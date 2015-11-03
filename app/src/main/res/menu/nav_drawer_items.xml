@@ -4,17 +4,17 @@
         <item
             android:id="@+id/notifications"
             android:checked="true"
-            android:icon="@drawable/ic_favorite"
+            android:icon="@drawable/ic_notification"
             android:title="@string/notifications" />
 
         <item
             android:id="@+id/awards"
-            android:icon="@drawable/ic_favorite"
+            android:icon="@drawable/ic_awards"
             android:title="@string/awards" />
 
         <item
             android:id="@+id/help"
-            android:icon="@drawable/ic_favorite"
+            android:icon="@drawable/ic_help"
             android:title="@string/help" />
 
         <item

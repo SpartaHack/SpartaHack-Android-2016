@@ -25,6 +25,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:tabGravity="fill"
+                app:tabIndicatorColor="@android:color/white"
+                app:tabIndicatorHeight="5dp"
+                app:tabMode="fixed"/>
+
         </android.support.design.widget.AppBarLayout>
 
 
@@ -39,7 +49,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_drawer_header"
         app:itemIconTint="@color/nav_drawer_toggle"
         app:itemTextColor="@color/nav_drawer_toggle"
         app:itemBackground="@android:color/transparent" />

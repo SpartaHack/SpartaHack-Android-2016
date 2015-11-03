@@ -1,17 +1,21 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.spartahack.spartahack2016.Adapters.AwardsPagerAdapter;
 import com.example.spartahack.spartahack2016.R;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AwardsFragment extends BaseFragment {
-    @Nullable
+
+    @Bind(R.id.view_pager) ViewPager viewPager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -19,6 +23,9 @@ public class AwardsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_awards, container, false);
 
         ButterKnife.bind(this, view);
+
+        viewPager.setAdapter(new AwardsPagerAdapter(getFragmentManager()));
+        setUpTabBar(viewPager);
 
         return view;
     }

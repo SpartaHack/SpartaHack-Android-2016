@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.AwardsFragment">
+    tools:context="com.example.spartahack.spartahack2016.Fragment.JudgesFragment">
 
-    <android.support.v4.view.ViewPager
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/view_pager"/>
+        android:text="Judges" />
 
 </RelativeLayout>

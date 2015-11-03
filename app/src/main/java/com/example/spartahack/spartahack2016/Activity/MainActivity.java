@@ -6,11 +6,14 @@ import android.app.FragmentTransaction;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
@@ -20,20 +23,27 @@ import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Utility;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.toolbar)Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
     @Bind(R.id.navigation_view) NavigationView navigationView;
+    @Bind(R.id.tab_layout) TabLayout tabLayout;
+
+    private View headerView;
+
+    /**
+     * Reference to the currently selected menu item in the nav drawer
+     */
+    private MenuItem currentItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ButterKnife.bind(this);
+        registerEventBus = true;
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -47,6 +57,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this),0,0);
         }
+
+        // inflate header view manually b/c no get headerview yet
+        headerView = navigationView.inflateHeaderView(R.layout.nav_drawer_header);
+
+        headerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                start(ProfileActivity.class);
+            }
+        });
 
         // set navigation drawer item click listener
         navigationView.setNavigationItemSelectedListener(this);
@@ -72,22 +92,30 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        item.setChecked(true);
-        switch (item.getItemId()){
-            case R.id.awards:
-                addFragment(new AwardsFragment());
-                break;
-            case R.id.help:
-                addFragment(new HelpFragment());
-                break;
-            case R.id.notifications:
-                addFragment(new NotificationFragment());
-                break;
-            case R.id.mentor:
-                addFragment(new MentorFragment());
-                break;
+
+        if (currentItem == null || currentItem != item) {
+            item.setChecked(true);
+
+            switch (item.getItemId()) {
+                case R.id.awards:
+                    addFragment(new AwardsFragment());
+                    break;
+                case R.id.help:
+                    addFragment(new HelpFragment());
+                    break;
+                case R.id.notifications:
+                    addFragment(new NotificationFragment());
+                    break;
+                case R.id.mentor:
+                    addFragment(new MentorFragment());
+                    break;
+            }
+
+            currentItem = item;
         }
+
         drawerLayout.closeDrawers();
+
         return true;
     }
 
@@ -102,5 +130,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         fragmentTransaction.commit();
+        tabLayout.setVisibility(View.GONE);
+    }
+
+    /**
+     * Eventbus reciever for fragments passing a view pager for the tab bar
+     * @param pager to set the tab bar up with
+     */
+    public void onEvent(ViewPager pager){
+        if (pager != null){
+            tabLayout.setupWithViewPager(pager);
+            tabLayout.setVisibility(View.VISIBLE);
+        }
     }
 }

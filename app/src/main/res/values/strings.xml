@@ -12,4 +12,5 @@
     <string name="awards">Awards</string>
     <string name="help">Help</string>
     <string name="mentor">Mentor</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 </resources>
