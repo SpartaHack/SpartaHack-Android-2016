@@ -109,6 +109,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 case R.id.mentor:
                     addFragment(new MentorFragment());
                     break;
+                case R.id.settings:
+                    addFragment(new SettingsFragment());
+                    break;
             }
 
             currentItem = item;

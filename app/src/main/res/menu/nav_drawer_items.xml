@@ -21,5 +21,10 @@
             android:id="@+id/mentor"
             android:icon="@drawable/ic_favorite"
             android:title="@string/mentor" />
+
+        <item
+            android:id="@+id/settings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
     </group>
 </menu>
