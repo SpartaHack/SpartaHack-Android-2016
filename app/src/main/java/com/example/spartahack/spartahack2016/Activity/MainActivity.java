@@ -12,13 +12,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.example.spartahack.spartahack2016.Cache;
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
 import com.example.spartahack.spartahack2016.Fragment.MentorFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
+import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Utility;
 
@@ -64,7 +69,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                start(ProfileActivity.class);
+                start(LoginActivity.class);
             }
         });
 
@@ -88,6 +93,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // set nav drawer header view
+        if (!TextUtils.isEmpty(Cache.INSTANCE.getQrURL())){
+            Glide.with(this)
+                    .load(Cache.INSTANCE.getQrURL())
+                    .into((ImageView) headerView.findViewById(R.id.header_image));
+        } else {
+            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.header);
+        }
     }
 
     @Override
