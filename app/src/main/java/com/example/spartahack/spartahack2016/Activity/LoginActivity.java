@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.spartahack.spartahack2016.Cache;
 import com.example.spartahack.spartahack2016.Keys;
@@ -68,9 +69,15 @@ public class LoginActivity extends BaseActivity {
                     onBackPressed();
 
                 } else {
+                    // invalid email or password
+                    if (e.getCode() == ParseException.OBJECT_NOT_FOUND){
+                        Toast.makeText(LoginActivity.this, "Wrong username or email", Toast.LENGTH_SHORT).show();
+                    }
                     Log.e("Login", e.toString());
+                    e.printStackTrace();
                 }
             }
+
         });
     }
 
