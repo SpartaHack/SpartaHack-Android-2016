@@ -54,7 +54,7 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.login_button)
     public void onLogin(){
-        ParseUser.logInInBackground(userNameTextView.getText().toString(), passwordTextView.getText().toString(), new LogInCallback() {
+        ParseUser.logInInBackground(userNameTextView.getText().toString().trim().toLowerCase(), passwordTextView.getText().toString().trim(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
 
