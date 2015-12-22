@@ -25,3 +25,10 @@ proguard/
 
 # Log Files
 *.log
+
+*.idea
+*/Keys.java
+
+.idea/*
+app/app.iml
+*.iml
