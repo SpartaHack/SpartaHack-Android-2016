@@ -13,9 +13,14 @@ import android.util.Log;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Model.PushNotification;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.ParsePushBroadcastReceiver;
+
+import io.realm.Realm;
+import io.realm.RealmObject;
 
 /**
  * Created by ryancasler on 12/22/15.
@@ -35,11 +40,31 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
         if (!TextUtils.isEmpty(jsonString)) {
 
             // convert the string into a PushNotification object
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            PushNotification push = gson.fromJson(jsonString, PushNotification.class);
+            Gson gson = new GsonBuilder()
+                    .setPrettyPrinting()
+                    .setExclusionStrategies(new ExclusionStrategy() {
+                        @Override
+                        public boolean shouldSkipField(FieldAttributes f) {
+                            return f.getDeclaringClass().equals(RealmObject.class);
+                        }
 
-            switch (push.type){
+                        @Override
+                        public boolean shouldSkipClass(Class<?> clazz) {
+                            return false;
+                        }
+                    }).create();
+            final PushNotification push = gson.fromJson(jsonString, PushNotification.class);
+
+
+            Realm realm = Realm.getDefaultInstance();
+
+            switch (push.getType()){
+
                 case 0: // play sound and show in bar
+
+                    realm.beginTransaction();
+                    realm.copyToRealm(push);
+                    realm.commitTransaction();
 
                     // intent opens to main activity
                     PendingIntent pIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
@@ -64,11 +89,16 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     break;
 
                 case 1: // silent push to just show in notificaitons
+                    realm.beginTransaction();
+                    realm.copyToRealm(push);
+                    realm.commitTransaction();
 
                     break;
 
                 case 2: // update of previous push
-
+                    realm.beginTransaction();
+                    realm.copyToRealmOrUpdate(push);
+                    realm.commitTransaction();
                     break;
             }
         }
