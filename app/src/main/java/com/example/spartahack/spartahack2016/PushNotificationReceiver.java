@@ -78,10 +78,11 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     Notification.Builder builder = new Notification.Builder(context)
                             .setSmallIcon(R.drawable.ic_notif)
                             .setContentTitle("SpartaHack")
+                            .setContentText(push.getTitle())
                             .setContentIntent(pIntent)
                             .setAutoCancel(true)
                             .setLargeIcon(largeLogo)
-                            .setStyle(new Notification.BigTextStyle().bigText(push.message))
+                            .setStyle(new Notification.BigTextStyle().bigText(push.getMessage()))
                             .setVibrate(pattern);
 
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
