@@ -4,9 +4,18 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.NotificationFragment">
 
-    <TextView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Notifications" />
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/notificaiton_list"/>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
 
 </FrameLayout>
