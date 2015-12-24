@@ -17,18 +17,13 @@ import java.util.List;
  *
  * Adapter for notifications displayed in the notificaiton fragment.
  *
- *
  */
 public class NotificationAdapter extends BaseAdapter {
 
-    /**
-     * Reference to the main activity for context to get images as well as get the layout inflater
-     */
+    /** Reference to the main activity for context to get images as well as get the layout inflater */
     private MainActivity context;
 
-    /**
-     * The list of notifications that is being displayed
-     */
+    /** The list of notifications that is being displayed */
     private List<PushNotification> notifications;
 
     public NotificationAdapter(MainActivity context, @SuppressWarnings("SameParameterValue") int resource, List<PushNotification> notifications) {

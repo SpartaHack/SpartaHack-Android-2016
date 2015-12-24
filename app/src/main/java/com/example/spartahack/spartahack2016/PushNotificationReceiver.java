@@ -1,6 +1,5 @@
 package com.example.spartahack.spartahack2016;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -28,6 +27,7 @@ import io.realm.RealmObject;
  */
 public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
+    /** Tag for logs */
     private static String TAG = "Push Receiver";
 
     @Override
@@ -39,7 +39,7 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
         if (!TextUtils.isEmpty(jsonString)) {
 
-            // convert the string into a PushNotification object
+            // gson deserializer
             Gson gson = new GsonBuilder()
                     .setPrettyPrinting()
                     .setExclusionStrategies(new ExclusionStrategy() {
@@ -53,8 +53,9 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                             return false;
                         }
                     }).create();
-            final PushNotification push = gson.fromJson(jsonString, PushNotification.class);
 
+            // convert the string into a PushNotification object
+            final PushNotification push = gson.fromJson(jsonString, PushNotification.class);
 
             Realm realm = Realm.getDefaultInstance();
 
@@ -62,6 +63,7 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
                 case 0: // play sound and show in bar
 
+                    // put the push notificaiton in Realm db
                     realm.beginTransaction();
                     realm.copyToRealm(push);
                     realm.commitTransaction();
@@ -85,58 +87,27 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                             .setStyle(new Notification.BigTextStyle().bigText(push.getMessage()))
                             .setVibrate(pattern);
 
+                    // show notificaiton in notificaiton bar
                     NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
                     notificationManager.notify(0, builder.build());
                     break;
 
                 case 1: // silent push to just show in notificaitons
+
+                    // put the push notificaiton in Realm db
                     realm.beginTransaction();
                     realm.copyToRealm(push);
                     realm.commitTransaction();
-
                     break;
 
                 case 2: // update of previous push
+
+                    // put the push notificaiton in Realm db
                     realm.beginTransaction();
                     realm.copyToRealmOrUpdate(push);
                     realm.commitTransaction();
                     break;
             }
         }
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-    }
-
-    @Override
-    protected void onPushOpen(Context context, Intent intent) {
-        super.onPushOpen(context, intent);
-    }
-
-    @Override
-    protected int getSmallIconId(Context context, Intent intent) {
-        return super.getSmallIconId(context, intent);
-    }
-
-    @Override
-    protected Bitmap getLargeIcon(Context context, Intent intent) {
-        return super.getLargeIcon(context, intent);
-    }
-
-    @Override
-    protected Notification getNotification(Context context, Intent intent) {
-        return super.getNotification(context, intent);
-    }
-
-    @Override
-    protected Class<? extends Activity> getActivity(Context context, Intent intent) {
-        return super.getActivity(context, intent);
-    }
-
-    @Override
-    protected void onPushDismiss(Context context, Intent intent) {
-        super.onPushDismiss(context, intent);
     }
 }

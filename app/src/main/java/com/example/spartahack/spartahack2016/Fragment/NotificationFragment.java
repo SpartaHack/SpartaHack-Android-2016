@@ -1,7 +1,6 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -24,16 +23,19 @@ import io.realm.Sort;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment that displays notifications in a list
  */
 public class NotificationFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
+    /** Listview that notificaitons are in */
     @Bind(R.id.notificaiton_list) ListView notificationList;
+
+    /** Swipe refresh layout for refreshing the list */
     @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
         ButterKnife.bind(this, view);
@@ -47,10 +49,12 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
     }
 
     private void updateNotifications(){
+        // get all notifications from the database
         Realm realm = Realm.getDefaultInstance();
         RealmResults<PushNotification> results = realm.where(PushNotification.class).findAllSorted("pinned", Sort.DESCENDING);
         List<PushNotification> notifications = results.subList(0, results.size());
 
+        // create adapter and add to arraylist
         NotificationAdapter adapter = new NotificationAdapter((MainActivity) getActivity(), R.layout.layout_notificaiton_item, notifications);
         notificationList.setAdapter(adapter);
     }
@@ -60,6 +64,10 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
         refresh(true);
     }
 
+    /**
+     * Refreshes the list. Can either load form network if forced or load from Realm if not forced
+     * @param force if the refresh is forced or not
+     */
     private void refresh(boolean force){
         updateNotifications();
         swipeRefreshLayout.setRefreshing(false);
