@@ -54,7 +54,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar!=null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_green);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -78,6 +78,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         // inflate the nav drawer items programmatically because it is dynamic based on roles
         navigationView.inflateMenu(R.menu.nav_drawer_items);
+
+        toolbar.setTitleTextColor(getResources().getColor(R.color.accent));
+        toolbar.setTitle("Notifications");
 
         // opening fragment is notificaions
         addFragment(new NotificationFragment());
@@ -117,18 +120,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             switch (item.getItemId()) {
                 case R.id.awards:
+                    toolbar.setTitle("Awards");
                     addFragment(new AwardsFragment());
                     break;
                 case R.id.help:
+                    toolbar.setTitle("Help");
                     addFragment(new HelpFragment());
                     break;
                 case R.id.notifications:
+                    toolbar.setTitle("Notifications");
                     addFragment(new NotificationFragment());
                     break;
                 case R.id.mentor:
+                    toolbar.setTitle("Mentor");
                     addFragment(new MentorFragment());
                     break;
                 case R.id.settings:
+                    toolbar.setTitle("Settings");
                     addFragment(new SettingsFragment());
                     break;
             }
