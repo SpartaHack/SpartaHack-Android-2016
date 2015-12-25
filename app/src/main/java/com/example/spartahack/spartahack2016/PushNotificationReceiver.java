@@ -58,15 +58,13 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
             final PushNotification push = gson.fromJson(jsonString, PushNotification.class);
 
             Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            realm.copyToRealmOrUpdate(push);
+            realm.commitTransaction();
 
             switch (push.getType()){
 
                 case 0: // play sound and show in bar
-
-                    // put the push notificaiton in Realm db
-                    realm.beginTransaction();
-                    realm.copyToRealm(push);
-                    realm.commitTransaction();
 
                     // intent opens to main activity
                     PendingIntent pIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
@@ -94,18 +92,10 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
                 case 1: // silent push to just show in notificaitons
 
-                    // put the push notificaiton in Realm db
-                    realm.beginTransaction();
-                    realm.copyToRealm(push);
-                    realm.commitTransaction();
                     break;
 
                 case 2: // update of previous push
 
-                    // put the push notificaiton in Realm db
-                    realm.beginTransaction();
-                    realm.copyToRealmOrUpdate(push);
-                    realm.commitTransaction();
                     break;
             }
         }
