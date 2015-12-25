@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
@@ -11,6 +12,9 @@ import com.example.spartahack.spartahack2016.Model.PushNotification;
 import com.example.spartahack.spartahack2016.R;
 
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by ryancasler on 12/23/15.
@@ -47,39 +51,42 @@ public class NotificationAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View view, ViewGroup parent) {
 
         NotificationViewHolder holder;
 
-        if (convertView == null) {
+        if (view == null) {
 
             LayoutInflater inflater = context.getLayoutInflater();
-            convertView = inflater.inflate(R.layout.layout_notificaiton_item, parent, false);
-            holder = new NotificationViewHolder();
-
-            holder.message = (TextView) convertView.findViewById(R.id.message);
-            holder.title = (TextView) convertView.findViewById(R.id.title);
-
-            convertView.setTag(holder);
+            view = inflater.inflate(R.layout.layout_notificaiton_item, parent, false);
+            holder = new NotificationViewHolder(view);
+            view.setTag(holder);
 
         } else {
-            holder = (NotificationViewHolder) convertView.getTag();
+            holder = (NotificationViewHolder) view.getTag();
         }
 
         final PushNotification pushNotification = notifications.get(position);
 
         holder.title.setText(pushNotification.getTitle());
         holder.message.setText(pushNotification.getMessage());
+        if (pushNotification.getPinned() == 0) holder.pinned.setVisibility(View.GONE);
+        else holder.pinned.setVisibility(View.VISIBLE);
 
-        return convertView;
+        return view;
     }
 
     /**
      * Class for the Viewholder pattern
      */
     static class NotificationViewHolder {
-        TextView title;
-        TextView message;
+        @Bind(R.id.title) TextView title;
+        @Bind(R.id.message)TextView message;
+        @Bind(R.id.pinned_icon)ImageView pinned;
+
+        public NotificationViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
 }
