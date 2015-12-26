@@ -63,13 +63,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        // inflate header view manually b/c no get headerview yet
+        headerView = navigationView.inflateHeaderView(R.layout.nav_drawer_header);
+
         // add padding for transparent statusbar if > kitkat
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
         }
-
-        // inflate header view manually b/c no get headerview yet
-        headerView = navigationView.inflateHeaderView(R.layout.nav_drawer_header);
 
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,8 +111,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             Glide.with(this)
                     .load(Cache.INSTANCE.getQrURL())
                     .into((ImageView) headerView.findViewById(R.id.header_image));
+            // add padding for transparent statusbar if > kitkat
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (headerView != null) headerView.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
+            }
         } else {
-            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.header);
+            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.banner);
+            // remove padding for transparent statusbar if > kitkat
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (headerView != null) headerView.setPadding(0, 0, 0, 0);
+            }
         }
 
         toolbar.setTitle(title);
