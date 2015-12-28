@@ -36,19 +36,13 @@ public class NotificationAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
-        return notifications.size();
-    }
+    public int getCount() { return notifications.size(); }
 
     @Override
-    public Object getItem(int position) {
-        return notifications.get(position);
-    }
+    public Object getItem(int position) { return notifications.get(position); }
 
     @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public long getItemId(int position) { return position; }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
@@ -70,8 +64,10 @@ public class NotificationAdapter extends BaseAdapter {
 
         holder.title.setText(pushNotification.getTitle());
         holder.message.setText(pushNotification.getMessage());
-        if (pushNotification.getPinned() == 0) holder.pinned.setVisibility(View.GONE);
-        else holder.pinned.setVisibility(View.VISIBLE);
+        if (pushNotification.getPinned() == 0)
+            holder.pinned.setVisibility(View.GONE);
+        else
+            holder.pinned.setVisibility(View.VISIBLE);
 
         return view;
     }
@@ -84,9 +80,7 @@ public class NotificationAdapter extends BaseAdapter {
         @Bind(R.id.message)TextView message;
         @Bind(R.id.pinned_icon)ImageView pinned;
 
-        public NotificationViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
+        public NotificationViewHolder(View view) {ButterKnife.bind(this, view);}
     }
 
 }

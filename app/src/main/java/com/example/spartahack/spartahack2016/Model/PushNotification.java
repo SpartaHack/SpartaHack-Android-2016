@@ -36,33 +36,18 @@ public class PushNotification extends RealmObject{
         return type;
     }
 
-    public void setType(int type) {
-        this.type = type;
-    }
+    public void setType(int type) {this.type = type;}
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() {return title;}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public void setTitle(String title) {this.title = title;}
 
-    public int getId() {
-        return id;
-    }
+    public int getId() {return id;}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) {this.id = id;}
 
-    public int getPinned() {
-        return pinned;
-    }
+    public int getPinned() {return pinned;}
 
-    public void setPinned(int pinned) {
-        this.pinned = pinned;
-    }
+    public void setPinned(int pinned) {this.pinned = pinned;}
 
-    public int isPinned(){return pinned;}
 }
