@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Adapters.NotificationAdapter;
@@ -29,6 +30,7 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
 
     /** Listview that notificaitons are in */
     @Bind(R.id.notificaiton_list) ListView notificationList;
+    @Bind(R.id.empty) TextView emptyView;
 
     /** Swipe refresh layout for refreshing the list */
     @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
@@ -52,6 +54,7 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
         // get all notifications from the database
         Realm realm = Realm.getDefaultInstance();
         RealmResults<PushNotification> results = realm.where(PushNotification.class).findAllSorted("pinned", Sort.DESCENDING);
+        toggleEmpty(results.size() == 0);
         List<PushNotification> notifications = results.subList(0, results.size());
 
         // create adapter and add to arraylist
@@ -71,6 +74,16 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
     private void refresh(boolean force){
         updateNotifications();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void toggleEmpty(boolean empty){
+        if (empty){
+            notificationList.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        }else {
+            notificationList.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
 

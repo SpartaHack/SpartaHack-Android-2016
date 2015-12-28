@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,19 +6,11 @@
     android:orientation="vertical"
     tools:context=".Fragment.NotificationFragment">
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/notifications"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:padding="@dimen/text_margin"-->
-        <!--android:textSize="@dimen/header_text_size"-->
-        <!--android:textColor="@color/accent"/>-->
-
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <ListView
             android:id="@+id/notificaiton_list"
@@ -27,4 +19,14 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/no_notificaitons"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
+
+</RelativeLayout>

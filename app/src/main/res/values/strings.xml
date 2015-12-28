@@ -19,4 +19,5 @@
     <string name="user_name">Username</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="pinned">pinned</string>
+    <string name="no_notificaitons">No Notificaitons</string>
 </resources>
