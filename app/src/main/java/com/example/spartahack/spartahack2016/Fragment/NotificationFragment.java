@@ -29,8 +29,8 @@ import io.realm.Sort;
 public class NotificationFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     /** Listview that notificaitons are in */
-    @Bind(R.id.notificaiton_list) ListView notificationList;
-    @Bind(R.id.empty) TextView emptyView;
+    @Bind(android.R.id.list) ListView notificationList;
+    @Bind(android.R.id.empty) TextView emptyView;
 
     /** Swipe refresh layout for refreshing the list */
     @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
@@ -47,6 +47,8 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light);
 
+        notificationList.setEmptyView(emptyView);
+
         return view;
     }
 
@@ -54,7 +56,7 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
         // get all notifications from the database
         Realm realm = Realm.getDefaultInstance();
         RealmResults<PushNotification> results = realm.where(PushNotification.class).findAllSorted("pinned", Sort.DESCENDING);
-        toggleEmpty(results.size() == 0);
+
         List<PushNotification> notifications = results.subList(0, results.size());
 
         // create adapter and add to arraylist
@@ -75,16 +77,5 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
         updateNotifications();
         swipeRefreshLayout.setRefreshing(false);
     }
-
-    private void toggleEmpty(boolean empty){
-        if (empty){
-            notificationList.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
-        }else {
-            notificationList.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
-        }
-    }
-
 
 }
