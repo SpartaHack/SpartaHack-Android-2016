@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.spartahack.spartahack2016.Cache;
 import com.example.spartahack.spartahack2016.Keys;
@@ -53,7 +54,7 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.login_button)
     public void onLogin(){
-        ParseUser.logInInBackground(userNameTextView.getText().toString(), passwordTextView.getText().toString(), new LogInCallback() {
+        ParseUser.logInInBackground(userNameTextView.getText().toString().trim().toLowerCase(), passwordTextView.getText().toString().trim(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
 
@@ -68,9 +69,15 @@ public class LoginActivity extends BaseActivity {
                     onBackPressed();
 
                 } else {
+                    // invalid email or password
+                    if (e.getCode() == ParseException.OBJECT_NOT_FOUND){
+                        Toast.makeText(LoginActivity.this, "Wrong username or email", Toast.LENGTH_SHORT).show();
+                    }
                     Log.e("Login", e.toString());
+                    e.printStackTrace();
                 }
             }
+
         });
     }
 

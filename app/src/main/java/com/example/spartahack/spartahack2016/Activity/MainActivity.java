@@ -31,12 +31,17 @@ import butterknife.Bind;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar)Toolbar toolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @Bind(R.id.navigation_view) NavigationView navigationView;
-    @Bind(R.id.tab_layout) TabLayout tabLayout;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @Bind(R.id.navigation_view)
+    NavigationView navigationView;
+    @Bind(R.id.tab_layout)
+    TabLayout tabLayout;
 
     private View headerView;
+    private String title = "Notificaitons";
 
     /**
      * Reference to the currently selected menu item in the nav drawer
@@ -53,18 +58,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
 
-        if (actionBar!=null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_green);
             actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        // add padding for transparent statusbar if > kitkat
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this),0,0);
         }
 
         // inflate header view manually b/c no get headerview yet
         headerView = navigationView.inflateHeaderView(R.layout.nav_drawer_header);
+
+        // add padding for transparent statusbar if > kitkat
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
+        }
 
         headerView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +83,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         // inflate the nav drawer items programmatically because it is dynamic based on roles
         navigationView.inflateMenu(R.menu.nav_drawer_items);
+
+        toolbar.setTitleTextColor(getResources().getColor(R.color.accent));
 
         // opening fragment is notificaions
         addFragment(new NotificationFragment());
@@ -100,13 +107,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onResume();
 
         // set nav drawer header view
-        if (!TextUtils.isEmpty(Cache.INSTANCE.getQrURL())){
+        if (!TextUtils.isEmpty(Cache.INSTANCE.getQrURL())) {
             Glide.with(this)
                     .load(Cache.INSTANCE.getQrURL())
                     .into((ImageView) headerView.findViewById(R.id.header_image));
+            // add padding for transparent statusbar if > kitkat
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (headerView != null) headerView.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
+            }
         } else {
-            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.header);
+            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.banner);
+            // remove padding for transparent statusbar if > kitkat
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                if (headerView != null) headerView.setPadding(0, 0, 0, 0);
+            }
         }
+
+        toolbar.setTitle(title);
+        drawerLayout.closeDrawers();
+
     }
 
     @Override
@@ -117,18 +136,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             switch (item.getItemId()) {
                 case R.id.awards:
+                    title = "Awards";
                     addFragment(new AwardsFragment());
                     break;
                 case R.id.help:
+                    title = "Help";
                     addFragment(new HelpFragment());
                     break;
                 case R.id.notifications:
+                    title = "Notifications";
                     addFragment(new NotificationFragment());
                     break;
                 case R.id.mentor:
+                    title = "Mentor";
                     addFragment(new MentorFragment());
                     break;
                 case R.id.settings:
+                    title = "Settings";
                     addFragment(new SettingsFragment());
                     break;
             }
@@ -143,6 +167,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     /**
      * Replaces the current fragment in the frame layout
+     *
      * @param fragment to replace the current fragment
      */
     private void addFragment(android.app.Fragment fragment) {
@@ -152,15 +177,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         fragmentTransaction.commit();
+        if (toolbar != null) toolbar.setTitle(title);
         tabLayout.setVisibility(View.GONE);
     }
 
     /**
      * Eventbus reciever for fragments passing a view pager for the tab bar
+     *
      * @param pager to set the tab bar up with
      */
-    public void onEvent(ViewPager pager){
-        if (pager != null){
+    public void onEvent(ViewPager pager) {
+        if (pager != null) {
             tabLayout.setupWithViewPager(pager);
             tabLayout.setVisibility(View.VISIBLE);
         }
