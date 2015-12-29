@@ -18,4 +18,16 @@
     <string name="password">Password</string>
     <string name="user_name">Username</string>
     <string name="forgot_password">Forgot Password</string>
+
+    <string name="err_msg_name">Enter your name</string>
+    <string name="err_msg_desc">Enter the description</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_room">Room</string>
+    <string name="hint_description">Description</string>
+
+    <string name="submit">Submit</string>
+    <string name="spinner_category">Category:</string>
+    <string name="spinner_location">Location:</string>
+
 </resources>
