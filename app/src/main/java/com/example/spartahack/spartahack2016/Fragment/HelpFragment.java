@@ -27,7 +27,6 @@ import butterknife.ButterKnife;
 public class HelpFragment extends BaseFragment {
 
 
-
     @Bind(R.id.categorySpinner) Spinner categorySpinner;
     @Bind(R.id.roomSpinner) Spinner roomSpinner;
     @Bind(R.id.submit) Button button;
@@ -87,7 +86,9 @@ public class HelpFragment extends BaseFragment {
         }
 
         ParseObject data = new ParseObject("Concierge");
-        //data.put("userId", user.getObjectId().toString());
+        if (user != null) {
+            data.put("userId", user.getObjectId().toString());
+        }
         data.put("name", name.getText().toString());
         data.put("room", roomSpinner.getSelectedItem().toString());
         data.put("description", description.getText().toString());
