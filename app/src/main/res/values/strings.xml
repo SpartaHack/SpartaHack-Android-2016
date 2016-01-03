@@ -33,4 +33,14 @@
 
     <string name="pinned">pinned</string>
     <string name="no_notificaitons">No Notificaitons</string>
+
+
+    <string-array name="roomArray">
+        <item>Cedar Village</item>
+        <item>Chandler Crossings</item>
+        <item>University Villa</item>
+        <item>University Village</item>
+        <item>2900 Apartments</item>
+    </string-array>
+
 </resources>
