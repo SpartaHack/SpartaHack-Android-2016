@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_back"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/text_margin"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/sub_header_text_size"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/sponsor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/text_margin"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/abc_text_size_small_material"
+            tools:text="sponsored by your mom" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_margin"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/body_text_size"
+        tools:text="this is an incredible prize that you could win " />
+</LinearLayout>

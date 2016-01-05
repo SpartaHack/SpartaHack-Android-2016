@@ -42,7 +42,6 @@ public class CompanyFragment extends BaseFragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
         ParseAPIService.INSTANCE.getRestAdapter().getCompany()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GSONMock.Companies>() {
