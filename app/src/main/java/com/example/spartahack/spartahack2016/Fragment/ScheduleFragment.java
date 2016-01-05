@@ -9,9 +9,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.spartahack.spartahack2016.Model.Event;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
+
+import org.joda.time.DateTimeComparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,7 +58,14 @@ public class ScheduleFragment extends BaseFragment {
 
                     @Override
                     public void onNext(GSONMock.Schedules schedules) {
+                        ArrayList<Event> events = schedules.events;
 
+                        Collections.sort(events, new Comparator<Event>() {
+                            @Override
+                            public int compare(Event lhs, Event rhs) {
+                                return DateTimeComparator.getInstance().compare(lhs.getTime(), rhs.getTime());
+                            }
+                         });
                     }
                 });
 //                .subscribe(new Subscriber<GSONMock.Companies>() {
