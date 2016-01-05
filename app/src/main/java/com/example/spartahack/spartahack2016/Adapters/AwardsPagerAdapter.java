@@ -4,8 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
-import com.example.spartahack.spartahack2016.Fragment.CriteriaFragment;
-import com.example.spartahack.spartahack2016.Fragment.JudgesFragment;
+import com.example.spartahack.spartahack2016.Fragment.CompanyFragment;
+import com.example.spartahack.spartahack2016.Fragment.PrizeFragment;
 
 import java.util.ArrayList;
 
@@ -22,13 +22,13 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"Judges", "Criteria"};
+    private String[] tabs = {"Prizes", "Sponsors"};
 
     public AwardsPagerAdapter(FragmentManager fm) {
         super(fm);
         fragments = new ArrayList<>();
-        fragments.add(new JudgesFragment());
-        fragments.add(new CriteriaFragment());
+        fragments.add(new PrizeFragment());
+        fragments.add(new CompanyFragment());
     }
 
     @Override

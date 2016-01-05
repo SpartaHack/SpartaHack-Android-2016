@@ -24,9 +24,17 @@ public class AwardsFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-        viewPager.setAdapter(new AwardsPagerAdapter(getFragmentManager()));
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // TODO Fix this not showing content on resuming fragment
+
+        viewPager.setAdapter(new AwardsPagerAdapter(getChildFragmentManager()));
         setUpTabBar(viewPager);
 
-        return view;
     }
 }
