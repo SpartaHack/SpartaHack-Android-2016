@@ -14,6 +14,7 @@ import io.realm.RealmConfiguration;
 public class MyApplication extends Application {
     @Override
     public void onCreate() {
+        Parse.enableLocalDatastore(this);
         Parse.initialize(this, Keys.PARSE_1, Keys.PARSE_2);
         ParseInstallation.getCurrentInstallation().saveInBackground();
 

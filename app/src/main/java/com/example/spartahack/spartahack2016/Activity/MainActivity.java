@@ -1,6 +1,7 @@
 package com.example.spartahack.spartahack2016.Activity;
 
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Build;
@@ -41,7 +42,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     TabLayout tabLayout;
 
     private View headerView;
-    private String title = "Notificaitons";
+    private String title = "Notifications";
 
     /**
      * Reference to the currently selected menu item in the nav drawer
@@ -191,5 +192,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             tabLayout.setupWithViewPager(pager);
             tabLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void switchContent(int id, Fragment fragment) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        ft.replace(id, fragment, fragment.toString());
+        ft.addToBackStack(null);
+        ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
+        ft.commit();
     }
 }
