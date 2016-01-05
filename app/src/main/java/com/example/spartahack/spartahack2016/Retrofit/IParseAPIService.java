@@ -11,4 +11,6 @@ public interface IParseAPIService {
     @GET("/classes/Company")
     Observable<GSONMock.Companies> getCompany();
 
+    @GET("/classes/Schedule")
+    Observable<GSONMock.Schedules> getSchedule();
 }

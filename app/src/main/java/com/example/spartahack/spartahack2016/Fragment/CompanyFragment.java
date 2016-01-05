@@ -2,9 +2,9 @@ package com.example.spartahack.spartahack2016.Fragment;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,12 +26,12 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragments that displays the companies that are sponsors of our great event
  */
 public class CompanyFragment extends BaseFragment {
 
+    /** Recycler view that displays all objects */
     @Bind(android.R.id.list) RecyclerView recyclerView;
-    SimpleCompanyAdapter simpleCompanyAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,9 +40,7 @@ public class CompanyFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
 
 
         ParseAPIService.INSTANCE.getRestAdapter().getCompany()
@@ -55,12 +53,18 @@ public class CompanyFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e("CompanyFragment", e.toString());
                     }
 
                     @Override
                     public void onNext(GSONMock.Companies company) {
-
+                        
+                        // get results as array list 
+                        ArrayList<Company> companies = company.companies;
+                        
+                        // TODO: 1/5/16 handle if list of companies returns empty/ null
+                        if (companies == null || companies.isEmpty()) 
+                            return;
                         Collections.sort(company.companies, new Comparator<Company>() {
                                     @Override
                                     public int compare(Company lhs, Company rhs) {
@@ -70,12 +74,25 @@ public class CompanyFragment extends BaseFragment {
                                     }
                                 });
 
-                        simpleCompanyAdapter = new SimpleCompanyAdapter(getActivity(), company.companies);
+                        SimpleCompanyAdapter simpleCompanyAdapter = new SimpleCompanyAdapter(getActivity(), companies);
 
-                        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<SimpleSectionedRecyclerViewAdapter.Section>();
+                        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
-                        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, "Warrior"));
-                        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(4, "Trainee"));
+                        // add section header for first tier that has sponsors
+//                        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, companies.get(0).getLevelName()));
+
+                        // the level from the last header used to track what level needs to add a header next
+                        int companyLevelTemp = -1;
+
+                        // location the header should go at
+                        int sectionLoc = 0;
+                        for (Company c : companies){
+                            if (c.getLevel() != companyLevelTemp){
+                                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(sectionLoc, c.getLevelName()));
+                                companyLevelTemp = c.getLevel();
+                            }
+                            sectionLoc++;
+                        }
 
                         SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
 
@@ -84,8 +101,6 @@ public class CompanyFragment extends BaseFragment {
                         adapter.setSections(sections.toArray(dummy));
 
                         recyclerView.setAdapter(adapter);
-
-//                                listView.setAdapter(new CompanyListAdapter((MainActivity) getActivity(), company.companies));
                     }
                 });
 

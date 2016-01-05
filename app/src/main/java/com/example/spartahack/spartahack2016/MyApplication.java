@@ -5,6 +5,8 @@ import android.app.Application;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -19,6 +21,8 @@ public class MyApplication extends Application {
 
         RealmConfiguration config = new RealmConfiguration.Builder(this).build();
         Realm.setDefaultConfiguration(config);
+
+        JodaTimeAndroid.init(this);
 
     }
 }

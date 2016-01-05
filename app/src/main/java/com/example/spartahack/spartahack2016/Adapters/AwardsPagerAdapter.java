@@ -22,7 +22,7 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"Judges", "Criteria"};
+    private String[] tabs = {"Prizes", "Sponsors"};
 
     public AwardsPagerAdapter(FragmentManager fm) {
         super(fm);

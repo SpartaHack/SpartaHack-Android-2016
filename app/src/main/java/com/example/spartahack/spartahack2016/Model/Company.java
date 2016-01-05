@@ -13,11 +13,16 @@ public class Company {
     private pic pic;
 
 
+    // used for sorting
     public int getLevel() {
-        if (level.equals("partner")) return 3;
-        if (level.equals("trainee")) return 2;
+        if (level.equals("partner")) return 5;
+        if (level.equals("trainee")) return 4;
+        if (level.equals("warrior")) return 3;
+        if (level.equals("commander")) return 2;
         return 1;
     }
+
+    public String getLevelName() { return level; }
 
     public String getUrl() {
         return url;

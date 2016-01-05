@@ -23,6 +23,7 @@ import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
 import com.example.spartahack.spartahack2016.Fragment.MentorFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
+import com.example.spartahack.spartahack2016.Fragment.ScheduleFragment;
 import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Utility;
@@ -31,14 +32,10 @@ import butterknife.Bind;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawerLayout;
-    @Bind(R.id.navigation_view)
-    NavigationView navigationView;
-    @Bind(R.id.tab_layout)
-    TabLayout tabLayout;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
+    @Bind(R.id.navigation_view) NavigationView navigationView;
+    @Bind(R.id.tab_layout) TabLayout tabLayout;
 
     private View headerView;
     private String title = "Notificaitons";
@@ -136,24 +133,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             switch (item.getItemId()) {
                 case R.id.awards:
-                    title = "Awards";
+                    title = getResources().getString(R.string.awards);
                     addFragment(new AwardsFragment());
                     break;
                 case R.id.help:
-                    title = "Help";
+                    title = getResources().getString(R.string.help);
                     addFragment(new HelpFragment());
                     break;
                 case R.id.notifications:
-                    title = "Notifications";
+                    title = getResources().getString(R.string.notifications);
                     addFragment(new NotificationFragment());
                     break;
                 case R.id.mentor:
-                    title = "Mentor";
+                    title = getResources().getString(R.string.mentor);
                     addFragment(new MentorFragment());
                     break;
                 case R.id.settings:
-                    title = "Settings";
+                    title = getResources().getString(R.string.settings);
                     addFragment(new SettingsFragment());
+                    break;
+                case R.id.schedule:
+                    title = getResources().getString(R.string.schedule);
+                    addFragment(new ScheduleFragment());
                     break;
             }
 

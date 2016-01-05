@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.Model.Company;
 import com.example.spartahack.spartahack2016.R;
 
@@ -66,7 +67,14 @@ public class SimpleCompanyAdapter extends RecyclerView.Adapter<SimpleCompanyAdap
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        holder.name.setText(mData.get(position).getName());
+        Company c = mData.get(position);
+
+        holder.name.setText(c.getName());
+        if (c.getPicUrl().contains(".png")){
+            Glide.with(mContext).load(c.getPicUrl()).into(holder.logo);
+        } else {
+            Glide.with(mContext).load(R.drawable.banner).into(holder.logo);
+        }
 //        holder.title.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
