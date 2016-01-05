@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.spartahack.spartahack2016.Adapters.SimpleCompanyAdapter;
+import com.example.spartahack.spartahack2016.Adapters.CompanyListAdapter;
 import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.example.spartahack.spartahack2016.Model.Company;
 import com.example.spartahack.spartahack2016.R;
@@ -74,7 +74,7 @@ public class CompanyFragment extends BaseFragment {
                                     }
                                 });
 
-                        SimpleCompanyAdapter simpleCompanyAdapter = new SimpleCompanyAdapter(getActivity(), companies);
+                        CompanyListAdapter simpleCompanyAdapter = new CompanyListAdapter(getActivity(), companies);
 
                         ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 

@@ -1,81 +1,91 @@
 package com.example.spartahack.spartahack2016.Adapters;
 
-import android.util.Log;
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Model.Company;
 import com.example.spartahack.spartahack2016.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by ryancasler on 1/4/16.
- */
-public class CompanyListAdapter extends BaseAdapter {
+public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.SimpleViewHolder> {
 
-    private MainActivity context;
-    private ArrayList<Company> companies;
 
-    public CompanyListAdapter(MainActivity context, ArrayList<Company> companies) {
-        this.context = context;
-        this.companies = companies;
+    private final Context mContext;
+    private List<Company> mData;
+
+
+    public void add(Company c,int position) {
+        position = position == -1 ? getItemCount()  : position;
+        mData.add(position ,c);
+        notifyItemInserted(position);
     }
 
-    @Override
-    public int getCount() {
-        return companies.size();
-    }
 
-    @Override
-    public Object getItem(int position) {
-        return companies.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View v, ViewGroup parent) {
-        CompanyViewHolder vh;
-
-        if (v == null){
-            LayoutInflater inflater = context.getLayoutInflater();
-            v = inflater.inflate(R.layout.layout_company_item, parent, false);
-            vh = new CompanyViewHolder(v);
-            v.setTag(vh);
-        }else {
-            vh = (CompanyViewHolder) v.getTag();
+    public void remove(int position){
+        if (position < getItemCount()  ) {
+            mData.remove(position);
+            notifyItemRemoved(position);
         }
-
-        final Company company = (Company) getItem(position);
-        vh.name.setText(company.getName());
-
-        try {
-            Glide.with(context).load(company.getUrl()).into(vh.logo);
-        }catch (Exception e){
-            Log.e("Company pic", e.toString() + " " + company.getPicUrl());
-        }
-
-        return v;
     }
 
-    static class  CompanyViewHolder{
+
+    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.logo) ImageView logo;
         @Bind(R.id.name) TextView name;
 
-        public CompanyViewHolder(View v) {ButterKnife.bind(this,v);}
+        public SimpleViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+
+    public CompanyListAdapter(Context context, ArrayList<Company> data) {
+        mContext = context;
+        if (data != null)
+            mData = data;
+        else mData = new ArrayList<>();
+    }
+
+
+    public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.layout_company_item, parent, false);
+        return new SimpleViewHolder(view);
+    }
+
+
+    @Override
+    public void onBindViewHolder(SimpleViewHolder holder, final int position) {
+        Company c = mData.get(position);
+
+        holder.name.setText(c.getName());
+        if (c.getPicUrl().contains(".png")){
+            Glide.with(mContext).load(c.getPicUrl()).into(holder.logo);
+        } else {
+            Glide.with(mContext).load(R.drawable.banner).into(holder.logo);
+        }
+//        holder.title.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(mContext,"Position ="+position,Toast.LENGTH_SHORT).show();
+//            }
+//        });
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return mData.size();
     }
 }
-

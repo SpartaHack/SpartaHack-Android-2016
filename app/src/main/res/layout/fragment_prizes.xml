@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.spartahack.spartahack2016.Fragment.JudgesFragment">
+    tools:context=".Fragment.PrizeFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Judges" />
+        android:text="Prizes" />
 
 </RelativeLayout>

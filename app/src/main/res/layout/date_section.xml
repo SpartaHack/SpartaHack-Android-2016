@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical"
-    android:paddingLeft="16dp"
     android:singleLine="true"
     android:textAllCaps="true"
     android:textColor="@color/accent"
     android:background="@android:color/transparent"
-    android:textSize="16sp"
+    android:textSize="@dimen/sub_header_text_size"
     android:id="@+id/section_text"
     tools:text="Section header"
     android:textStyle="bold" />

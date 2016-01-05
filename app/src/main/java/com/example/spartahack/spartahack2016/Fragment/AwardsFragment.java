@@ -33,7 +33,8 @@ public class AwardsFragment extends BaseFragment {
 
         // TODO Fix this not showing content on resuming fragment
 
-        viewPager.setAdapter(new AwardsPagerAdapter(getFragmentManager()));
+        viewPager.setAdapter(new AwardsPagerAdapter(getChildFragmentManager()));
         setUpTabBar(viewPager);
+
     }
 }
