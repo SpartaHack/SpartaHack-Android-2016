@@ -15,7 +15,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         Parse.enableLocalDatastore(this);
-        Parse.initialize(this, Keys.PARSE_1, Keys.PARSE_2);
+        Parse.initialize(this, Keys.PARSE_APP_ID, Keys.PARSE_API_KEY);
         ParseInstallation.getCurrentInstallation().saveInBackground();
 
         RealmConfiguration config = new RealmConfiguration.Builder(this).build();
