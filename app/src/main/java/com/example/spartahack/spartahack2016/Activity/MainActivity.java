@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.Cache;
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
-import com.example.spartahack.spartahack2016.Fragment.MentorFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
 import com.example.spartahack.spartahack2016.Fragment.ScheduleFragment;
 import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
@@ -145,10 +144,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     title = getResources().getString(R.string.notifications);
                     addFragment(new NotificationFragment());
                     break;
-                case R.id.mentor:
-                    title = getResources().getString(R.string.mentor);
-                    addFragment(new MentorFragment());
-                    break;
+
                 case R.id.settings:
                     title = getResources().getString(R.string.settings);
                     addFragment(new SettingsFragment());

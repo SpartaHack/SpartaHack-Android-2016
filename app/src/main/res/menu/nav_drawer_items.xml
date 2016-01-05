@@ -18,10 +18,6 @@
             android:title="@string/help" />
 
         <item
-            android:id="@+id/mentor"
-            android:icon="@drawable/ic_favorite"
-            android:title="@string/mentor" />
-        <item
             android:id="@+id/schedule"
             android:icon="@drawable/ic_sched"
             android:title="@string/schedule" />
