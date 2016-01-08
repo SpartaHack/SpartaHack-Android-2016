@@ -21,7 +21,7 @@
         android:icon="@drawable/logo_black"
         android:name=".MyApplication">
         <activity
-            android:name=".Activity.LoginActivity"
+            android:name=".Activity.ProfileFragment"
             android:label="@string/login">
         </activity>
 

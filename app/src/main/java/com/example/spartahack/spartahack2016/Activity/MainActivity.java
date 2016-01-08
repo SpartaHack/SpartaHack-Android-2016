@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.example.spartahack.spartahack2016.Cache;
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
@@ -27,6 +26,7 @@ import com.example.spartahack.spartahack2016.Fragment.ScheduleFragment;
 import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Utility;
+import com.parse.ParseUser;
 
 import butterknife.Bind;
 
@@ -68,12 +68,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
         }
 
-        headerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                start(LoginActivity.class);
-            }
-        });
+//        headerView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                start(ProfileFragment.class);
+////            }
+//        });
 
         // set navigation drawer item click listener
         navigationView.setNavigationItemSelectedListener(this);
@@ -104,9 +104,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onResume();
 
         // set nav drawer header view
-        if (!TextUtils.isEmpty(Cache.INSTANCE.getQrURL())) {
+        String url = "";
+        if (ParseUser.getCurrentUser() != null) ParseUser.getCurrentUser().getParseFile("qrCode").getUrl();
+
+        if (!TextUtils.isEmpty(url)) {
             Glide.with(this)
-                    .load(Cache.INSTANCE.getQrURL())
+                    .load(url)
                     .into((ImageView) headerView.findViewById(R.id.header_image));
             // add padding for transparent statusbar if > kitkat
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -153,6 +156,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     title = getResources().getString(R.string.schedule);
                     addFragment(new ScheduleFragment());
                     break;
+
+                case R.id.profile:
+                    title = getResources().getString(R.string.profile);
+                    addFragment(new ProfileFragment());
+                    break;
             }
 
             currentItem = item;
@@ -198,4 +206,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         ft.commit();
     }
+
 }

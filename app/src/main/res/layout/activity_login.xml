@@ -1,61 +1,102 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="false"
-    tools:context=".Activity.LoginActivity">
+    android:animateLayoutChanges="true"
+    tools:context=".Activity.ProfileFragment">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/background"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/signedOut">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.design.widget.TextInputLayout style="@style/TextInputLayout">
-
-        <EditText
-            android:id="@+id/user_name"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/email" />
+            android:layout_gravity="center_horizontal"
+            android:padding="5dp"
+            android:text="@string/login_to_see_profile"/>
 
-    </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout style="@style/TextInputLayout">
+        <android.support.design.widget.TextInputLayout style="@style/TextInputLayout">
 
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout style="@style/TextInputLayout">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/password"
-            android:inputType="textPassword" />
+            android:layout_gravity="center"
+            android:text="@string/login" />
 
-    </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:id="@+id/forgot_passowrd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/abc_button_padding_horizontal_material"
+            android:layout_gravity="center"
 
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/login" />
+            android:text="@string/forgot_password" />
 
-    <TextView
-        android:id="@+id/forgot_passowrd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/abc_button_padding_horizontal_material"
-        android:layout_gravity="center"
+    </LinearLayout>
 
-        android:text="@string/forgot_password" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/signedIn"
+        android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/display_name"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            tools:text="Signed in as"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:layout_gravity="center"
+            android:id="@+id/qr"
+            tools:src="@drawable/header"
+            android:padding="0dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/logout"
+                android:id="@+id/logout"
+                android:layout_gravity="center"/>
+        </FrameLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
