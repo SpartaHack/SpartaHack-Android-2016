@@ -25,6 +25,8 @@ import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {
 
+    public static final String RESET_URL = "http://spartahack.com/forgot";
+
     @Bind(R.id.password) EditText passwordTextView;
     @Bind(R.id.user_name) EditText userNameTextView;
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -86,7 +88,7 @@ public class LoginActivity extends BaseActivity {
      */
     @OnClick(R.id.forgot_passowrd)
     public void onForgotPassword(){
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Keys.RESET_URL)));
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(RESET_URL)));
     }
 
     @Override
