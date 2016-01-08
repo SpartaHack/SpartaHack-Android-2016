@@ -3,13 +3,14 @@ package com.example.spartahack.spartahack2016.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class ProfileFragment extends BaseFragment {
     @Bind(R.id.signedOut) View signedOut;
     @Bind(R.id.qr) ImageView qr;
     @Bind(R.id.display_name) TextView displayName;
+    @Bind(R.id.progressBar) ProgressBar bar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +53,7 @@ public class ProfileFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        toggleViews();
+        toggleViews(false);
     }
 
     /**
@@ -59,10 +61,11 @@ public class ProfileFragment extends BaseFragment {
      */
     @OnClick(R.id.login_button)
     public void onLogin(){
+        toggleViews(true);
         ParseUser.logInInBackground(userNameTextView.getText().toString().trim().toLowerCase(), passwordTextView.getText().toString().trim(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    toggleViews();
+                    toggleViews(false);
 
                 } else {
                     // invalid email or password
@@ -87,34 +90,31 @@ public class ProfileFragment extends BaseFragment {
 
     @OnClick(R.id.logout)
     public void onLogout(){
+        toggleViews(true);
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
             public void done(ParseException e) {
-                toggleViews();
+                toggleViews(false);
+                Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_SHORT).show();
             }
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                toggleViews();
-                return true;
+    private void toggleViews(boolean load){
+        if (load){
+            signedIn.setVisibility(View.GONE);
+            signedOut.setVisibility(View.GONE);
+            bar.setVisibility(View.VISIBLE);
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    private void toggleViews(){
-        if (ParseUser.getCurrentUser() != null){
+        else if (ParseUser.getCurrentUser() != null){
+            bar.setVisibility(View.GONE);
             signedIn.setVisibility(View.VISIBLE);
             signedOut.setVisibility(View.GONE);
             Glide.with(this).load(ParseUser.getCurrentUser().getParseFile("qrCode").getUrl()).into(qr);
             displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), ParseUser.getCurrentUser().get("username")));
 
         } else {
+            bar.setVisibility(View.GONE);
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.VISIBLE);
         }
