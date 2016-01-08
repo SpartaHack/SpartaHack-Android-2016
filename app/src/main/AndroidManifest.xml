@@ -18,7 +18,7 @@
 
     <application
         android:theme="@style/AppTheme"
-        android:icon="@drawable/logo_black"
+        android:icon="@drawable/logo"
         android:name=".MyApplication">
         <activity
             android:name=".Activity.ProfileFragment"

@@ -1,5 +1,6 @@
 package com.example.spartahack.spartahack2016.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -62,6 +64,11 @@ public class ProfileFragment extends BaseFragment {
     @OnClick(R.id.login_button)
     public void onLogin(){
         toggleViews(true);
+
+        // hide keyboard!!! fuck android
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(passwordTextView.getWindowToken(), 0);
+
         ParseUser.logInInBackground(userNameTextView.getText().toString().trim().toLowerCase(), passwordTextView.getText().toString().trim(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
