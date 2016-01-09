@@ -13,9 +13,7 @@
     <permission android:protectionLevel="signature"
         android:name="com.spartahack.spartahack2016.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.spartahack.spartahack2016.permission.C2D_MESSAGE" />
-
-
-
+    
     <application
         android:theme="@style/AppTheme"
         android:icon="@drawable/logo"
