@@ -1,6 +1,5 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
-
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -10,18 +9,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
-import com.example.spartahack.spartahack2016.Adapters.NotificationAdapter;
-import com.example.spartahack.spartahack2016.Model.PushNotification;
+import com.example.spartahack.spartahack2016.Adapters.AnnouncementAdapter;
+import com.example.spartahack.spartahack2016.Model.Announcement;
 import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
+import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 
-import java.util.List;
+import org.joda.time.DateTimeComparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.realm.Realm;
-import io.realm.RealmResults;
-import io.realm.Sort;
-
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Fragment that displays notifications in a list
@@ -52,16 +55,41 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
         return view;
     }
 
-    private void updateNotifications(){
-        // get all notifications from the database
-        Realm realm = Realm.getDefaultInstance();
-        RealmResults<PushNotification> results = realm.where(PushNotification.class).findAllSorted("pinned", Sort.DESCENDING);
+    private void updateNotifications() {
+        ParseAPIService.INSTANCE.getRestAdapter().getAnnouncements()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GSONMock.Announcements>() {
+                    @Override
+                    public void onCompleted() {
 
-        List<PushNotification> notifications = results.subList(0, results.size());
+                    }
 
-        // create adapter and add to arraylist
-        NotificationAdapter adapter = new NotificationAdapter((MainActivity) getActivity(), R.layout.layout_notificaiton_item, notifications);
-        notificationList.setAdapter(adapter);
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(GSONMock.Announcements announcements) {
+                        ArrayList<Announcement> notifications = announcements.announcements;
+
+                        Collections.sort(notifications, new Comparator<Announcement>() {
+                            @Override
+                            public int compare(Announcement lhs, Announcement rhs) {
+                                if (rhs.getPinned() && lhs.getPinned())
+                                    return DateTimeComparator.getInstance().compare(lhs.getTime(), rhs.getTime());
+                                else if (rhs.getPinned())
+                                    return 1;
+                                else
+                                    return -1;
+                            }
+                        });
+
+                        // create adapter and add to arraylist
+                        AnnouncementAdapter adapter = new AnnouncementAdapter((MainActivity) getActivity(), notifications);
+                        notificationList.setAdapter(adapter);
+                    }
+                });
     }
 
     @Override

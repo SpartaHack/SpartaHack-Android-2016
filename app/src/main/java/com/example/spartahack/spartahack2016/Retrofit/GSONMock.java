@@ -1,5 +1,6 @@
 package com.example.spartahack.spartahack2016.Retrofit;
 
+import com.example.spartahack.spartahack2016.Model.Announcement;
 import com.example.spartahack.spartahack2016.Model.Company;
 import com.example.spartahack.spartahack2016.Model.Event;
 import com.example.spartahack.spartahack2016.Model.Prize;
@@ -25,4 +26,10 @@ public class GSONMock {
         @SerializedName("results")
         public ArrayList<Prize> prizes;
     }
+
+    public static class Announcements {
+        @SerializedName("results")
+        public ArrayList<Announcement> announcements;
+    }
+
 }
