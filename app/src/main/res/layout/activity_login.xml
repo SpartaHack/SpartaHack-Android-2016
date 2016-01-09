@@ -1,17 +1,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
     android:animateLayoutChanges="true"
+    android:background="@color/light_back"
     tools:context=".Activity.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:id="@+id/signedOut">
 
         <TextView
@@ -19,26 +21,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="5dp"
+            android:textColor="@android:color/darker_gray"
             android:text="@string/login_to_see_profile"/>
 
 
-        <android.support.design.widget.TextInputLayout style="@style/TextInputLayout">
+        <android.support.design.widget.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/email_layout">
 
             <EditText
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
                 android:hint="@string/email" />
 
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout style="@style/TextInputLayout">
+        <android.support.design.widget.TextInputLayout
+            style="@style/TextInputLayout"
+            android:id="@+id/password_layout">
 
             <EditText
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
+                android:textColor="@android:color/darker_gray"
                 android:inputType="textPassword" />
 
         </android.support.design.widget.TextInputLayout>
@@ -53,6 +62,7 @@
         <TextView
             android:id="@+id/forgot_passowrd"
             android:layout_width="wrap_content"
+            android:textColor="@android:color/darker_gray"
             android:layout_height="wrap_content"
             android:padding="@dimen/abc_button_padding_horizontal_material"
             android:layout_gravity="center"
@@ -65,7 +75,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/signedIn"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
         <TextView
@@ -74,6 +84,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
+            android:textColor="@android:color/darker_gray"
             tools:text="Signed in as"/>
 
         <ImageView
@@ -105,7 +116,7 @@
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal"/>
 

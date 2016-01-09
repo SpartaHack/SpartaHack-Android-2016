@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.Fragment.BaseFragment;
@@ -31,6 +31,9 @@ import butterknife.OnClick;
 
 public class ProfileFragment extends BaseFragment {
 
+    /**
+     * URL to reset a password
+     */
     public static final String RESET_URL = "http://spartahack.com/forgot";
 
     @Bind(R.id.password) EditText passwordTextView;
@@ -40,6 +43,8 @@ public class ProfileFragment extends BaseFragment {
     @Bind(R.id.qr) ImageView qr;
     @Bind(R.id.display_name) TextView displayName;
     @Bind(R.id.progressBar) ProgressBar bar;
+    @Bind(R.id.email_layout) TextInputLayout emailLayout;
+    @Bind(R.id.password_layout) TextInputLayout passwordLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,24 +68,51 @@ public class ProfileFragment extends BaseFragment {
      */
     @OnClick(R.id.login_button)
     public void onLogin(){
-        toggleViews(true);
+
+        // flag for if there are any errors
+        boolean error = false;
+
+        // validate email;
+        String email = userNameTextView.getText().toString().trim().toLowerCase();
+        if (!validateEmail(email)){
+            emailLayout.setError("Invalid Email");
+            error = true;
+        }else {
+            emailLayout.setErrorEnabled(false);
+        }
+
+        // validate password
+        String password = passwordTextView.getText().toString().trim();
+        if (!validatePassword(password)){
+            passwordLayout.setError("Password not long enough");
+            error = true;
+        } else {
+            passwordLayout.setErrorEnabled(false);
+        }
+
+        // dont submitt call if errors
+        if (error) return;
 
         // hide keyboard!!! fuck android
         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(passwordTextView.getWindowToken(), 0);
 
-        ParseUser.logInInBackground(userNameTextView.getText().toString().trim().toLowerCase(), passwordTextView.getText().toString().trim(), new LogInCallback() {
+        // change views shown
+        toggleViews(true);
+
+        ParseUser.logInInBackground(email, passwordTextView.getText().toString().trim(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     toggleViews(false);
 
                 } else {
-                    // invalid email or password
+                    // wrong email or password
                     if (e.getCode() == ParseException.OBJECT_NOT_FOUND){
-                        Toast.makeText(getActivity(), "Wrong username or email", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
                     }
                     Log.e("Login", e.toString());
                     e.printStackTrace();
+                    toggleViews(false);
                 }
             }
 
@@ -95,6 +127,10 @@ public class ProfileFragment extends BaseFragment {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(RESET_URL)));
     }
 
+    /**
+     * Called when logout is clicked. This will log out and show a snackbar
+     * when the logout is done
+     */
     @OnClick(R.id.logout)
     public void onLogout(){
         toggleViews(true);
@@ -102,11 +138,17 @@ public class ProfileFragment extends BaseFragment {
             @Override
             public void done(ParseException e) {
                 toggleViews(false);
-                Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
             }
         });
     }
 
+    /**
+     * Toggles which views are shown in the view. Either the loading circle if
+     * something is loading, the logged in view or the logged out view
+     *
+     * @param load if the loading circle should show or not
+     */
     private void toggleViews(boolean load){
         if (load){
             signedIn.setVisibility(View.GONE);
@@ -125,6 +167,27 @@ public class ProfileFragment extends BaseFragment {
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.VISIBLE);
         }
+    }
+
+    /**
+     * Makes sure email address is valid
+     * @param email a string which is the email address
+     * @return if it is valid or not
+     */
+    private boolean validateEmail(String email){
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+    /**
+     *
+     * @param password string which is the password entered
+     * @return if the password is long enough
+     */
+    private boolean validatePassword(String password){
+        return password.length() >= 4;
     }
 
 }
