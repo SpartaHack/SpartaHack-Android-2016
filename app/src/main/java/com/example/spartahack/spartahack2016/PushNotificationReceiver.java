@@ -11,14 +11,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
-import com.example.spartahack.spartahack2016.Model.PushNotification;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.ParsePushBroadcastReceiver;
 
-import io.realm.Realm;
 import io.realm.RealmObject;
 
 /**
@@ -27,7 +25,9 @@ import io.realm.RealmObject;
  */
 public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
-    /** Tag for logs */
+    /**
+     * Tag for logs
+     */
     private static String TAG = "Push Receiver";
 
     @Override
@@ -55,49 +55,34 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     }).create();
 
             // convert the string into a PushNotification object
-            final PushNotification push = gson.fromJson(jsonString, PushNotification.class);
+            final PushInfo push = gson.fromJson(jsonString, PushInfo.class);
 
-            Realm realm = Realm.getDefaultInstance();
-            realm.beginTransaction();
-            realm.copyToRealmOrUpdate(push);
-            realm.commitTransaction();
+            // intent opens to main activity
+            PendingIntent pIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
-            switch (push.getType()){
+            // vibrate pattern 500 ms, pause 50ms, vibrate 500ms
+            long[] pattern = {0, 500, 50, 500};
 
-                case 0: // play sound and show in bar
+            Bitmap largeLogo = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_black);
 
-                    // intent opens to main activity
-                    PendingIntent pIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
+            // build the notification
+            Notification.Builder builder = new Notification.Builder(context)
+                    .setSmallIcon(R.drawable.ic_notif)
+                    .setContentTitle("SpartaHack")
+                    .setContentText(push.alert)
+                    .setContentIntent(pIntent)
+                    .setAutoCancel(true)
+                    .setLargeIcon(largeLogo)
+                    .setVibrate(pattern);
 
-                    // vibrate pattern 500 ms, pause 50ms, vibrate 500ms
-                    long[] pattern = {0, 500,50,500};
+            // show notificaiton in notificaiton bar
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, builder.build());
 
-                    Bitmap largeLogo = BitmapFactory.decodeResource(context.getResources(), R.drawable.logo_black);
-
-                    // build the notification
-                    Notification.Builder builder = new Notification.Builder(context)
-                            .setSmallIcon(R.drawable.ic_notif)
-                            .setContentTitle("SpartaHack")
-                            .setContentText(push.getTitle())
-                            .setContentIntent(pIntent)
-                            .setAutoCancel(true)
-                            .setLargeIcon(largeLogo)
-                            .setStyle(new Notification.BigTextStyle().bigText(push.getMessage()))
-                            .setVibrate(pattern);
-
-                    // show notificaiton in notificaiton bar
-                    NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager.notify(0, builder.build());
-                    break;
-
-                case 1: // silent push to just show in notificaitons
-
-                    break;
-
-                case 2: // update of previous push
-
-                    break;
-            }
         }
+    }
+
+    private class PushInfo {
+        public String alert;
     }
 }

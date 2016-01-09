@@ -20,10 +20,6 @@
         android:theme="@style/AppTheme"
         android:icon="@drawable/logo"
         android:name=".MyApplication">
-        <activity
-            android:name=".Activity.ProfileFragment"
-            android:label="@string/login">
-        </activity>
 
         <activity
             android:name=".Activity.MainActivity"
