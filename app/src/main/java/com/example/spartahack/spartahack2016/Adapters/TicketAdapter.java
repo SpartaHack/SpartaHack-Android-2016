@@ -56,8 +56,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     public TicketAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_ticket, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override
@@ -97,8 +96,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
             return;
         if (mContext instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) mContext;
-            Fragment frag = fragment;
-            mainActivity.switchContent(id, frag);
+            mainActivity.switchContent(id, fragment);
         }
 
     }

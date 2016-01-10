@@ -42,6 +42,7 @@
     <string name="login_to_see_profile">Login to see profile.</string>
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
+    <string name="need_help">Need Help? Submit a ticket below</string>
 
 
     <string-array name="roomArray">
