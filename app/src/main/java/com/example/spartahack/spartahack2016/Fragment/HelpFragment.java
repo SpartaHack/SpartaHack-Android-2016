@@ -66,14 +66,14 @@ public class HelpFragment extends BaseFragment {
                             if (user_id.equals(obj_id)) {
                                 // CHANGE WHEN DB IS FIXED
                                 if (object.get("subject") != null) {
-//                                    ticketList.add(new Ticket(object.get("subject").toString(), ((ParseObject) object.get("category")).get("category").toString(), object.get("description").toString()));
-                                }
-                                else {
                                     try {
-                                        ticketList.add(new Ticket("No Subject", ((ParseObject) object.fetchIfNeeded().get("category")).get("category").toString(), object.get("description").toString()));
+                                        ticketList.add(new Ticket(object.get("subject").toString(), ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(), object.get("description").toString()));
                                     } catch (ParseException e1) {
                                         e1.printStackTrace();
                                     }
+                                }
+                                else {
+                                    ticketList.add(new Ticket("No Subject", ((ParseObject) object.get("category")).get("category").toString(), object.get("description").toString()));
                                 }
                             }
                         }

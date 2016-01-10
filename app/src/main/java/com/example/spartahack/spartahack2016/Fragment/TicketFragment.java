@@ -2,7 +2,6 @@ package com.example.spartahack.spartahack2016.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,4 +37,6 @@ public class TicketFragment extends BaseFragment {
 
         return view;
     }
+
+
 }
