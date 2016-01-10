@@ -10,8 +10,23 @@ import de.greenrobot.event.EventBus;
  */
 public class BaseFragment extends Fragment{
 
+    protected boolean registerEventBus = false;
     protected void setUpTabBar(ViewPager viewPager){
         EventBus.getDefault().post(viewPager);
+    }
+
+    @Override
+    public void onResume() {
+        // register for event bus
+        if (registerEventBus) EventBus.getDefault().register(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        // unregister event bus
+        if (registerEventBus) EventBus.getDefault().unregister(this);
+        super.onPause();
     }
 
 }

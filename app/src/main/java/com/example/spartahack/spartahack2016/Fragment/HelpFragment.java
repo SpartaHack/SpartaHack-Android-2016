@@ -31,15 +31,21 @@ public class HelpFragment extends BaseFragment {
 
     @Bind(R.id.recycler) RecyclerView ticketView;
 
-    private RecyclerView.Adapter mAdapter;
+    private TicketAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     ParseUser user;
     List<ParseObject> categoryList;
+    private ArrayList<Ticket> tickets;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view;
+
+        registerEventBus = true;
+
+        tickets = new ArrayList<>() ;
+
         user = ParseUser.getCurrentUser();
         if (user == null) {
             return inflater.inflate(R.layout.layout_notloggedin, container, false);
@@ -54,7 +60,7 @@ public class HelpFragment extends BaseFragment {
             mLayoutManager = new LinearLayoutManager(getActivity());
             ticketView.setLayoutManager(mLayoutManager);
 
-            final ArrayList<Ticket> ticketList = new ArrayList<Ticket>();
+//            final ArrayList<Ticket> ticketList = new ArrayList<Ticket>();
             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
@@ -67,17 +73,17 @@ public class HelpFragment extends BaseFragment {
                                 // CHANGE WHEN DB IS FIXED
                                 if (object.get("subject") != null) {
                                     try {
-                                        ticketList.add(new Ticket(object.get("subject").toString(), ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(), object.get("description").toString()));
+                                        tickets.add(new Ticket(object.get("subject").toString(), ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(), object.get("description").toString()));
                                     } catch (ParseException e1) {
                                         e1.printStackTrace();
                                     }
                                 }
                                 else {
-                                    ticketList.add(new Ticket("No Subject", ((ParseObject) object.get("category")).get("category").toString(), object.get("description").toString()));
+                                    tickets.add(new Ticket("No Subject", ((ParseObject) object.get("category")).get("category").toString(), object.get("description").toString()));
                                 }
                             }
                         }
-                        mAdapter = new TicketAdapter(ticketList);
+                        mAdapter = new TicketAdapter(tickets);
                         ticketView.setAdapter(mAdapter);
                     } else {
                         // handle Parse Exception here
@@ -85,12 +91,14 @@ public class HelpFragment extends BaseFragment {
                 }
             });
 
-
         }
 
         return view;
     }
 
+    public void onEvent(Ticket ticket){
+        mAdapter.add(mAdapter.getItemCount(), ticket);
+    }
 
     @OnClick(R.id.fab)
     void showDialog() {

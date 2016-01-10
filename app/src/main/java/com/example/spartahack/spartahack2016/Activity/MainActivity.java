@@ -139,10 +139,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     title = getResources().getString(R.string.awards);
                     addFragment(new AwardsFragment());
                     break;
+
                 case R.id.help:
                     title = getResources().getString(R.string.help);
                     addFragment(new HelpFragment());
                     break;
+
                 case R.id.notifications:
                     title = getResources().getString(R.string.notifications);
                     addFragment(new NotificationFragment());
@@ -152,6 +154,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     title = getResources().getString(R.string.settings);
                     addFragment(new SettingsFragment());
                     break;
+                
                 case R.id.schedule:
                     title = getResources().getString(R.string.schedule);
                     addFragment(new ScheduleFragment());
@@ -207,4 +210,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ft.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStack();
+        }else {
+            super.onBackPressed();
+        }
+    }
 }

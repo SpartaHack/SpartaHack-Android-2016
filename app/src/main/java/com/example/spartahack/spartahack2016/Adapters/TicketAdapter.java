@@ -85,7 +85,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     private void fragmentJump(Ticket mItemSelected) {
         mFragment = new TicketFragment();
         mBundle = new Bundle();
-        mBundle.putSerializable("ticket", mItemSelected);
+        mBundle.putSerializable(TicketFragment.I_TICKET, mItemSelected);
         mFragment.setArguments(mBundle);
         switchContent(R.id.container, mFragment);
     }

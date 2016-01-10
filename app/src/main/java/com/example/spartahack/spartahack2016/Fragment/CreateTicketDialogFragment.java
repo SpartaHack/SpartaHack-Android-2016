@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -29,6 +30,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by ryancasler on 1/9/16.
@@ -43,7 +45,6 @@ public class CreateTicketDialogFragment  extends DialogFragment {
     @Bind(R.id.description) AppCompatEditText description;
     @Bind(R.id.subject) AppCompatEditText subject;
 
-    ParseUser user;
     List<ParseObject> categoryList;
 
 
@@ -109,7 +110,6 @@ public class CreateTicketDialogFragment  extends DialogFragment {
 
     @OnClick(R.id.submit)
     public void submit(){
-        dismiss();
         if (!validateDesc() || !validateSubject()) {
             return;
         }
@@ -118,14 +118,22 @@ public class CreateTicketDialogFragment  extends DialogFragment {
         data.put("description", description.getText().toString());
         data.put("subject", subject.getText().toString());
 
+
+        Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString());
+
         //Category Relation Object
         ParseObject categoryObject = null;
         for (ParseObject object : categoryList) {
             if (object.get("category") == categorySpinner.getSelectedItem().toString()) {
                 categoryObject = object;
+
             }
         }
-
+        ParseUser user = ParseUser.getCurrentUser();
+        if (user == null){
+            // handle error
+            dismiss();
+        }
         data.put("user", user);
         data.put("category", categoryObject);
         data.saveInBackground();
@@ -133,6 +141,10 @@ public class CreateTicketDialogFragment  extends DialogFragment {
         subject.setText("");
         description.setText("");
         requestFocus(subject);
+
+        EventBus.getDefault().post(ticket);
+        dismiss();
+
     }
 
     private boolean validateDesc() {
