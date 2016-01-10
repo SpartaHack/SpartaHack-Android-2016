@@ -63,7 +63,8 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     @Override
     public void onBindViewHolder(TicketAdapter.ViewHolder holder, int position) {
         final Ticket ticket = mDataset.get(position);
-        holder.ticket.setText("Ticket #" + position);
+        holder.ticket.setText(String.format(mContext.getResources().getString(R.string.ticket_number), position+1));
+
         holder.ticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
