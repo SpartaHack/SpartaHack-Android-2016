@@ -3,7 +3,6 @@
     android:id="@+id/navigation_view_header"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/light_back"
     android:layout_height="192dp">
 
     <ImageView

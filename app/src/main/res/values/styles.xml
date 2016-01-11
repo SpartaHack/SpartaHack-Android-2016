@@ -3,6 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorPrimaryDark">@color/background</item>
+        <item name="android:colorBackground">@color/light_back</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
@@ -28,5 +31,16 @@
     <style name="FloatingButton" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/accent</item>
     </style>
+
+
+    <style name="TabLayoutStyle" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/accent</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">8dp</item>
+        <item name="tabPaddingEnd">8dp</item>
+        <item name="tabBackground">?attr/selectableItemBackground</item>
+        <item name="tabSelectedTextColor">@color/accent</item>
+    </style>
+
 
 </resources>

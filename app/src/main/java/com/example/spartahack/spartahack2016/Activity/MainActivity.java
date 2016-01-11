@@ -4,6 +4,7 @@ package com.example.spartahack.spartahack2016.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -154,7 +156,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     title = getResources().getString(R.string.settings);
                     addFragment(new SettingsFragment());
                     break;
-                
+
                 case R.id.schedule:
                     title = getResources().getString(R.string.schedule);
                     addFragment(new ScheduleFragment());
@@ -218,4 +220,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             super.onBackPressed();
         }
     }
+
+    protected void hideKeyboard(View view){
+        // hide keyboard!!! fuck android
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 }

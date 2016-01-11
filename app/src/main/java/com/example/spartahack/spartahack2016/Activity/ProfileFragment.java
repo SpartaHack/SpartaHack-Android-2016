@@ -1,6 +1,5 @@
 package com.example.spartahack.spartahack2016.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -63,6 +61,12 @@ public class ProfileFragment extends BaseFragment {
         toggleViews(false);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        hideKeyboard(passwordTextView);
+    }
+
     /**
      * Called when the login button is pressed
      */
@@ -93,9 +97,7 @@ public class ProfileFragment extends BaseFragment {
         // dont submitt call if errors
         if (error) return;
 
-        // hide keyboard!!! fuck android
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(passwordTextView.getWindowToken(), 0);
+        hideKeyboard(passwordTextView);
 
         // change views shown
         toggleViews(true);

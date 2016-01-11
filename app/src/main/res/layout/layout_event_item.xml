@@ -7,8 +7,7 @@
     android:paddingTop="5dp"
     android:gravity="center_vertical"
     android:paddingLeft="4dp"
-    android:paddingRight="4dp"
-    android:background="@color/light_back">
+    android:paddingRight="4dp">
 
     <TextView
         android:layout_width="match_parent"
