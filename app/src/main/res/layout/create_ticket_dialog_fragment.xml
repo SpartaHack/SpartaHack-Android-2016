@@ -2,17 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="30dp">
+    android:background="@color/light_back"
+    android:padding="7dp">
 
     <TextView
         android:id="@+id/ticket_label"
         style="?android:attr/listSeparatorTextViewStyle"
         android:layout_width="match_parent"
+        android:textColor="@android:color/darker_gray"
         android:layout_height="wrap_content"
         android:text="@string/need_help"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/subjectLayout"
+        style="@style/TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -28,6 +31,7 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/descLayout"
         android:layout_width="match_parent"
+        style="@style/TextInputLayout"
         android:layout_height="wrap_content">
 
         <android.support.v7.widget.AppCompatEditText
@@ -47,12 +51,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textColor="@android:color/darker_gray"
             android:text="@string/spinner_location" />
 
         <Spinner
             android:id="@+id/roomSpinner"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -65,13 +70,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
             android:layout_gravity="center_vertical"
             android:text="@string/spinner_category" />
 
         <Spinner
             android:id="@+id/categorySpinner"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

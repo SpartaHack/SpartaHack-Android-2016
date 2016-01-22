@@ -10,7 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
+import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
@@ -30,6 +33,8 @@ import butterknife.OnClick;
 public class HelpFragment extends BaseFragment {
 
     @Bind(R.id.recycler) RecyclerView ticketView;
+    @Bind(R.id.no_user) LinearLayout noUser;
+    @Bind(R.id.user) RelativeLayout userExitst;
 
     private TicketAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -47,12 +52,18 @@ public class HelpFragment extends BaseFragment {
         tickets = new ArrayList<>() ;
 
         user = ParseUser.getCurrentUser();
-        if (user == null) {
-            return inflater.inflate(R.layout.layout_notloggedin, container, false);
-        } else {
-            view = inflater.inflate(R.layout.fragment_help, container, false);
 
-            ButterKnife.bind(this, view);
+        view = inflater.inflate(R.layout.fragment_help, container, false);
+
+        ButterKnife.bind(this, view);
+
+
+        if (user == null) {
+            noUser.setVisibility(View.VISIBLE);
+            userExitst.setVisibility(View.GONE);
+        } else {
+            noUser.setVisibility(View.GONE);
+            userExitst.setVisibility(View.VISIBLE);
 
             //RecyclerView
             ticketView.setHasFixedSize(true);
@@ -117,6 +128,17 @@ public class HelpFragment extends BaseFragment {
         DialogFragment newFragment = new CreateTicketDialogFragment();
         newFragment.show(ft, "dialog");
     }
+
+    @OnClick(R.id.login)
+    void onLogin(){
+        MainActivity activity =  ((MainActivity) getActivity());
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(ProfileFragment.I_EXTRA_FROM, ProfileFragment.I_EXTRA_FROM);
+        fragment.setArguments(bundle);
+        activity.switchContent(R.id.container, fragment);
+    }
+
 
 
 }

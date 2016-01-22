@@ -1,4 +1,4 @@
-package com.example.spartahack.spartahack2016.Activity;
+package com.example.spartahack.spartahack2016.Fragment;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +15,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.spartahack.spartahack2016.Fragment.BaseFragment;
 import com.example.spartahack.spartahack2016.R;
 import com.parse.LogInCallback;
 import com.parse.LogOutCallback;
@@ -34,6 +33,8 @@ public class ProfileFragment extends BaseFragment {
      */
     public static final String RESET_URL = "http://spartahack.com/forgot";
 
+    public static final String I_EXTRA_FROM = "From help";
+
     @Bind(R.id.password) EditText passwordTextView;
     @Bind(R.id.user_name) EditText userNameTextView;
     @Bind(R.id.signedIn) View signedIn;
@@ -44,6 +45,8 @@ public class ProfileFragment extends BaseFragment {
     @Bind(R.id.email_layout) TextInputLayout emailLayout;
     @Bind(R.id.password_layout) TextInputLayout passwordLayout;
 
+    boolean fromHelp = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
@@ -51,6 +54,10 @@ public class ProfileFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.activity_login, container, false);
 
         ButterKnife.bind(this, view);
+
+        Bundle args = this.getArguments();
+        if (args  != null && args.containsKey(I_EXTRA_FROM))
+            fromHelp = true;
 
         return view;
     }
@@ -105,16 +112,24 @@ public class ProfileFragment extends BaseFragment {
         ParseUser.logInInBackground(email, passwordTextView.getText().toString().trim(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
-                    toggleViews(false);
+                    Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
+
+                    if (fromHelp){
+                        getActivity().onBackPressed();
+                    }else {
+                        toggleViews(false);
+                    }
 
                 } else {
                     // wrong email or password
                     if (e.getCode() == ParseException.OBJECT_NOT_FOUND){
                         Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
+                        Log.e("Login", e.toString());
+                        e.printStackTrace();
                     }
-                    Log.e("Login", e.toString());
-                    e.printStackTrace();
-                    toggleViews(false);
+                    else {
+                        toggleViews(false);
+                    }
                 }
             }
 
