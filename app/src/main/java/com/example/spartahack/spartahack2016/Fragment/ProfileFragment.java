@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,7 @@ public class ProfileFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         Bundle args = this.getArguments();
-        if (args  != null && args.containsKey(I_EXTRA_FROM))
+        if (args != null && args.containsKey(I_EXTRA_FROM))
             fromHelp = true;
 
         return view;
@@ -78,23 +79,23 @@ public class ProfileFragment extends BaseFragment {
      * Called when the login button is pressed
      */
     @OnClick(R.id.login_button)
-    public void onLogin(){
+    public void onLogin() {
 
         // flag for if there are any errors
         boolean error = false;
 
         // validate email;
         String email = userNameTextView.getText().toString().trim().toLowerCase();
-        if (!validateEmail(email)){
+        if (!validateEmail(email)) {
             emailLayout.setError("Invalid Email");
             error = true;
-        }else {
+        } else {
             emailLayout.setErrorEnabled(false);
         }
 
         // validate password
         String password = passwordTextView.getText().toString().trim();
-        if (!validatePassword(password)){
+        if (!validatePassword(password)) {
             passwordLayout.setError("Password not long enough");
             error = true;
         } else {
@@ -114,22 +115,17 @@ public class ProfileFragment extends BaseFragment {
                 if (user != null) {
                     Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
-                    if (fromHelp){
+                    if (fromHelp) {
                         getActivity().onBackPressed();
-                    }else {
+                    } else {
                         toggleViews(false);
                     }
 
                 } else {
-                    // wrong email or password
-                    if (e.getCode() == ParseException.OBJECT_NOT_FOUND){
-                        Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
-                        Log.e("Login", e.toString());
-                        e.printStackTrace();
-                    }
-                    else {
-                        toggleViews(false);
-                    }
+                    Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
+                    Log.e("Login", e.toString());
+                    e.printStackTrace();
+                    toggleViews(false);
                 }
             }
 
@@ -140,7 +136,7 @@ public class ProfileFragment extends BaseFragment {
      * Called when a user clicks on forgot password. This will open the users browser of choice
      */
     @OnClick(R.id.forgot_passowrd)
-    public void onForgotPassword(){
+    public void onForgotPassword() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(RESET_URL)));
     }
 
@@ -149,7 +145,7 @@ public class ProfileFragment extends BaseFragment {
      * when the logout is done
      */
     @OnClick(R.id.logout)
-    public void onLogout(){
+    public void onLogout() {
         toggleViews(true);
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
@@ -166,18 +162,19 @@ public class ProfileFragment extends BaseFragment {
      *
      * @param load if the loading circle should show or not
      */
-    private void toggleViews(boolean load){
-        if (load){
+    private void toggleViews(boolean load) {
+        ParseUser user = ParseUser.getCurrentUser();
+        if (load) {
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.GONE);
             bar.setVisibility(View.VISIBLE);
-        }
-        else if (ParseUser.getCurrentUser() != null){
+        } else if (user != null) {
             bar.setVisibility(View.GONE);
             signedIn.setVisibility(View.VISIBLE);
             signedOut.setVisibility(View.GONE);
-            Glide.with(this).load(ParseUser.getCurrentUser().getParseFile("qrCode").getUrl()).into(qr);
-            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), ParseUser.getCurrentUser().get("username")));
+            if (!(user.getParseFile("qrCode") == null || TextUtils.isEmpty(user.getParseFile("qrCode").getUrl())))
+                Glide.with(this).load(user.getParseFile("qrCode").getUrl()).into(qr);
+            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), user.get("username")));
 
         } else {
             bar.setVisibility(View.GONE);
@@ -188,10 +185,11 @@ public class ProfileFragment extends BaseFragment {
 
     /**
      * Makes sure email address is valid
+     *
      * @param email a string which is the email address
      * @return if it is valid or not
      */
-    private boolean validateEmail(String email){
+    private boolean validateEmail(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
@@ -199,12 +197,12 @@ public class ProfileFragment extends BaseFragment {
     }
 
     /**
-     *
      * @param password string which is the password entered
      * @return if the password is long enough
      */
-    private boolean validatePassword(String password){
+    private boolean validatePassword(String password) {
         return password.length() >= 4;
     }
+
 
 }
