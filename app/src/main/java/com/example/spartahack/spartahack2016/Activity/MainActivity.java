@@ -24,10 +24,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
+import com.example.spartahack.spartahack2016.Fragment.GuideFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpDeskFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
 import com.example.spartahack.spartahack2016.Fragment.ProfileFragment;
-import com.example.spartahack.spartahack2016.Fragment.ScheduleFragment;
 import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Utility;
@@ -161,8 +161,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     break;
 
                 case R.id.schedule:
-                    title = getResources().getString(R.string.schedule);
-                    addFragment(new ScheduleFragment());
+                    title = getResources().getString(R.string.guide);
+                    addFragment(new GuideFragment());
                     break;
 
                 case R.id.profile:

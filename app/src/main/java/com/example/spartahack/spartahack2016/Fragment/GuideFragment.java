@@ -8,22 +8,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.spartahack.spartahack2016.Adapters.HelpDeskPagerAdapter;
+import com.example.spartahack.spartahack2016.Adapters.GidePagerAdapter;
 import com.example.spartahack.spartahack2016.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HelpDeskFragment extends BaseFragment {
+public class GuideFragment extends BaseFragment {
 
     @Bind(R.id.view_pager) ViewPager viewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_help_desk, container, false);
+        // Inflate the layout for this fragment
+        View view =  inflater.inflate(R.layout.fragment_guide, container, false);
 
         ButterKnife.bind(this, view);
 
@@ -34,7 +36,7 @@ public class HelpDeskFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
 
-        viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
+        viewPager.setAdapter(new GidePagerAdapter(getChildFragmentManager()));
         setUpTabBar(viewPager);
 
     }

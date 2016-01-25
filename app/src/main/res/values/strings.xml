@@ -13,7 +13,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notifications">Notifications</string>
     <string name="awards">Awards</string>
-    <string name="help">Help</string>
+    <string name="help">Help Desk</string>
     <string name="mentor">Mentor</string>
     <string name="settings">Settings</string>
 
@@ -38,7 +38,7 @@
 
     <string name="pinned">pinned</string>
     <string name="no_notificaitons">No Notificaitons</string>
-    <string name="schedule">Schedule</string>
+    <string name="guide">Guide</string>
     <string name="login_to_see_profile">Login to see profile.</string>
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>

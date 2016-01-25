@@ -5,14 +5,14 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
-import com.example.spartahack.spartahack2016.Fragment.MapFragment;
+import com.example.spartahack.spartahack2016.Fragment.MentorFragment;
 
 import java.util.ArrayList;
 
 /**
  * Created by ryancasler on 1/22/16.
  */
-public class HelpPagerAdapter extends FragmentPagerAdapter {
+public class HelpDeskPagerAdapter extends FragmentPagerAdapter {
 
     /**
      * list of fragments in the adapter
@@ -22,13 +22,13 @@ public class HelpPagerAdapter extends FragmentPagerAdapter {
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"Tickets", "Guide"};
+    private String[] tabs = {"Tickets", "Mentor"};
 
-    public HelpPagerAdapter(FragmentManager fm) {
+    public HelpDeskPagerAdapter(FragmentManager fm) {
         super(fm);
         fragments = new ArrayList<>();
         fragments.add(new HelpFragment());
-        fragments.add(new MapFragment());
+        fragments.add(new MentorFragment());
     }
 
     @Override
