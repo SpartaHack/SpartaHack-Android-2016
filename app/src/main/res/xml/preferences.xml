@@ -4,9 +4,9 @@
 
     <SwitchPreference
         android:defaultValue="true"
-        android:key="toggle_theme"
-        android:summary="Toggle dark and light theme."
-        android:title="Dark Theme"/>
+        android:key="toggle_mentor"
+        android:summary="Toggle if mentor tickets are displayed under the help desk section."
+        android:title="Mentor"/>
 
     <SwitchPreference
         android:defaultValue="true"

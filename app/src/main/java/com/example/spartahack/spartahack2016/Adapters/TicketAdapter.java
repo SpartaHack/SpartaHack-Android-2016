@@ -56,14 +56,14 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     public TicketAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_ticket, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(TicketAdapter.ViewHolder holder, int position) {
         final Ticket ticket = mDataset.get(position);
-        holder.ticket.setText("Ticket #" + position);
+        holder.ticket.setText(String.format(mContext.getResources().getString(R.string.ticket_number), position+1));
+
         holder.ticket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +85,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     private void fragmentJump(Ticket mItemSelected) {
         mFragment = new TicketFragment();
         mBundle = new Bundle();
-        mBundle.putSerializable("ticket", mItemSelected);
+        mBundle.putSerializable(TicketFragment.I_TICKET, mItemSelected);
         mFragment.setArguments(mBundle);
         switchContent(R.id.container, mFragment);
     }
@@ -96,8 +96,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
             return;
         if (mContext instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) mContext;
-            Fragment frag = fragment;
-            mainActivity.switchContent(id, frag);
+            mainActivity.switchContent(id, fragment);
         }
 
     }

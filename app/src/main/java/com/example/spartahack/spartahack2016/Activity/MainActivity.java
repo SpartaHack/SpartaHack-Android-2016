@@ -4,6 +4,9 @@ package com.example.spartahack.spartahack2016.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -16,13 +19,15 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
-import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
+import com.example.spartahack.spartahack2016.Fragment.GuideFragment;
+import com.example.spartahack.spartahack2016.Fragment.HelpDeskFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
-import com.example.spartahack.spartahack2016.Fragment.ScheduleFragment;
+import com.example.spartahack.spartahack2016.Fragment.ProfileFragment;
 import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Utility;
@@ -105,7 +110,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         // set nav drawer header view
         String url = "";
-        if (ParseUser.getCurrentUser() != null) ParseUser.getCurrentUser().getParseFile("qrCode").getUrl();
+        if (ParseUser.getCurrentUser() != null &&  ParseUser.getCurrentUser().getParseFile("qrCode")!=null) ParseUser.getCurrentUser().getParseFile("qrCode").getUrl();
 
         if (!TextUtils.isEmpty(url)) {
             Glide.with(this)
@@ -139,10 +144,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     title = getResources().getString(R.string.awards);
                     addFragment(new AwardsFragment());
                     break;
+
                 case R.id.help:
                     title = getResources().getString(R.string.help);
-                    addFragment(new HelpFragment());
+                    addFragment(new HelpDeskFragment());
                     break;
+
                 case R.id.notifications:
                     title = getResources().getString(R.string.notifications);
                     addFragment(new NotificationFragment());
@@ -152,9 +159,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     title = getResources().getString(R.string.settings);
                     addFragment(new SettingsFragment());
                     break;
+
                 case R.id.schedule:
-                    title = getResources().getString(R.string.schedule);
-                    addFragment(new ScheduleFragment());
+                    title = getResources().getString(R.string.guide);
+                    addFragment(new GuideFragment());
                     break;
 
                 case R.id.profile:
@@ -205,6 +213,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ft.addToBackStack(null);
         ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         ft.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 0){
+            getFragmentManager().popBackStack();
+        }else {
+            super.onBackPressed();
+        }
+    }
+
+    protected void hideKeyboard(View view){
+        // hide keyboard!!! fuck android
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void onEvent(String url){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+
     }
 
 }

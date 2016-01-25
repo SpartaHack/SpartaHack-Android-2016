@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingLeft="4dp"
@@ -15,7 +16,8 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:text="TICKET #"
+        android:textColor="@color/accent"
+        tools:text="TICKET #"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -27,7 +29,8 @@
         android:layout_marginRight="8dp"
         android:singleLine="true"
         android:ellipsize="end"
-        android:text="DESC GOES HERE"
+        android:textColor="@android:color/white"
+        tools:text="DESC GOES HERE"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 

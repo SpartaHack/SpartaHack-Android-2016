@@ -3,17 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingTop="5dp"
-    android:background="@color/light_back">
+    android:gravity="center_vertical"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
         tools:text="random event happening "
-        android:textColor="@color/accent"
-        android:textSize="@dimen/sub_header_text_size"/>
+        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -21,14 +23,14 @@
         android:id="@+id/time"
         tools:text="4:00 pm"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/sub_header_text_size"/>
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/description"
         tools:text="decriptoin of whatever is going on here"
-        android:textSize="@dimen/body_text_size"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:textColor="@android:color/white"/>
 

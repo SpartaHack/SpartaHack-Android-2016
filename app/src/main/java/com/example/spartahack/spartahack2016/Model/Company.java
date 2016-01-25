@@ -9,16 +9,16 @@ public class Company {
     private String level;
     private String name;
     private String url;
-    @SerializedName("img")
+    @SerializedName("png")
     private pic pic;
 
 
     // used for sorting
     public int getLevel() {
-        if (level.equals("partner")) return 5;
-        if (level.equals("trainee")) return 4;
-        if (level.equals("warrior")) return 3;
-        if (level.equals("commander")) return 2;
+        if (level.equals("Partner")) return 5;
+        if (level.equals("Trainee")) return 4;
+        if (level.equals("Warrior")) return 3;
+        if (level.equals("Commander")) return 2;
         return 1;
     }
 
