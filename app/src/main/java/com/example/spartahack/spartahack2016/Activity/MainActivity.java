@@ -5,6 +5,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -108,7 +110,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         // set nav drawer header view
         String url = "";
-        if (ParseUser.getCurrentUser() != null) ParseUser.getCurrentUser().getParseFile("qrCode").getUrl();
+        if (ParseUser.getCurrentUser() != null &&  ParseUser.getCurrentUser().getParseFile("qrCode")!=null) ParseUser.getCurrentUser().getParseFile("qrCode").getUrl();
 
         if (!TextUtils.isEmpty(url)) {
             Glide.with(this)
@@ -226,6 +228,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // hide keyboard!!! fuck android
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void onEvent(String url){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+
     }
 
 }

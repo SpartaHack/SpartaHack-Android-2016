@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.SimpleViewHolder> {
 
@@ -67,7 +68,7 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
 
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
-        Company c = mData.get(position);
+        final Company c = mData.get(position);
 
         holder.name.setText(c.getName());
         if (c.getPicUrl().contains(".png")){
@@ -75,12 +76,12 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
         } else {
             Glide.with(mContext).load(R.drawable.banner).into(holder.logo);
         }
-//        holder.title.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(mContext,"Position ="+position,Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        holder.logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(c.getUrl());
+            }
+        });
     }
 
 
