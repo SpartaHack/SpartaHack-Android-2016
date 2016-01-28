@@ -170,6 +170,7 @@ public class CreateTicketDialogFragment  extends BaseFragment {
         data.put("status", "Open");
         data.put("notifiedFlag", false);
         data.put("subCategory", categoryObject.get("category").toString());
+        data.put("notifiedFlag", false);
         data.saveInBackground();
         Toast.makeText(getActivity().getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
         subject.setText("");
