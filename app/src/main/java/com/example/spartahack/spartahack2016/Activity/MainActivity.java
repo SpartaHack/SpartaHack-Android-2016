@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 if (headerView != null) headerView.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
             }
         } else {
-            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.banner);
+            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.navigationdrawerlogo);
             // remove padding for transparent statusbar if > kitkat
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 if (headerView != null) headerView.setPadding(0, 0, 0, 0);

@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:src="@drawable/header"
+        android:src="@drawable/navigationdrawerlogo"
         android:id="@+id/header_image"/>
     
 </FrameLayout>

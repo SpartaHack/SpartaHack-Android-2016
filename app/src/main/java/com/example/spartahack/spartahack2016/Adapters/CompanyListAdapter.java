@@ -73,7 +73,7 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
         if (c.getPicUrl().contains(".png")){
             Glide.with(mContext).load(c.getPicUrl()).into(holder.logo);
         } else {
-            Glide.with(mContext).load(R.drawable.banner).into(holder.logo);
+            Glide.with(mContext).load(R.drawable.navigationdrawerlogo).into(holder.logo);
         }
         holder.logo.setOnClickListener(new View.OnClickListener() {
             @Override
