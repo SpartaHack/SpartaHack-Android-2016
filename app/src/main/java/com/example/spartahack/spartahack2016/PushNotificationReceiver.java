@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.ParsePushBroadcastReceiver;
 
+import java.util.ArrayList;
+
 import io.realm.RealmObject;
 
 /**
@@ -75,14 +77,32 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     .setLargeIcon(largeLogo)
                     .setVibrate(pattern);
 
+            // if there are actions add them to the notificaiton
+            if (!push.action.isEmpty()){
+                PendingIntent pIntentExtend = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
+                PendingIntent pIntentClose = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
+
+                builder.addAction(R.drawable.ic_add, push.action.get(0), pIntentExtend);
+                builder.addAction(R.drawable.ic_delete, push.action.get(1), pIntentClose);
+            }
+
             // show notificaiton in notificaiton bar
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
             notificationManager.notify(0, builder.build());
 
         }
     }
 
+    /**
+     * Class for gson to parse out the json push object
+     */
     private class PushInfo {
         public String alert;
+        public String sound;
+        public String description;
+        public String category;
+        public ArrayList<String> action;
+        public boolean silent;
     }
 }
