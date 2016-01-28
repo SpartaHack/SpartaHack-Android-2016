@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
+import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
@@ -24,6 +25,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -49,7 +52,7 @@ public class HelpFragment extends BaseFragment {
 
         registerEventBus = true;
 
-        tickets = new ArrayList<>() ;
+        tickets = new ArrayList<>();
 
         user = ParseUser.getCurrentUser();
 
@@ -82,32 +85,65 @@ public class HelpFragment extends BaseFragment {
                             String obj_id = ((ParseObject) object.get("user")).getObjectId().toString();
                             if (user_id.equals(obj_id)) {
                                 // CHANGE WHEN DB IS FIXED
-                                if (object.get("subject") != null) {
-                                    try {
-                                        tickets.add(new Ticket(object.get("subject").toString(), ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(), object.get("description").toString()));
-                                    } catch (ParseException e1) {
-                                        e1.printStackTrace();
-                                    }
-                                }
-                                else {
-                                    tickets.add(new Ticket("No Subject", ((ParseObject) object.get("category")).get("category").toString(), object.get("description").toString()));
+
+                                // pick the title
+                                String title = "No Subject";
+                                if (object.containsKey("subject"))
+                                    title = object.get("subject").toString();
+
+                                // pick the status
+                                String status = "None";
+                                if (object.containsKey("status"))
+                                    status = object.get("status").toString();
+
+                                try {
+                                    tickets.add(new Ticket(title,
+                                            ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(),
+                                            object.get("description").toString(), status));
+                                } catch (ParseException e1) {
+                                    e1.printStackTrace();
                                 }
                             }
+
                         }
-                        mAdapter = new TicketAdapter(tickets);
-                        ticketView.setAdapter(mAdapter);
-                    } else {
-                        // handle Parse Exception here
                     }
+
+                    Collections.sort(tickets, new Comparator<Ticket>() {
+                        @Override
+                        public int compare(Ticket lhs, Ticket rhs) {
+                            if (lhs.getStatus().equals("Expired") && !rhs.getStatus().equals("Expired"))
+                                return 1;
+//                            else if (!lhs.getStatus().equals("Expired") && rhs.getStatus().equals("Expired"))
+                            else
+                                return -1;
+                            // TODO: 1/27/16 Sort by time if neither
+                        }
+                    });
+                    mAdapter = new TicketAdapter(tickets);
+                    ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
+                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, "Current Tickets"));
+                    int loc2 = 0;
+                    for (int i = 0; i < tickets.size(); i++) {
+                        if (tickets.get(i).getStatus().equals("Expired")){
+                            loc2 = i;
+                            break;
+                        }
+                    }
+                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Expired Tickets"));
+                    SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+                    SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
+                    adapter.setSections(sections.toArray(dummy));
+
+                    ticketView.setAdapter(adapter);
                 }
-            });
+        });
 
-        }
-
-        return view;
     }
 
-    public void onEvent(Ticket ticket){
+    return view;
+}
+
+    public void onEvent(Ticket ticket) {
         mAdapter.add(mAdapter.getItemCount(), ticket);
     }
 
@@ -130,15 +166,14 @@ public class HelpFragment extends BaseFragment {
     }
 
     @OnClick(R.id.login)
-    void onLogin(){
-        MainActivity activity =  ((MainActivity) getActivity());
+    void onLogin() {
+        MainActivity activity = ((MainActivity) getActivity());
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ProfileFragment.I_EXTRA_FROM, ProfileFragment.I_EXTRA_FROM);
         fragment.setArguments(bundle);
         activity.switchContent(R.id.container, fragment);
     }
-
 
 
 }

@@ -14,10 +14,17 @@ public class Ticket implements Serializable {
     // Description of the ticket
     private String description;
 
-    public Ticket(String subject, String category, String description) {
+    public String getStatus() {
+        return status;
+    }
+
+    private String status;
+
+    public Ticket(String subject, String category, String description, String status) {
         this.subject = subject;
         this.category = category;
         this.description = description;
+        this.status = status;
     }
 
     public String getSubject() {

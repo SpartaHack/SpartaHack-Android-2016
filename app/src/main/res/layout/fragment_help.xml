@@ -13,19 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/address_label"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Current Tickets"
-            android:textColor="@android:color/darker_gray" />
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/address_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:scrollbars="vertical" />
 
         <FrameLayout

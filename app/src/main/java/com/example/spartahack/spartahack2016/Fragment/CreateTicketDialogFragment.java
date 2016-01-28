@@ -119,7 +119,7 @@ public class CreateTicketDialogFragment  extends DialogFragment {
         data.put("subject", subject.getText().toString());
 
 
-        Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString());
+        Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open");
 
         //Category Relation Object
         ParseObject categoryObject = null;
