@@ -129,7 +129,7 @@ public class HelpFragment extends BaseFragment {
                             break;
                         }
                     }
-                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Expired Tickets"));
+                    if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Expired Tickets"));
                     SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
                     SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
                     adapter.setSections(sections.toArray(dummy));
