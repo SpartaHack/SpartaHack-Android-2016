@@ -1,6 +1,9 @@
 package com.example.spartahack.spartahack2016.Retrofit;
 
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.PUT;
+import retrofit.http.Path;
 import rx.Observable;
 
 /**
@@ -19,4 +22,7 @@ public interface IParseAPIService {
 
     @GET("/classes/Announcements")
     Observable<GSONMock.Announcements> getAnnouncements();
+
+    @PUT("/classes/HelpDeskTickets/{oid}")
+    Observable<GSONMock.UpdateObj> deleteObject(@Path("oid") String o, @Body GSONMock.DeleteObjRequest del);
 }

@@ -83,23 +83,22 @@ public class HelpFragment extends BaseFragment {
                         String user_id = ParseUser.getCurrentUser().getObjectId();
                         for (ParseObject object : objects) {
                             String obj_id = ((ParseObject) object.get("user")).getObjectId().toString();
-                            if (user_id.equals(obj_id)) {
-                                // CHANGE WHEN DB IS FIXED
 
+                            // pick the status
+                            String status = "None";
+                            if (object.containsKey("status"))
+                                status = object.get("status").toString();
+
+                            if (user_id.equals(obj_id) && !status.equals("Deleted")) {
                                 // pick the title
                                 String title = "No Subject";
                                 if (object.containsKey("subject"))
                                     title = object.get("subject").toString();
 
-                                // pick the status
-                                String status = "None";
-                                if (object.containsKey("status"))
-                                    status = object.get("status").toString();
-
                                 try {
                                     tickets.add(new Ticket(title,
                                             ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(),
-                                            object.get("description").toString(), status));
+                                            object.get("description").toString(), status, object.getObjectId()));
                                 } catch (ParseException e1) {
                                     e1.printStackTrace();
                                 }
@@ -108,33 +107,8 @@ public class HelpFragment extends BaseFragment {
                         }
                     }
 
-                    Collections.sort(tickets, new Comparator<Ticket>() {
-                        @Override
-                        public int compare(Ticket lhs, Ticket rhs) {
-                            if (lhs.getStatus().equals("Expired") && !rhs.getStatus().equals("Expired"))
-                                return 1;
-//                            else if (!lhs.getStatus().equals("Expired") && rhs.getStatus().equals("Expired"))
-                            else
-                                return -1;
-                            // TODO: 1/27/16 Sort by time if neither
-                        }
-                    });
-                    mAdapter = new TicketAdapter(tickets);
-                    ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
-                    sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, "Current Tickets"));
-                    int loc2 = 0;
-                    for (int i = 0; i < tickets.size(); i++) {
-                        if (tickets.get(i).getStatus().equals("Expired")){
-                            loc2 = i;
-                            break;
-                        }
-                    }
-                    if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Expired Tickets"));
-                    SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
-                    SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
-                    adapter.setSections(sections.toArray(dummy));
-
-                    ticketView.setAdapter(adapter);
+                    // setup the recyclerview with the member var tickets
+                    setRecyclerViewSections();
                 }
         });
 
@@ -144,7 +118,9 @@ public class HelpFragment extends BaseFragment {
 }
 
     public void onEvent(Ticket ticket) {
-        mAdapter.add(mAdapter.getItemCount(), ticket);
+        // add ticket and update recyclerview
+        tickets.add(0, ticket);
+        setRecyclerViewSections();
     }
 
     @OnClick(R.id.fab)
@@ -175,5 +151,48 @@ public class HelpFragment extends BaseFragment {
         activity.switchContent(R.id.container, fragment);
     }
 
+    /**
+     * Setup the recyclerview with the proper sections
+     */
+    private void setRecyclerViewSections(){
+
+        // sort tix first on expired or not, then by created date
+        Collections.sort(tickets, new Comparator<Ticket>() {
+            @Override
+            public int compare(Ticket lhs, Ticket rhs) {
+                if (lhs.getStatus().equals("Expired") && !rhs.getStatus().equals("Expired"))
+                    return 1;
+//                            else if (!lhs.getStatus().equals("Expired") && rhs.getStatus().equals("Expired"))
+                else
+                    return -1;
+                // TODO: 1/27/16 Sort by time if neither
+            }
+        });
+
+        mAdapter = new TicketAdapter(tickets);
+
+        // add first section for either expired or current
+        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, tickets.get(0).getStatus().equals("Expired") ?  "Expired Tickets" : "Current Tickets"));
+
+        // find where the tix turn from current to expired
+        int loc2 = 0;
+        for (int i = 0; i < tickets.size(); i++) {
+            if (tickets.get(i).getStatus().equals("Expired")){
+                loc2 = i;
+                break;
+            }
+        }
+
+        // add another section if needed
+        if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Expired Tickets"));
+
+        // setup adapter with the sections
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
+        adapter.setSections(sections.toArray(dummy));
+
+        ticketView.setAdapter(adapter);
+    }
 
 }

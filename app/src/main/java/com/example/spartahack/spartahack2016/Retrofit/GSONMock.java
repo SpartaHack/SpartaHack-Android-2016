@@ -32,4 +32,12 @@ public class GSONMock {
         public ArrayList<Announcement> announcements;
     }
 
+    public static class UpdateObj {
+        public String updatedAt;
+    }
+
+    public static class DeleteObjRequest {
+        String status = "Deleted";
+    }
+
 }
