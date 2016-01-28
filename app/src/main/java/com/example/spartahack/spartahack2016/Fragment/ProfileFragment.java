@@ -20,6 +20,7 @@ import com.example.spartahack.spartahack2016.R;
 import com.parse.LogInCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import butterknife.Bind;
@@ -114,7 +115,7 @@ public class ProfileFragment extends BaseFragment {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
-
+                    updateParseInstillation(false);
                     if (fromHelp) {
                         getActivity().onBackPressed();
                     } else {
@@ -150,6 +151,7 @@ public class ProfileFragment extends BaseFragment {
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
             public void done(ParseException e) {
+                updateParseInstillation(true);
                 toggleViews(false);
                 Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
             }
@@ -204,5 +206,14 @@ public class ProfileFragment extends BaseFragment {
         return password.length() >= 4;
     }
 
+    private void updateParseInstillation(boolean logout){
+        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
 
+        if (logout)
+            currentInstall.remove("user");
+        else
+            currentInstall.put("user", ParseUser.getCurrentUser());
+
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+    }
 }
