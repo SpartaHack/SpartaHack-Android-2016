@@ -137,6 +137,7 @@ public class CreateTicketDialogFragment  extends DialogFragment {
         data.put("user", user);
         data.put("category", categoryObject);
         data.put("status", "Open");
+        data.put("subCategory", categoryObject.get("category").toString());
         data.saveInBackground();
         Toast.makeText(getActivity().getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
         subject.setText("");
