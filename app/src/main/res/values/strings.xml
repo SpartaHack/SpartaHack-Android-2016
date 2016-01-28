@@ -43,6 +43,7 @@
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
     <string name="need_help">Need Help? Submit a ticket below</string>
+    <string name="no_tickets">No Tickets</string>
 
 
     <string-array name="roomArray">

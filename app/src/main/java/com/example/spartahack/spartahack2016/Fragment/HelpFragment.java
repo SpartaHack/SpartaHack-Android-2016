@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
@@ -38,6 +39,7 @@ public class HelpFragment extends BaseFragment {
     @Bind(R.id.recycler) RecyclerView ticketView;
     @Bind(R.id.no_user) LinearLayout noUser;
     @Bind(R.id.user) RelativeLayout userExitst;
+    @Bind(R.id.no_tix) TextView noTix;
 
     private TicketAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -64,9 +66,12 @@ public class HelpFragment extends BaseFragment {
         if (user == null) {
             noUser.setVisibility(View.VISIBLE);
             userExitst.setVisibility(View.GONE);
+            noTix.setVisibility(View.VISIBLE);
         } else {
             noUser.setVisibility(View.GONE);
             userExitst.setVisibility(View.VISIBLE);
+            noTix.setVisibility(View.GONE);
+
 
             //RecyclerView
             ticketView.setHasFixedSize(true);
@@ -155,7 +160,12 @@ public class HelpFragment extends BaseFragment {
      * Setup the recyclerview with the proper sections
      */
     private void setRecyclerViewSections(){
-
+        if (tickets.isEmpty()){
+            noTix.setVisibility(View.VISIBLE);
+            return;
+        }
+        
+        noTix.setVisibility(View.GONE);
         // sort tix first on expired or not, then by created date
         Collections.sort(tickets, new Comparator<Ticket>() {
             @Override
