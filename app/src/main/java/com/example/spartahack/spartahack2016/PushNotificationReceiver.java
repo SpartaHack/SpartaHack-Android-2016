@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -31,6 +32,10 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
      * Tag for logs
      */
     private static String TAG = "Push Receiver";
+
+    public static String ACTION = "action";
+    public static String EXTEND = "extend";
+    public static String CLOSE = "close";
 
     @Override
     protected void onPushReceive(Context context, Intent intent) {
@@ -79,8 +84,19 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
             // if there are actions add them to the notificaiton
             if (!push.action.isEmpty()){
-                PendingIntent pIntentExtend = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
-                PendingIntent pIntentClose = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
+
+                Intent extend = new Intent(context, MainActivity.class);
+                Bundle extraExtend = new Bundle();
+                extraExtend.putString(ACTION, EXTEND);
+                extend.putExtras(extraExtend);
+
+                Intent close = new Intent(context, MainActivity.class);
+                Bundle extraClose = new Bundle();
+                extraClose.putString(ACTION, CLOSE);
+                close.putExtras(extraClose);
+
+                PendingIntent pIntentExtend = PendingIntent.getActivity(context, 0, extend, 0);
+                PendingIntent pIntentClose = PendingIntent.getActivity(context, 0, close, 0);
 
                 builder.addAction(R.drawable.ic_add, push.action.get(0), pIntentExtend);
                 builder.addAction(R.drawable.ic_delete, push.action.get(1), pIntentClose);
