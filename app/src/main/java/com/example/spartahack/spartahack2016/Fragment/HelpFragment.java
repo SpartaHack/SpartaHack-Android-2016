@@ -38,7 +38,7 @@ public class HelpFragment extends BaseFragment {
 
     @Bind(R.id.recycler) RecyclerView ticketView;
     @Bind(R.id.no_user) LinearLayout noUser;
-    @Bind(R.id.user) RelativeLayout userExitst;
+    @Bind(R.id.user) RelativeLayout userExists;
     @Bind(R.id.no_tix) TextView noTix;
 
     private TicketAdapter mAdapter;
@@ -65,11 +65,11 @@ public class HelpFragment extends BaseFragment {
 
         if (user == null) {
             noUser.setVisibility(View.VISIBLE);
-            userExitst.setVisibility(View.GONE);
-            noTix.setVisibility(View.VISIBLE);
+            userExists.setVisibility(View.GONE);
+            noTix.setVisibility(View.GONE);
         } else {
             noUser.setVisibility(View.GONE);
-            userExitst.setVisibility(View.VISIBLE);
+            userExists.setVisibility(View.VISIBLE);
             noTix.setVisibility(View.GONE);
 
 
@@ -94,7 +94,7 @@ public class HelpFragment extends BaseFragment {
                             if (object.containsKey("status"))
                                 status = object.get("status").toString();
 
-                            if (user_id.equals(obj_id) && !status.equals("Deleted")) {
+                            if (!user_id.equals(obj_id) && !status.equals("Deleted")) {
                                 // pick the title
                                 String title = "No Subject";
                                 if (object.containsKey("subject"))

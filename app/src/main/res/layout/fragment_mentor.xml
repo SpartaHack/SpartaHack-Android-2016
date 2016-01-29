@@ -1,12 +1,62 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.MentorFragment">
 
     <TextView
+        android:id="@+id/notMentor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Mentor" />
+        android:gravity="center"
+        android:text="You are not a Mentor."
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp"
+        android:visibility="gone" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/Mentor"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:text="Welcome Mentor."
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/auth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Authentication Required to use Help Desk"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/no_tixs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/no_tickets"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/abc_text_size_large_material" />
+
+    <RelativeLayout
+        android:id="@+id/users"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
