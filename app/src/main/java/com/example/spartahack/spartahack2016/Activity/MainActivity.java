@@ -73,13 +73,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
         }
 
-//        headerView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                start(ProfileFragment.class);
-////            }
-//        });
-
         // set navigation drawer item click listener
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -88,8 +81,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.accent));
 
-        // opening fragment is notificaions
-        addFragment(new NotificationFragment());
+        if (getIntent() == null || getIntent().getExtras() == null) {
+            // opening fragment is notificaions
+            addFragment(new NotificationFragment());
+        }else{
+            HelpDeskFragment fragment = new HelpDeskFragment();
+            fragment.setArguments(getIntent().getExtras());
+            addFragment(fragment);
+        }
     }
 
     @Override
