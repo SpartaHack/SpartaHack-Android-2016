@@ -48,7 +48,6 @@ public class HelpFragment extends BaseFragment {
     @Bind(R.id.no_tix) TextView noTix;
 
     private TicketAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     ParseUser user;
     List<ParseObject> categoryList;
@@ -82,7 +81,7 @@ public class HelpFragment extends BaseFragment {
             //RecyclerView
             ticketView.setHasFixedSize(true);
 
-            mLayoutManager = new LinearLayoutManager(getActivity());
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             ticketView.setLayoutManager(mLayoutManager);
 
 //            final ArrayList<Ticket> ticketList = new ArrayList<Ticket>();

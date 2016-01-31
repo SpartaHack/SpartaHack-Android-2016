@@ -18,7 +18,7 @@ public class Cache {
     /**
      * enum for user roles
      */
-    public enum ROLE {ADMIN, ATTENDEE, JUDGE};
+    public enum ROLE {ADMIN, ATTENDEE, JUDGE}
 
     /**
      * The role that the current user has

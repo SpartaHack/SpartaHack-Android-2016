@@ -30,6 +30,7 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
     /**
      * Tag for logs
      */
+    @SuppressWarnings("FieldCanBeLocal")
     private static String TAG = "Push Receiver";
 
     public static String ACTION = "action";
