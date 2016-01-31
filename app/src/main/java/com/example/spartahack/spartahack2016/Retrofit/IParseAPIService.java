@@ -24,5 +24,7 @@ public interface IParseAPIService {
     Observable<GSONMock.Announcements> getAnnouncements();
 
     @PUT("/classes/HelpDeskTickets/{oid}")
-    Observable<GSONMock.UpdateObj> deleteObject(@Path("oid") String o, @Body GSONMock.DeleteObjRequest del);
+    Observable<GSONMock.UpdateObj> updateTicketStatus(@Path("oid") String o, @Body GSONMock.UpdateTicketStatusRequest del);
+
+
 }

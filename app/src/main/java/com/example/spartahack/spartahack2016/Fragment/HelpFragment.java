@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,7 +19,10 @@ import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
+import com.example.spartahack.spartahack2016.PushNotificationReceiver;
 import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
+import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -33,6 +37,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class HelpFragment extends BaseFragment {
 
@@ -128,6 +134,17 @@ public class HelpFragment extends BaseFragment {
         setRecyclerViewSections();
     }
 
+    public void onEvent(HelpDeskFragment.ModTix t){
+        if (t.action.equals(PushNotificationReceiver.EXTEND)){
+            refreshTicket(t.oid, "Open", false);
+        } else if (t.action.equals(PushNotificationReceiver.CLOSE)){
+            refreshTicket(t.oid, "Closed", true);
+        } else {
+
+        }
+
+    }
+
     @OnClick(R.id.fab)
     void showDialog() {
 
@@ -205,4 +222,26 @@ public class HelpFragment extends BaseFragment {
         ticketView.setAdapter(adapter);
     }
 
+    public void refreshTicket(String objectID, String status, boolean not){
+        ParseAPIService.INSTANCE.getRestAdapter()
+                .updateTicketStatus(objectID, new GSONMock.UpdateTicketStatusRequest(status, not))
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GSONMock.UpdateObj>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(GSONMock.UpdateObj updateObj) {
+//                        getActivity().onBackPressed();
+                        Snackbar.make(ticketView, "Ticket Deleted", Snackbar.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }

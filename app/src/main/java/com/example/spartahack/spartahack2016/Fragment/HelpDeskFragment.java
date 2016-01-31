@@ -30,16 +30,6 @@ public class HelpDeskFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-        Bundle args = this.getArguments();
-        if (args != null && args.containsKey(PushNotificationReceiver.ACTION)){
-            String aciton = args.getString(PushNotificationReceiver.ACTION);
-            if (TextUtils.isEmpty(aciton)){
-            }
-            else {
-                EventBus.getDefault().post(aciton);
-            }
-        }
-
         return view;
     }
 
@@ -50,6 +40,28 @@ public class HelpDeskFragment extends BaseFragment {
         viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
         setUpTabBar(viewPager);
 
+
+        Bundle args = this.getArguments();
+        if (args != null && args.containsKey(PushNotificationReceiver.ACTION)) {
+            String aciton = args.getString(PushNotificationReceiver.ACTION);
+            String tix = args.getString(PushNotificationReceiver.OBJECT_ID);
+            if (TextUtils.isEmpty(aciton)) {
+            } else {
+                EventBus.getDefault().post(new ModTix(tix, aciton));
+            }
+        }
+
+
+    }
+
+    public static class ModTix {
+        public String oid;
+        public String action;
+
+        public ModTix(String oid, String action) {
+            this.oid = oid;
+            this.action = action;
+        }
     }
 
 }
