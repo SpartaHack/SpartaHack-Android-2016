@@ -53,8 +53,12 @@ public class TicketFragment extends BaseFragment {
 
     @OnClick(R.id.fab)
     public void onFabClick(){
+        refreshTicket(ticket.getId(), "Deleted", true);
+    }
+
+    public void refreshTicket(String objectID, String status, boolean not){
         ParseAPIService.INSTANCE.getRestAdapter()
-                .deleteObject(ticket.getId(), new GSONMock.DeleteObjRequest())
+                .updateTicketStatus(objectID, new GSONMock.UpdateTicketStatusRequest(status, not))
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GSONMock.UpdateObj>() {
                     @Override

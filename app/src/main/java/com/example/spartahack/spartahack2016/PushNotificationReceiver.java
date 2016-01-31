@@ -36,6 +36,8 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
     public static String ACTION = "action";
     public static String EXTEND = "extend";
     public static String CLOSE = "close";
+    public static String OBJECT_ID = "objectid";
+
 
     @Override
     protected void onPushReceive(Context context, Intent intent) {
@@ -87,16 +89,19 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
                 Intent extend = new Intent(context, MainActivity.class);
                 Bundle extraExtend = new Bundle();
-                extraExtend.putString(ACTION, EXTEND);
-                extend.putExtras(extraExtend);
+                extend.putExtra(ACTION, EXTEND);
+                extend.putExtra(OBJECT_ID, push.ticket);
 
                 Intent close = new Intent(context, MainActivity.class);
                 Bundle extraClose = new Bundle();
                 extraClose.putString(ACTION, CLOSE);
+                extraClose.putString(OBJECT_ID, push.ticket);
                 close.putExtras(extraClose);
 
-                PendingIntent pIntentExtend = PendingIntent.getActivity(context, 0, extend, 0);
-                PendingIntent pIntentClose = PendingIntent.getActivity(context, 0, close, 0);
+                int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
+
+                PendingIntent pIntentExtend = PendingIntent.getActivity(context, uniqueInt, extend, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pIntentClose = PendingIntent.getActivity(context, uniqueInt+1, close, PendingIntent.FLAG_UPDATE_CURRENT);
 
                 builder.addAction(R.drawable.ic_add, push.action.get(0), pIntentExtend);
                 builder.addAction(R.drawable.ic_delete, push.action.get(1), pIntentClose);
@@ -120,5 +125,6 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
         public String category;
         public ArrayList<String> action;
         public boolean silent;
+        public String ticket;
     }
 }
