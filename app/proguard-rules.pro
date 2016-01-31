@@ -51,3 +51,72 @@
     **[] $VALUES;
     public *;
 }
+
+# Parse
+-keep class com.parse.** { *; }
+
+# eventbus
+
+-keepclassmembers class ** {
+    public void onEvent*(***);
+}
+# Don't warn for missing support classes
+-dontwarn de.greenrobot.event.util.*$Support
+-dontwarn de.greenrobot.event.util.*$SupportManagerFragment
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+
+## Joda Time 2.3
+
+-dontwarn org.joda.convert.**
+-dontwarn org.joda.time.**
+-keep class org.joda.time.** { *; }
+-keep interface org.joda.time.** { *; }
+
+# RxJava 0.21
+
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+
+-dontwarn com.parse.**
+
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+-dontwarn sun.misc.**
+
+-keepclassmembers class rx.internal.util.unsafe.*ArrayQueue*Field* {
+   long producerIndex;
+   long consumerIndex;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueProducerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode producerNode;
+}
+
+-keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
+    rx.internal.util.atomic.LinkedQueueNode consumerNode;
+}
