@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -88,15 +87,12 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
             if (!push.action.isEmpty()){
 
                 Intent extend = new Intent(context, MainActivity.class);
-                Bundle extraExtend = new Bundle();
                 extend.putExtra(ACTION, EXTEND);
                 extend.putExtra(OBJECT_ID, push.ticket);
 
                 Intent close = new Intent(context, MainActivity.class);
-                Bundle extraClose = new Bundle();
-                extraClose.putString(ACTION, CLOSE);
-                extraClose.putString(OBJECT_ID, push.ticket);
-                close.putExtras(extraClose);
+                close.putExtra(ACTION, CLOSE);
+                close.putExtra(OBJECT_ID, push.ticket);
 
                 int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
 
