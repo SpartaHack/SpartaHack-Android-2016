@@ -33,6 +33,15 @@
                 android:theme="@style/FloatingButton" />
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/no_tix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:textColor="@android:color/darker_gray"
+            android:text="@string/no_tickets"/>
+        
     </RelativeLayout>
 
 
@@ -60,14 +69,5 @@
             android:text="@string/login" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/no_tix"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="@dimen/abc_text_size_large_material"
-        android:textColor="@android:color/darker_gray"
-        android:text="@string/no_tickets"/>
 
 </RelativeLayout>

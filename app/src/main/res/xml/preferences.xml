@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory android:title="Settings">
+    <PreferenceCategory
+        android:title="Settings">
 
-    <SwitchPreference
-        android:defaultValue="true"
-        android:key="toggle_mentor"
-        android:summary="Toggle if mentor tickets are displayed under the help desk section."
-        android:title="Mentor"/>
+    <!--<SwitchPreference-->
+        <!--android:defaultValue="true"-->
+        <!--android:key="toggle_mentor"-->
+        <!--android:summary="Toggle if mentor tickets are displayed under the help desk section."-->
+        <!--android:title="Mentor"/>-->
 
     <SwitchPreference
         android:defaultValue="true"
