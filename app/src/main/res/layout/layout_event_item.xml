@@ -1,37 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="5dp"
     android:gravity="center_vertical"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp">
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:padding="10dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/title"
         tools:text="random event happening "
+        android:padding="2dp"
         android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/time"
-        tools:text="4:00 pm"
-        android:textColor="@android:color/white"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/centered_shit">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/time"
+            tools:text="4:00 pm"
+            android:padding="2dp"
+            android:textColor="@android:color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/location"
+            android:padding="2dp"
+            tools:text="at yo bitch crib"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_below="@id/time"
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/white"
+            android:text="d" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/description"
+        android:padding="2dp"
         tools:text="decriptoin of whatever is going on here"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:layout_below="@id/centered_shit"
         android:textColor="@android:color/white"/>
 
-</LinearLayout>
+
+
+
+</RelativeLayout>

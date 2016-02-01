@@ -89,11 +89,11 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
                 Intent extend = new Intent(context, MainActivity.class);
                 extend.putExtra(ACTION, EXTEND);
-                extend.putExtra(OBJECT_ID, push.ticket);
+                extend.putExtra(OBJECT_ID, push.ticketId);
 
                 Intent close = new Intent(context, MainActivity.class);
                 close.putExtra(ACTION, CLOSE);
-                close.putExtra(OBJECT_ID, push.ticket);
+                close.putExtra(OBJECT_ID, push.ticketId);
 
                 int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
 
@@ -122,6 +122,6 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
         public String category;
         public ArrayList<String> action;
         public boolean silent;
-        public String ticket;
+        public String ticketId;
     }
 }
