@@ -15,6 +15,12 @@ public class Event {
     @SerializedName("eventTime")
     private Time eventTime;
 
+    private String eventLocation;
+
+    public String getEventLocation() {
+        return eventLocation;
+    }
+
     public String getTitle() {
         return title;
     }
