@@ -36,8 +36,14 @@ public class GSONMock {
         public String updatedAt;
     }
 
-    public static class DeleteObjRequest {
-        String status = "Deleted";
+    public static class UpdateTicketStatusRequest {
+        public UpdateTicketStatusRequest(String status, boolean notifiedFlag) {
+            this.status = status;
+            this.notifiedFlag = notifiedFlag;
+        }
+
+        public String status;
+        public boolean notifiedFlag;
     }
 
 }

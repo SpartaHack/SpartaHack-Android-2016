@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
         android:src="@drawable/navigationdrawerlogo"
+        android:contentDescription="@string/spartahack_banner"
         android:id="@+id/header_image"/>
     
 </FrameLayout>

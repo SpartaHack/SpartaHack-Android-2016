@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/black"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
         android:orientation="horizontal">
 
         <TextView
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="@dimen/text_margin"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/sub_header_text_size"
             tools:text="Title" />
 
@@ -28,7 +28,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_margin="@dimen/text_margin"
+            android:layout_marginRight="@dimen/text_margin"
             android:contentDescription="@string/pinned"
             android:src="@drawable/ic_pin"
             android:visibility="invisible" />
@@ -40,7 +40,8 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/text_margin"
+        android:paddingLeft="@dimen/text_margin"
+        android:paddingBottom="@dimen/text_margin"
         android:textColor="@android:color/white"
         android:textSize="@dimen/body_text_size"
         tools:text="Message" />

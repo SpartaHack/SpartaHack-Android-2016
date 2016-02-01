@@ -43,6 +43,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
         @Bind(R.id.title) TextView title;
         @Bind(R.id.time) TextView time;
         @Bind(R.id.description) TextView description;
+        @Bind(R.id.location) TextView locaiton;
 
         public SimpleViewHolder(View itemView) {
             super(itemView);
@@ -71,8 +72,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
 
         holder.title.setText(e.getTitle());
         holder.description.setText(e.getDescription());
-        SimpleDateFormat f = new SimpleDateFormat("hh:mm a");
+        holder.locaiton.setText(e.getEventLocation());
 
+        SimpleDateFormat f = new SimpleDateFormat("hh:mm a");
         holder.time.setText(f.format(e.getTime().toDate()));
 
     }

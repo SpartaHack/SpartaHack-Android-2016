@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.ParsePushBroadcastReceiver;
 
+import java.util.ArrayList;
+
 import io.realm.RealmObject;
 
 /**
@@ -28,7 +30,14 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
     /**
      * Tag for logs
      */
+    @SuppressWarnings("FieldCanBeLocal")
     private static String TAG = "Push Receiver";
+
+    public static String ACTION = "action";
+    public static String EXTEND = "extend";
+    public static String CLOSE = "close";
+    public static String OBJECT_ID = "objectid";
+
 
     @Override
     protected void onPushReceive(Context context, Intent intent) {
@@ -75,14 +84,44 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     .setLargeIcon(largeLogo)
                     .setVibrate(pattern);
 
+            // if there are actions add them to the notificaiton
+            if (!push.action.isEmpty()){
+
+                Intent extend = new Intent(context, MainActivity.class);
+                extend.putExtra(ACTION, EXTEND);
+                extend.putExtra(OBJECT_ID, push.ticketId);
+
+                Intent close = new Intent(context, MainActivity.class);
+                close.putExtra(ACTION, CLOSE);
+                close.putExtra(OBJECT_ID, push.ticketId);
+
+                int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
+
+                PendingIntent pIntentExtend = PendingIntent.getActivity(context, uniqueInt, extend, PendingIntent.FLAG_UPDATE_CURRENT);
+                PendingIntent pIntentClose = PendingIntent.getActivity(context, uniqueInt+1, close, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                builder.addAction(R.drawable.ic_add, push.action.get(0), pIntentExtend);
+                builder.addAction(R.drawable.ic_delete, push.action.get(1), pIntentClose);
+            }
+
             // show notificaiton in notificaiton bar
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
             notificationManager.notify(0, builder.build());
 
         }
     }
 
+    /**
+     * Class for gson to parse out the json push object
+     */
     private class PushInfo {
         public String alert;
+        public String sound;
+        public String description;
+        public String category;
+        public ArrayList<String> action;
+        public boolean silent;
+        public String ticketId;
     }
 }

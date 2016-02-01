@@ -1,11 +1,11 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +15,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.R;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.parse.LogInCallback;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -114,7 +122,7 @@ public class ProfileFragment extends BaseFragment {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
-
+                    updateParseInstillation(false);
                     if (fromHelp) {
                         getActivity().onBackPressed();
                     } else {
@@ -150,6 +158,7 @@ public class ProfileFragment extends BaseFragment {
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
             public void done(ParseException e) {
+                updateParseInstillation(true);
                 toggleViews(false);
                 Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
             }
@@ -172,8 +181,26 @@ public class ProfileFragment extends BaseFragment {
             bar.setVisibility(View.GONE);
             signedIn.setVisibility(View.VISIBLE);
             signedOut.setVisibility(View.GONE);
-            if (!(user.getParseFile("qrCode") == null || TextUtils.isEmpty(user.getParseFile("qrCode").getUrl())))
-                Glide.with(this).load(user.getParseFile("qrCode").getUrl()).into(qr);
+//            if (!(user.getParseFile("qrCode") == null || TextUtils.isEmpty(user.getParseFile("qrCode").getUrl())))
+//                Glide.with(this).load(user.getParseFile("qrCode").getUrl()).into(qr);
+
+
+
+            // barcode image
+            Bitmap bitmap = null;
+
+            try {
+
+                bitmap = encodeAsBitmap(user.getObjectId(), BarcodeFormat.CODE_128, 600, 300);
+                qr.setImageBitmap(bitmap);
+
+            } catch (WriterException e) {
+                e.printStackTrace();
+            }
+
+
+
+
             displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), user.get("username")));
 
         } else {
@@ -204,5 +231,74 @@ public class ProfileFragment extends BaseFragment {
         return password.length() >= 4;
     }
 
+    private void updateParseInstillation(boolean logout){
+        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
+
+        if (logout)
+            currentInstall.remove("user");
+        else
+            currentInstall.put("user", ParseUser.getCurrentUser());
+
+        ParseInstallation.getCurrentInstallation().saveInBackground();
+    }
+
+
+
+    /**************************************************************
+     * getting from com.google.zxing.client.android.encode.QRCodeEncoder
+     *
+     * See the sites below
+     * http://code.google.com/p/zxing/
+     * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/EncodeActivity.java
+     * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/QRCodeEncoder.java
+     */
+
+    private static final int WHITE = 0xFFFFFFFF;
+    private static final int BLACK = 0xFF000000;
+
+    Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
+        String contentsToEncode = contents;
+        if (contentsToEncode == null) {
+            return null;
+        }
+        Map<EncodeHintType, Object> hints = null;
+        String encoding = guessAppropriateEncoding(contentsToEncode);
+        if (encoding != null) {
+            hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+            hints.put(EncodeHintType.CHARACTER_SET, encoding);
+        }
+        MultiFormatWriter writer = new MultiFormatWriter();
+        BitMatrix result;
+        try {
+            result = writer.encode(contentsToEncode, format, img_width, img_height, hints);
+        } catch (IllegalArgumentException iae) {
+            // Unsupported format
+            return null;
+        }
+        int width = result.getWidth();
+        int height = result.getHeight();
+        int[] pixels = new int[width * height];
+        for (int y = 0; y < height; y++) {
+            int offset = y * width;
+            for (int x = 0; x < width; x++) {
+                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+            }
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height,
+                Bitmap.Config.ARGB_8888);
+        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        return bitmap;
+    }
+
+    private static String guessAppropriateEncoding(CharSequence contents) {
+        // Very crude at the moment
+        for (int i = 0; i < contents.length(); i++) {
+            if (contents.charAt(i) > 0xFF) {
+                return "UTF-8";
+            }
+        }
+        return null;
+    }
 
 }
