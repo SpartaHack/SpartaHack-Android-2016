@@ -15,10 +15,10 @@ public class Company {
 
     // used for sorting
     public int getLevel() {
-        if (level.equals("Partner")) return 5;
-        if (level.equals("Trainee")) return 4;
-        if (level.equals("Warrior")) return 3;
-        if (level.equals("Commander")) return 2;
+        if (level.toLowerCase().equals("partner")) return 5;
+        if (level.toLowerCase().equals("trainee")) return 4;
+        if (level.toLowerCase().equals("warrior")) return 3;
+        if (level.toLowerCase().equals("commander")) return 2;
         return 1;
     }
 
