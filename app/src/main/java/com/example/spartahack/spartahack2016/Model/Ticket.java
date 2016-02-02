@@ -11,6 +11,8 @@ public class Ticket implements Serializable {
     // Category the ticket was submitted under
     private String category;
 
+    private String subcategory;
+
     // Description of the ticket
     private String description;
 
@@ -32,6 +34,15 @@ public class Ticket implements Serializable {
         this.description = description;
         this.status = status;
         this.id = id;
+    }
+
+    public Ticket(String subject, String category, String description, String status, String id, String subcategory) {
+        this.subject = subject;
+        this.category = category;
+        this.description = description;
+        this.status = status;
+        this.id = id;
+        this.subcategory = subcategory;
     }
 
     public String getSubject() {
@@ -59,4 +70,11 @@ public class Ticket implements Serializable {
     }
 
 
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
+    }
 }

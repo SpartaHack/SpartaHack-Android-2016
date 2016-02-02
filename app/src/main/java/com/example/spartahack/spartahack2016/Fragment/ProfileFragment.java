@@ -102,7 +102,7 @@ public class ProfileFragment extends BaseFragment {
             passwordLayout.setErrorEnabled(false);
         }
 
-        // dont submitt call if errors
+        // Don't submit call if errors
         if (error) return;
 
         hideKeyboard(passwordTextView);

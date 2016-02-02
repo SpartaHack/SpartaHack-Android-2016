@@ -41,6 +41,8 @@ public class MentorFragment extends BaseFragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
     ParseUser user;
+    ParseObject mentor;
+    List<String> mentorCategories;
     private ArrayList<Ticket> tickets;
 
 
@@ -58,6 +60,7 @@ public class MentorFragment extends BaseFragment {
             authView.setVisibility(View.VISIBLE);
             notMentorView.setVisibility(View.GONE);
             mentorView.setVisibility(View.GONE);
+            ticketView.setVisibility(View.GONE);
         }
         else{
 
@@ -73,8 +76,7 @@ public class MentorFragment extends BaseFragment {
                             mentorView.setVisibility(View.GONE);
                         }
                         else{
-                            mentorView.setVisibility(View.VISIBLE);
-                            notMentorView.setVisibility(View.GONE);
+                            mentorCategories = mentorList.get(0).getList("categories");
                         }
 
                     } else {
@@ -91,23 +93,34 @@ public class MentorFragment extends BaseFragment {
             mLayoutManager = new LinearLayoutManager(getActivity());
             ticketView.setLayoutManager(mLayoutManager);
 
-//            final ArrayList<Ticket> ticketList = new ArrayList<Ticket>();
+
+
+            query = ParseQuery.getQuery("HelpDesk");
+            query.whereEqualTo("category", "Mentorship");
+            try {
+                mentor = query.find().get(0);
+                Log.d("Mentor", mentor.get("Description").toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
             query = ParseQuery.getQuery("HelpDeskTickets");
-            //query.whereNotEqualTo("user", user);
+            query.whereNotEqualTo("user", user);
+            query.whereEqualTo("category", mentor);
+            query.whereExists("subCategory");
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
                     if (e == null) {
-                        String user_id = ParseUser.getCurrentUser().getObjectId();
                         for (ParseObject object : objects) {
-                            String obj_id = ((ParseObject) object.get("user")).getObjectId().toString();
 
                             // pick the status
                             String status = "None";
                             if (object.containsKey("status"))
                                 status = object.get("status").toString();
 
-                            if (!user_id.equals(obj_id) && !status.equals("Deleted")) {
+                            if (!status.equals("Deleted") && !status.equals("Expired")) {
                                 // pick the title
                                 String title = "No Subject";
                                 if (object.containsKey("subject"))
@@ -116,8 +129,8 @@ public class MentorFragment extends BaseFragment {
                                 try {
                                     tickets.add(new Ticket(title,
                                             ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(),
-                                            object.get("description").toString(), status, object.getObjectId()));
-                                    Log.d("Mentor", title);
+                                            object.get("description").toString(), status, object.getObjectId(), object.get("subCategory").toString()));
+                                    Log.d("Title", title);
                                 } catch (ParseException e1) {
                                     e1.printStackTrace();
                                 }
@@ -149,7 +162,7 @@ public class MentorFragment extends BaseFragment {
         Collections.sort(tickets, new Comparator<Ticket>() {
             @Override
             public int compare(Ticket lhs, Ticket rhs) {
-                if (lhs.getStatus().equals("Expired") && !rhs.getStatus().equals("Expired"))
+                if (mentorCategories.contains(lhs.getSubcategory()) && !mentorCategories.contains(rhs.getSubcategory()))
                     return 1;
 //                            else if (!lhs.getStatus().equals("Expired") && rhs.getStatus().equals("Expired"))
                 else
@@ -162,19 +175,20 @@ public class MentorFragment extends BaseFragment {
 
         // add first section for either expired or current
         ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, tickets.get(0).getStatus().equals("Expired") ?  "Expired Tickets" : "Current Tickets"));
+
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, !mentorCategories.contains(tickets.get(0).getSubcategory()) ?  "Other Tickets" : "Current Tickets"));
 
         // find where the tix turn from current to expired
         int loc2 = 0;
         for (int i = 0; i < tickets.size(); i++) {
-            if (tickets.get(i).getStatus().equals("Expired")){
+            if (mentorCategories.contains(tickets.get(i).getSubcategory())){
                 loc2 = i;
                 break;
             }
         }
 
         // add another section if needed
-        if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Expired Tickets"));
+        if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Other Tickets"));
 
         // setup adapter with the sections
         SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];

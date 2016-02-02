@@ -4,7 +4,9 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +15,9 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spartahack.spartahack2016.Model.Ticket;
@@ -24,6 +28,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,15 +40,19 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by ryancasler on 1/9/16.
  */
-public class CreateTicketDialogFragment  extends DialogFragment {
+public class CreateTicketDialogFragment  extends BaseFragment {
 
     @Bind(R.id.categorySpinner) Spinner categorySpinner;
-    @Bind(R.id.roomSpinner) Spinner roomSpinner;
+    @Bind(R.id.subCategorySpinner) Spinner subCategorySpinner;
     @Bind(R.id.submit) Button button;
     @Bind(R.id.subjectLayout) TextInputLayout inputLayoutSub;
     @Bind(R.id.descLayout) TextInputLayout inputLayoutDesc;
+    @Bind(R.id.locationLayout) TextInputLayout inputLayoutLoc;
     @Bind(R.id.description) AppCompatEditText description;
     @Bind(R.id.subject) AppCompatEditText subject;
+    @Bind(R.id.location) AppCompatEditText location;
+
+    @Bind(R.id.subCategoryLayout) LinearLayout subCategoryLayout;
 
     List<ParseObject> categoryList;
 
@@ -67,7 +76,8 @@ public class CreateTicketDialogFragment  extends DialogFragment {
                     for (ParseObject object : markers) {
                         categoryArray.add(object.get("category").toString());
                     }
-                    ArrayAdapter<String> spinnerCategoryArrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_dropdown_item, categoryArray);
+                    ArrayAdapter<String> spinnerCategoryArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, categoryArray);
+                    spinnerCategoryArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     categorySpinner.setAdapter(spinnerCategoryArrayAdapter);
 
                 } else {
@@ -80,6 +90,12 @@ public class CreateTicketDialogFragment  extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getActivity(), R.color.accent));
+                if (i == 0){
+                    subCategoryLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    subCategoryLayout.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -88,11 +104,12 @@ public class CreateTicketDialogFragment  extends DialogFragment {
             }
         });
 
-        // Room Spinner
-        ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.roomArray));
-        roomSpinner.setAdapter(spinnerRoomArrayAdapter);
+        // subCategory Spinner
+        ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, getResources().getStringArray(R.array.roomArray));
+        spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
 
-        roomSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        subCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getActivity(), R.color.accent));
@@ -110,7 +127,7 @@ public class CreateTicketDialogFragment  extends DialogFragment {
 
     @OnClick(R.id.submit)
     public void submit(){
-        if (!validateDesc() || !validateSubject()) {
+        if (!validateSubject() || !validateDesc() || !validateLocation()) {
             return;
         }
 
@@ -126,14 +143,15 @@ public class CreateTicketDialogFragment  extends DialogFragment {
         for (ParseObject object : categoryList) {
             if (object.get("category") == categorySpinner.getSelectedItem().toString()) {
                 categoryObject = object;
-
             }
         }
+
         ParseUser user = ParseUser.getCurrentUser();
-        if (user == null){
-            // handle error
-            dismiss();
-        }
+//        if (user == null){
+//            // handle error
+//            dismiss();
+//        }
+
         data.put("user", user);
         data.put("category", categoryObject);
         data.put("status", "Open");
@@ -141,10 +159,12 @@ public class CreateTicketDialogFragment  extends DialogFragment {
         Toast.makeText(getActivity().getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
         subject.setText("");
         description.setText("");
+        location.setText("");
         requestFocus(subject);
 
         EventBus.getDefault().post(ticket);
-        dismiss();
+        //dismiss();
+        getActivity().onBackPressed();
 
     }
 
@@ -172,21 +192,33 @@ public class CreateTicketDialogFragment  extends DialogFragment {
         return true;
     }
 
+    private boolean validateLocation() {
+        if (location.getText().toString().trim().isEmpty()) {
+            inputLayoutLoc.setError(getString(R.string.err_msg_subject));
+            requestFocus(location);
+            return false;
+        } else {
+            inputLayoutLoc.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
     private void requestFocus(View view) {
         if (view.requestFocus()) {
             getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
 
-    /** The system calls this only when creating the layout in a dialog. */
-    @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // The only reason you might override this method when using onCreateView() is
-        // to modify any dialog characteristics. For example, the dialog includes a
-        // title by default, but your custom layout might not need it. So here you can
-        // remove the dialog title, but you must call the superclass to get the Dialog.
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        return dialog;
-    }
+//    /** The system calls this only when creating the layout in a dialog. */
+//    @Override
+//    public Dialog onCreateDialog(Bundle savedInstanceState) {
+//        // The only reason you might override this method when using onCreateView() is
+//        // to modify any dialog characteristics. For example, the dialog includes a
+//        // title by default, but your custom layout might not need it. So here you can
+//        // remove the dialog title, but you must call the superclass to get the Dialog.
+//        Dialog dialog = super.onCreateDialog(savedInstanceState);
+//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        return dialog;
+//    }
 }

@@ -44,6 +44,8 @@
     <string name="profile">Profile</string>
     <string name="need_help">Need Help? Submit a ticket below</string>
     <string name="no_tickets">No Tickets</string>
+    <string name="hint_location">Location</string>
+    <string name="spinner_subcategory">SubCategory</string>
 
 
     <string-array name="roomArray">

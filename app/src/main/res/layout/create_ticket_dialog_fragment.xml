@@ -42,24 +42,21 @@
 
     </android.support.design.widget.TextInputLayout>
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/locationLayout"
+        android:layout_width="match_parent"
+        style="@style/TextInputLayout"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/location"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:textColor="@android:color/darker_gray"
-            android:text="@string/spinner_location" />
+            android:hint="@string/hint_location" />
 
-        <Spinner
-            android:id="@+id/roomSpinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+    </android.support.design.widget.TextInputLayout>
 
-    </LinearLayout>
 
 
     <LinearLayout
@@ -76,6 +73,28 @@
 
         <Spinner
             android:id="@+id/categorySpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/subCategoryLayout"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:layout_gravity="center_vertical"
+            android:text="@string/spinner_subcategory" />
+
+        <Spinner
+            android:id="@+id/subCategorySpinner"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
 

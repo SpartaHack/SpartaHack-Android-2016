@@ -44,6 +44,8 @@ public class HelpFragment extends BaseFragment {
     private TicketAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    private final String I_EXTRA_FROM = "from help";
+
     ParseUser user;
     List<ParseObject> categoryList;
     private ArrayList<Ticket> tickets;
@@ -94,7 +96,7 @@ public class HelpFragment extends BaseFragment {
                             if (object.containsKey("status"))
                                 status = object.get("status").toString();
 
-                            if (!user_id.equals(obj_id) && !status.equals("Deleted")) {
+                            if (user_id.equals(obj_id) && !status.equals("Deleted")) {
                                 // pick the title
                                 String title = "No Subject";
                                 if (object.containsKey("subject"))
@@ -134,16 +136,21 @@ public class HelpFragment extends BaseFragment {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-        if (prev != null) {
-            ft.remove(prev);
-        }
-        ft.addToBackStack(null);
 
-        // Create and show the dialog.
-        DialogFragment newFragment = new CreateTicketDialogFragment();
-        newFragment.show(ft, "dialog");
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+//        if (prev != null) {
+//            ft.remove(prev);
+//        }
+//        ft.addToBackStack(null);
+//
+//        // Create and show the dialog.
+//        DialogFragment newFragment = new CreateTicketDialogFragment();
+//        newFragment.show(ft, "dialog");
+
+        MainActivity activity = ((MainActivity) getActivity());
+        CreateTicketDialogFragment fragment = new CreateTicketDialogFragment();
+        activity.switchContent(R.id.container, fragment);
     }
 
     @OnClick(R.id.login)
