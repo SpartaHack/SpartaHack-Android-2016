@@ -55,7 +55,7 @@ public class CreateTicketDialogFragment  extends BaseFragment {
     @Bind(R.id.subCategoryLayout) LinearLayout subCategoryLayout;
 
     List<ParseObject> categoryList;
-
+    List<String> subCategoryList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,7 +66,6 @@ public class CreateTicketDialogFragment  extends BaseFragment {
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
 
-        // Category Spinner
         final ArrayList<String> categoryArray = new ArrayList<String>();
         query = new ParseQuery<ParseObject>("HelpDesk");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -75,10 +74,19 @@ public class CreateTicketDialogFragment  extends BaseFragment {
                     categoryList = markers;
                     for (ParseObject object : markers) {
                         categoryArray.add(object.get("category").toString());
+                        if (object.get("category").toString().equals("Mentorship")){
+                            subCategoryList = object.getList("subCategory");
+                        }
                     }
+                    // Category Spinner
                     ArrayAdapter<String> spinnerCategoryArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, categoryArray);
                     spinnerCategoryArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     categorySpinner.setAdapter(spinnerCategoryArrayAdapter);
+
+                    // subCategory Spinner
+                    ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, subCategoryList);
+                    spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                    subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
 
                 } else {
                     // handle Parse Exception here
@@ -104,10 +112,7 @@ public class CreateTicketDialogFragment  extends BaseFragment {
             }
         });
 
-        // subCategory Spinner
-        ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.spinner_item, getResources().getStringArray(R.array.roomArray));
-        spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
+
 
         subCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -134,6 +139,14 @@ public class CreateTicketDialogFragment  extends BaseFragment {
         ParseObject data = new ParseObject("HelpDeskTickets");
         data.put("description", description.getText().toString());
         data.put("subject", subject.getText().toString());
+        data.put("location", location.getText().toString());
+
+        if(categorySpinner.getSelectedItem().toString().equals("Mentorship")){
+            data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
+        }
+        else{
+            data.put("subCategory", categorySpinner.getSelectedItem().toString());
+        }
 
 
         Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
@@ -155,6 +168,7 @@ public class CreateTicketDialogFragment  extends BaseFragment {
         data.put("user", user);
         data.put("category", categoryObject);
         data.put("status", "Open");
+        data.put("notifiedFlag", false);
         data.saveInBackground();
         Toast.makeText(getActivity().getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
         subject.setText("");
