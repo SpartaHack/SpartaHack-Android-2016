@@ -1,9 +1,6 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
 
-import android.app.DialogFragment;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -172,7 +169,7 @@ public class HelpFragment extends BaseFragment {
             return;
         }
         
-        noTix.setVisibility(View.GONE);
+        if (noTix!=null) noTix.setVisibility(View.GONE);
         // sort tix first on expired or not, then by created date
         Collections.sort(tickets, new Comparator<Ticket>() {
             @Override
