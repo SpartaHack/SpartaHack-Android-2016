@@ -25,8 +25,10 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     public Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.ticket) TextView ticket;
-        @Bind(R.id.info) TextView info;
+        @Bind(R.id.title) TextView title;
+        @Bind(R.id.description) TextView description;
+        @Bind(R.id.ticket_layout) View layout;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,16 +64,17 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     @Override
     public void onBindViewHolder(TicketAdapter.ViewHolder holder, int position) {
         final Ticket ticket = mDataset.get(position);
-        holder.ticket.setText(ticket.getSubject());
+        holder.title.setText(ticket.getSubject());
 
-        holder.ticket.setOnClickListener(new View.OnClickListener() {
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //remove(ticket);
                 fragmentJump(ticket);
             }
         });
-        holder.info.setText(ticket.getDescription());
+
+        holder.description.setText(ticket.getDescription());
     }
 
     @Override

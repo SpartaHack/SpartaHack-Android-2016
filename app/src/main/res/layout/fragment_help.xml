@@ -70,7 +70,6 @@
         android:text="@string/no_tickets"
         android:textColor="@android:color/darker_gray"
         android:textSize="@dimen/abc_text_size_large_material"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </RelativeLayout>
