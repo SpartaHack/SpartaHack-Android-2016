@@ -12,6 +12,10 @@ public class Company {
     @SerializedName("png")
     private pic pic;
 
+    public Company(String level, String name) {
+        this.level = level;
+        this.name = name;
+    }
 
     // used for sorting
     public int getLevel() {
