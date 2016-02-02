@@ -17,6 +17,10 @@ public class Prize {
     }
 
     public Company getSponsor() {
+        if (sponsor == null){
+            // this is a spartahack prize, put a bandaid on for now
+            sponsor = new Company("", "SpartaHack");
+        }
         return sponsor;
     }
 }
