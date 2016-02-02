@@ -2,14 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
-    android:background="@color/background"
     android:animateLayoutChanges="true"
+    android:background="@color/background"
     android:orientation="vertical">
 
-
-    <LinearLayout android:orientation="vertical"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/ticket_label"
@@ -113,11 +113,11 @@
         android:id="@+id/submit"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_shape"
-        android:text="@string/submit"
-        android:textColor="@color/accent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="@drawable/button_shape"
+        android:text="@string/submit"
+        android:textColor="@color/accent" />
 
 </RelativeLayout>
