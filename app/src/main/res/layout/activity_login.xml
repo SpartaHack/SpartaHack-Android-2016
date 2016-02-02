@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="5dp"
+            android:id="@+id/login_page_title"
             android:textColor="@android:color/darker_gray"
             android:text="@string/login_to_see_profile"/>
 
