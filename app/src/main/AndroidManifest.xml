@@ -17,6 +17,7 @@
     <application
         android:theme="@style/AppTheme"
         android:icon="@drawable/logo"
+        android:allowBackup="false"
         android:name=".MyApplication">
 
         <activity

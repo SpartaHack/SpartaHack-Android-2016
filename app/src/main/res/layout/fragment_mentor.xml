@@ -9,10 +9,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="You are not a Mentor."
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:text="@string/mentor" />
 
     <TextView
         android:id="@+id/Mentor"

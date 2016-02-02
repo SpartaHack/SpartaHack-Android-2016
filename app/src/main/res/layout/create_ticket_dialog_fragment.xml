@@ -4,8 +4,8 @@
     android:layout_height="fill_parent"
     android:background="@color/background"
     android:animateLayoutChanges="true"
-    android:orientation="vertical"
-    android:padding="7dp">
+    android:orientation="vertical">
+
 
     <LinearLayout android:orientation="vertical"
         android:layout_width="match_parent"

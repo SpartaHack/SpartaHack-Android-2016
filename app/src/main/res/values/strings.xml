@@ -46,6 +46,11 @@
     <string name="no_tickets">No Tickets</string>
     <string name="hint_location">Location</string>
     <string name="spinner_subcategory">SubCategory</string>
+    <string name="authentication_required">Authentication Required to use Help Desk</string>
+    <string name="criteria">Criteria</string>
+    <string name="barcode">Barcode</string>
+    <string name="company_logo">Company logo</string>
+    <string name="spartahack_banner">spartahack banner</string>
 
 
     <string-array name="roomArray">
