@@ -1,6 +1,7 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
+import com.example.spartahack.spartahack2016.Activity.CreateTicketActivity;
 import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
@@ -144,26 +146,9 @@ public class HelpFragment extends BaseFragment {
     }
 
     @OnClick(R.id.fab)
-    void showDialog() {
-
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-//        if (prev != null) {
-//            ft.remove(prev);
-//        }
-//        ft.addToBackStack(null);
-//
-//        // Create and show the dialog.
-//        DialogFragment newFragment = new CreateTicketDialogFragment();
-//        newFragment.show(ft, "dialog");
-
+    void viewTicket() {
         MainActivity activity = ((MainActivity) getActivity());
-        CreateTicketDialogFragment fragment = new CreateTicketDialogFragment();
-        activity.switchContent(R.id.container, fragment);
+        activity.startActivity(new Intent(activity, CreateTicketActivity.class));
     }
 
     @OnClick(R.id.login)

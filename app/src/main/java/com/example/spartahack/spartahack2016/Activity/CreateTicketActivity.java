@@ -1,56 +1,52 @@
-package com.example.spartahack.spartahack2016.Fragment;
+package com.example.spartahack.spartahack2016.Activity;
 
-import android.app.Dialog;
-import android.app.DialogFragment;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack2016.Utility;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by ryancasler on 1/9/16.
+ * Created by ryancasler on 2/2/16.
  */
-public class CreateTicketDialogFragment  extends BaseFragment {
+public class CreateTicketActivity extends BaseActivity {
 
     @Bind(R.id.categorySpinner) Spinner categorySpinner;
     @Bind(R.id.subCategorySpinner) Spinner subCategorySpinner;
-    @Bind(R.id.submit) Button button;
     @Bind(R.id.subjectLayout) TextInputLayout inputLayoutSub;
     @Bind(R.id.descLayout) TextInputLayout inputLayoutDesc;
     @Bind(R.id.locationLayout) TextInputLayout inputLayoutLoc;
     @Bind(R.id.description) AppCompatEditText description;
     @Bind(R.id.subject) AppCompatEditText subject;
     @Bind(R.id.location) AppCompatEditText location;
+    @Bind(R.id.rootLayout) View view;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+
 
     @Bind(R.id.subCategoryLayout) LinearLayout subCategoryLayout;
 
@@ -58,11 +54,27 @@ public class CreateTicketDialogFragment  extends BaseFragment {
     List<String> subCategoryList;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout to use as dialog or embedded fragment
-        View view =  inflater.inflate(R.layout.create_ticket_dialog_fragment, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_ticket);
 
-        ButterKnife.bind(this, view);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null) {
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_accent);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        // add padding for transparent statusbar if > kitkat
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        toolbar.setTitleTextColor(getResources().getColor(R.color.accent, null));
+
+
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
 
@@ -79,12 +91,12 @@ public class CreateTicketDialogFragment  extends BaseFragment {
                         }
                     }
                     // Category Spinner
-                    ArrayAdapter<String> spinnerCategoryArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, categoryArray);
+                    ArrayAdapter<String> spinnerCategoryArrayAdapter = new ArrayAdapter<String>(CreateTicketActivity.this, R.layout.spinner_item, categoryArray);
                     spinnerCategoryArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     categorySpinner.setAdapter(spinnerCategoryArrayAdapter);
 
                     // subCategory Spinner
-                    ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_item, subCategoryList);
+                    ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<String>(CreateTicketActivity.this, R.layout.spinner_item, subCategoryList);
                     spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
 
@@ -126,9 +138,8 @@ public class CreateTicketDialogFragment  extends BaseFragment {
             }
         });
 
-
-        return view;
     }
+
 
     @OnClick(R.id.submit)
     public void submit(){
@@ -160,10 +171,6 @@ public class CreateTicketDialogFragment  extends BaseFragment {
         }
 
         ParseUser user = ParseUser.getCurrentUser();
-//        if (user == null){
-//            // handle error
-//            dismiss();
-//        }
 
         data.put("user", user);
         data.put("category", categoryObject);
@@ -172,15 +179,15 @@ public class CreateTicketDialogFragment  extends BaseFragment {
         data.put("subCategory", categoryObject.get("category").toString());
         data.put("notifiedFlag", false);
         data.saveInBackground();
-        Toast.makeText(getActivity().getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
         subject.setText("");
         description.setText("");
         location.setText("");
         requestFocus(subject);
 
         EventBus.getDefault().post(ticket);
-        //dismiss();
-        getActivity().onBackPressed();
+
+        onBackPressed();
 
     }
 
@@ -222,19 +229,20 @@ public class CreateTicketDialogFragment  extends BaseFragment {
 
     private void requestFocus(View view) {
         if (view.requestFocus()) {
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
     }
 
-//    /** The system calls this only when creating the layout in a dialog. */
-//    @Override
-//    public Dialog onCreateDialog(Bundle savedInstanceState) {
-//        // The only reason you might override this method when using onCreateView() is
-//        // to modify any dialog characteristics. For example, the dialog includes a
-//        // title by default, but your custom layout might not need it. So here you can
-//        // remove the dialog title, but you must call the superclass to get the Dialog.
-//        Dialog dialog = super.onCreateDialog(savedInstanceState);
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//        return dialog;
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

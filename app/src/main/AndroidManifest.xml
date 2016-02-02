@@ -21,6 +21,18 @@
         android:name=".MyApplication">
 
         <activity
+            android:name=".Activity.CreateTicketActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_main">
+        </activity>
+
+        <activity
+            android:name=".Activity.ViewTicketActivity"
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_main">
+        </activity>
+
+        <activity
             android:name=".Activity.MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/title_activity_main">
