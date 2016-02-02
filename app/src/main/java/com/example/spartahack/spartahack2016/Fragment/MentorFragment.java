@@ -15,7 +15,6 @@ import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -176,7 +175,7 @@ public class MentorFragment extends BaseFragment {
         // add first section for either expired or current
         ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, !mentorCategories.contains(tickets.get(0).getSubcategory()) ?  "Other Tickets" : "Current Tickets"));
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, !mentorCategories.contains(tickets.get(0).getSubcategory()) ?  tickets.get(0).getSubcategory() : "Other Tickets"));
 
         // find where the tix turn from current to expired
         int loc2 = 0;
