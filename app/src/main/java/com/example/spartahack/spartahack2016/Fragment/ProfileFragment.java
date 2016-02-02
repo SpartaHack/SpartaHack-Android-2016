@@ -53,6 +53,7 @@ public class ProfileFragment extends BaseFragment {
     @Bind(R.id.progressBar) ProgressBar bar;
     @Bind(R.id.email_layout) TextInputLayout emailLayout;
     @Bind(R.id.password_layout) TextInputLayout passwordLayout;
+    @Bind(R.id.login_page_title) TextView loginViewTitle;
 
     boolean fromHelp = false;
 
@@ -65,8 +66,10 @@ public class ProfileFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         Bundle args = this.getArguments();
-        if (args != null && args.containsKey(I_EXTRA_FROM))
+        if (args != null && args.containsKey(I_EXTRA_FROM)){
             fromHelp = true;
+            loginViewTitle.setText(R.string.login_for_help);
+        }
 
         return view;
     }
