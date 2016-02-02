@@ -64,7 +64,7 @@ public class CompanyFragment extends BaseFragment {
                         // TODO: 1/5/16 handle if list of companies returns empty/ null
                         if (companies == null || companies.isEmpty()) 
                             return;
-                        Collections.sort(company.companies, new Comparator<Company>() {
+                        Collections.sort(companies, new Comparator<Company>() {
                                     @Override
                                     public int compare(Company lhs, Company rhs) {
                                         if (lhs.getLevel() - rhs.getLevel() != 0)
