@@ -4,7 +4,6 @@
     android:layout_height="fill_parent"
     android:id="@+id/rootLayout"
     android:animateLayoutChanges="true"
-    android:background="@color/background"
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
