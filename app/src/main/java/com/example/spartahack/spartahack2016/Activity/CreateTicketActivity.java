@@ -146,17 +146,25 @@ public class CreateTicketActivity extends BaseActivity {
         }
 
         ParseObject data = new ParseObject("HelpDeskTickets");
+
+        Ticket ticket = new Ticket();//Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
+
         data.put("description", description.getText().toString());
+        ticket.setDescription(description.getText().toString());
+
         data.put("subject", subject.getText().toString());
+        ticket.setSubject(subject.getText().toString());
+
         data.put("location", location.getText().toString());
 
         if (categorySpinner.getSelectedItem().toString().equals("Mentorship")) {
             data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
+            ticket.setSubcategory(subCategorySpinner.getSelectedItem().toString());
         } else {
             data.put("subCategory", categorySpinner.getSelectedItem().toString());
+            ticket.setSubcategory(categorySpinner.getSelectedItem().toString());
         }
 
-        //Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
 
         //Category Relation Object
         ParseObject categoryObject = null;
@@ -170,17 +178,20 @@ public class CreateTicketActivity extends BaseActivity {
 
         data.put("user", user);
         data.put("category", categoryObject);
+
         data.put("status", "Open");
-        data.put("notifiedFlag", false);
+        ticket.setStatus("Open");
+
         data.put("notifiedFlag", false);
         data.saveInBackground();
+        
         Toast.makeText(getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
         subject.setText("");
         description.setText("");
         location.setText("");
         requestFocus(subject);
 
-        //EventBus.getDefault().post(ticket);
+        EventBus.getDefault().post(ticket);
 
         onBackPressed();
 
