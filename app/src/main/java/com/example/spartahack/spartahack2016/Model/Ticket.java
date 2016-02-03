@@ -28,6 +28,8 @@ public class Ticket implements Serializable {
         return status;
     }
 
+    public void setStatus(String s){status = s;}
+
     private String status;
 
     public Ticket(String subject, String category, String description, String status, String id, String subcategory) {
@@ -39,7 +41,9 @@ public class Ticket implements Serializable {
         this.subcategory = subcategory;
     }
 
-    public Ticket(String subject, String category, String description, String status, String id, String subcategory, String location) {
+    public Ticket() {}
+
+    public Ticket(String subject, String description, String status, String id, String subcategory) {
         this.subject = subject;
         this.description = description;
         this.status = status;
