@@ -127,7 +127,6 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
                                         tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
                                     }
                                     setRecyclerViewSections();
-
                                 }
                             }
                         });

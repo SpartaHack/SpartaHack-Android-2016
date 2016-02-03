@@ -37,6 +37,7 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
     public static String EXTEND = "extend";
     public static String CLOSE = "close";
     public static String OBJECT_ID = "objectid";
+    public static String DISPLAY = "display";
 
 
     @Override

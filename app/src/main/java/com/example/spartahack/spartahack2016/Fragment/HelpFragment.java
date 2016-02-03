@@ -36,6 +36,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -49,7 +50,9 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     private final String I_EXTRA_FROM = "from help";
 
-    ParseUser user;
+    /** Arguments passed in from Helpdesk fragment from main activity from pushreciever*/
+    private Bundle args;
+
     private ArrayList<Ticket> tickets;
 
     @Override
@@ -60,14 +63,15 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
         tickets = new ArrayList<>();
 
-        user = ParseUser.getCurrentUser();
-
         ButterKnife.bind(this, view);
+
+        // get any Arguments passed in from Helpdesk fragment from main activity from pushreciever
+        args = this.getArguments();
 
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.background);
 
-        if (user == null) {
+        if (ParseUser.getCurrentUser() == null) {
             noUser.setVisibility(View.VISIBLE);
             userExists.setVisibility(View.GONE);
             noTix.setVisibility(View.GONE);
@@ -97,17 +101,6 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         // add ticket and update recyclerview
         tickets.add(0, ticket);
         setRecyclerViewSections();
-    }
-
-    public void onEvent(HelpDeskFragment.ModTix t) {
-        if (t.action.equals(PushNotificationReceiver.EXTEND)) {
-            refreshTicket(t.oid, "Open", false);
-        } else if (t.action.equals(PushNotificationReceiver.CLOSE)) {
-            refreshTicket(t.oid, "Closed", true);
-        } else {
-
-        }
-
     }
 
     @OnClick(R.id.fab)
@@ -193,6 +186,38 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
                 // setup the recyclerview with the member var tickets
                 setRecyclerViewSections();
+
+                // after refresh check if it was about an action and do work on it
+                if (args != null) {
+                    String action = args.getString(PushNotificationReceiver.ACTION);
+                    String id = args.getString(PushNotificationReceiver.OBJECT_ID);
+
+                    if (id == null || action == null) return;
+
+                    if (action.equals(PushNotificationReceiver.EXTEND)) {
+                        refreshTicket(id, "Open", false);
+                        for (Ticket t: tickets) {
+                            if (t.getId().equals(id)){
+                                EventBus.getDefault().post(new MainActivity.StartViewTicketActivity(t));
+                            }
+                        }
+                    } else if (action.equals(PushNotificationReceiver.CLOSE)) {
+                        // close the ticket
+                        refreshTicket(id, "Closed", true);
+
+                    } else if (action.equals(PushNotificationReceiver.DISPLAY)){
+                        // user clicked on the ticket so open that shit
+                        for (Ticket t: tickets) {
+                            if (t.getId().equals(id)){
+                                EventBus.getDefault().post(new MainActivity.StartViewTicketActivity(t));
+                            }
+                        }
+                    }
+
+                    // clear out the args that were passed in
+                    args = null;
+
+                }
             }
         });
     }

@@ -4,7 +4,6 @@ package com.example.spartahack.spartahack2016.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import com.example.spartahack.spartahack2016.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,27 +28,27 @@ public class HelpDeskFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
+        // args from main activity from push reciever for actionable pushes
+        Bundle args = this.getArguments();
+        if (args != null && args.containsKey(PushNotificationReceiver.ACTION)) {
+
+            HelpFragment helpFragment = new HelpFragment();
+            helpFragment.setArguments(args);
+            viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager(), helpFragment));
+
+        } else {
+            viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
+        }
+
+
+        setUpTabBar(viewPager);
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
-        setUpTabBar(viewPager);
-
-
-        Bundle args = this.getArguments();
-        if (args != null && args.containsKey(PushNotificationReceiver.ACTION)) {
-            String aciton = args.getString(PushNotificationReceiver.ACTION);
-            String tix = args.getString(PushNotificationReceiver.OBJECT_ID);
-            if (TextUtils.isEmpty(aciton)) {
-            } else {
-                EventBus.getDefault().post(new ModTix(tix, aciton));
-            }
-        }
-
 
     }
 
