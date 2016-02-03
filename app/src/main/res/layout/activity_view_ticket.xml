@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,68 +19,91 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/appbar"
-        android:orientation="vertical">
-
+        android:padding="15dp"
+        android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:layout_marginTop="15dp"
+                android:text="@string/subject"/>
 
             <TextView
                 android:id="@+id/subject"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="4dp"
-                android:layout_weight="1"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:layout_marginBottom="15dp"
+                tools:text="Subject goes here" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/accent"
-                tools:text="Subject" />
+                android:text="@string/category"/>
 
             <TextView
                 android:id="@+id/category"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:textColor="@color/accent"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:layout_marginBottom="15dp"
                 tools:text="Category" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:text="@string/description"/>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:layout_marginBottom="15dp"
+                tools:text="Description" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:text="@string/status"/>
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                tools:text="Status" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:textColor="@color/accent"
-            tools:text="Description" />
 
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:textColor="@color/accent"
-            tools:text="Status" />
-    </LinearLayout>
+        <Button
+            android:id="@+id/delete"
+            style="@style/StyleButtonBig"
+            android:layout_alignParentBottom="true"
+            android:text="@string/delete_ticket" />
+
+        <Button
+            android:id="@+id/extend_reopen"
+            style="@style/StyleButtonBig"
+            android:layout_above="@+id/delete"
+            android:text="@string/extend_ticket" />
+
+    </RelativeLayout>
 
 
-    <Button
-        android:id="@+id/delete"
-        style="@style/StyleButtonBig"
-        android:layout_alignParentBottom="true"
-        android:text="@string/delete_ticket" />
-
-    <Button
-        android:id="@+id/extend_reopen"
-        style="@style/StyleButtonBig"
-        android:layout_above="@+id/delete"
-        android:text="@string/extend_ticket" />
-
-
-</RelativeLayout>
+</LinearLayout>

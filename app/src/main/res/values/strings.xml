@@ -55,6 +55,10 @@
     <string name="reopen_ticket">Reopen Ticket</string>
     <string name="extend_ticket">Extend Ticket</string>
     <string name="delete_ticket">Delete Ticket</string>
+    <string name="subject">Subject</string>
+    <string name="category">Category</string>
+    <string name="description">Description</string>
+    <string name="status">Status</string>
 
 
     <string-array name="roomArray">
