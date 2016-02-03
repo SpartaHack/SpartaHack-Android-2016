@@ -4,6 +4,7 @@ package com.example.spartahack.spartahack2016.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,17 +39,17 @@ import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class HelpFragment extends BaseFragment {
+public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recycler) RecyclerView ticketView;
     @Bind(R.id.no_user) LinearLayout noUser;
     @Bind(R.id.user) RelativeLayout userExists;
     @Bind(R.id.no_tix) TextView noTix;
+    @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     private final String I_EXTRA_FROM = "from help";
 
     ParseUser user;
-    List<ParseObject> categoryList;
     private ArrayList<Ticket> tickets;
 
     @Override
@@ -63,6 +64,8 @@ public class HelpFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.background);
 
         if (user == null) {
             noUser.setVisibility(View.VISIBLE);
@@ -72,33 +75,23 @@ public class HelpFragment extends BaseFragment {
             noUser.setVisibility(View.GONE);
             userExists.setVisibility(View.VISIBLE);
             noTix.setVisibility(View.GONE);
-            
+
             //RecyclerView
             ticketView.setHasFixedSize(true);
 
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
             ticketView.setLayoutManager(mLayoutManager);
 
-//            final ArrayList<Ticket> ticketList = new ArrayList<Ticket>();
-            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> objects, ParseException e) {
-                    if (e == null) {
-                        for (ParseObject object : objects) {
-                            tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
-                        }
-                    }
+        }
 
-                    // setup the recyclerview with the member var tickets
-                    setRecyclerViewSections();
-                }
-        });
-
+        return view;
     }
 
-    return view;
-}
+    @Override
+    public void onResume() {
+        super.onResume();
+        onRefresh();
+    }
 
     public void onEvent(Ticket ticket) {
         // add ticket and update recyclerview
@@ -106,10 +99,10 @@ public class HelpFragment extends BaseFragment {
         setRecyclerViewSections();
     }
 
-    public void onEvent(HelpDeskFragment.ModTix t){
-        if (t.action.equals(PushNotificationReceiver.EXTEND)){
+    public void onEvent(HelpDeskFragment.ModTix t) {
+        if (t.action.equals(PushNotificationReceiver.EXTEND)) {
             refreshTicket(t.oid, "Open", false);
-        } else if (t.action.equals(PushNotificationReceiver.CLOSE)){
+        } else if (t.action.equals(PushNotificationReceiver.CLOSE)) {
             refreshTicket(t.oid, "Closed", true);
         } else {
 
@@ -136,13 +129,14 @@ public class HelpFragment extends BaseFragment {
     /**
      * Setup the recyclerview with the proper sections
      */
-    private void setRecyclerViewSections(){
-        if (tickets.isEmpty()){
+    private void setRecyclerViewSections() {
+        if (tickets.isEmpty()) {
+            ticketView.setAdapter(new TicketAdapter(tickets));
             noTix.setVisibility(View.VISIBLE);
             return;
         }
-        
-        if (noTix!=null) noTix.setVisibility(View.GONE);
+
+        if (noTix != null) noTix.setVisibility(View.GONE);
         // sort tix first on expired or not, then by created date
         Collections.sort(tickets, new Comparator<Ticket>() {
             @Override
@@ -159,7 +153,7 @@ public class HelpFragment extends BaseFragment {
         ticketView.setAdapter(new TicketAdapter(tickets));
     }
 
-    public void refreshTicket(String objectID, String status, boolean not){
+    public void refreshTicket(String objectID, String status, boolean not) {
         ParseAPIService.INSTANCE.getRestAdapter()
                 .updateTicketStatus(objectID, new GSONMock.UpdateTicketStatusRequest(status, not))
                 .observeOn(AndroidSchedulers.mainThread())
@@ -180,5 +174,26 @@ public class HelpFragment extends BaseFragment {
                         Snackbar.make(ticketView, "Ticket Deleted", Snackbar.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    public void onRefresh() {
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                swipeRefreshLayout.setRefreshing(false);
+
+                if (e == null) {
+                    tickets = new ArrayList<Ticket>();
+                    for (ParseObject object : objects) {
+                        tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
+                    }
+                }
+
+                // setup the recyclerview with the member var tickets
+                setRecyclerViewSections();
+            }
+        });
     }
 }

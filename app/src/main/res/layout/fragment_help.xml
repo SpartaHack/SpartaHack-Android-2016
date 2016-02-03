@@ -11,20 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--<TextView-->
-            <!--android:id="@+id/section_text"-->
-            <!--style="?android:attr/listSeparatorTextViewStyle"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/my_tickets"-->
-            <!--android:textColor="@android:color/darker_gray" />-->
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_below="@id/section_text"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:visibility="visible">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/section_text"
+                android:scrollbars="vertical" />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
         <FrameLayout
             android:id="@+id/rootLayout"
@@ -36,9 +35,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:src="@drawable/ic_add"
                 android:layout_marginBottom="16dp"
                 android:layout_marginRight="16dp"
+                android:src="@drawable/ic_add"
                 android:theme="@style/FloatingButton" />
         </FrameLayout>
 
@@ -47,10 +46,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:textSize="@dimen/abc_text_size_large_material"
+            android:text="@string/no_tickets"
             android:textColor="@android:color/darker_gray"
-            android:text="@string/no_tickets"/>
-        
+            android:textSize="@dimen/abc_text_size_large_material" />
+
     </RelativeLayout>
 
 
@@ -67,16 +66,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textColor="@android:color/darker_gray"
             android:text="@string/authentication_required"
+            android:textColor="@android:color/darker_gray"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:text="@string/login" />
+            android:text="@string/login"
+            android:textColor="@android:color/black" />
 
     </LinearLayout>
 
