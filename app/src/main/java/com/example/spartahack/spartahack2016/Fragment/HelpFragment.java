@@ -87,28 +87,7 @@ public class HelpFragment extends BaseFragment {
                     if (e == null) {
                         String user_id = ParseUser.getCurrentUser().getObjectId();
                         for (ParseObject object : objects) {
-                            String obj_id = ((ParseObject) object.get("user")).getObjectId().toString();
-
-                            // pick the status
-                            String status = "None";
-                            if (object.containsKey("status"))
-                                status = object.get("status").toString();
-
-                            if (user_id.equals(obj_id) && !status.equals("Deleted")) {
-                                // pick the title
-                                String title = "No Subject";
-                                if (object.containsKey("subject"))
-                                    title = object.get("subject").toString();
-
-                                try {
-                                    tickets.add(new Ticket(title,
-                                            ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(),
-                                            object.get("description").toString(), status, object.getObjectId()));
-                                } catch (ParseException e1) {
-                                    e1.printStackTrace();
-                                }
-                            }
-
+                            tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory")));
                         }
                     }
 
