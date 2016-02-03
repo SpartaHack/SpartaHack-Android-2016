@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical"
     android:singleLine="true"
+    android:padding="5dp"
     android:textAllCaps="true"
     android:textColor="@color/accent"
     android:background="@android:color/transparent"

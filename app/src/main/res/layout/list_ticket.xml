@@ -9,17 +9,33 @@
     android:paddingLeft="4dp"
     android:paddingRight="4dp">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        android:textColor="@color/accent"
-        tools:text="TICKET #"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/accent"
+            tools:text="TICKET #"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Status"
+            android:layout_alignParentRight="true"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/description"

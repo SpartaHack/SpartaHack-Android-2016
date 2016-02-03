@@ -184,10 +184,6 @@ public class ProfileFragment extends BaseFragment {
             bar.setVisibility(View.GONE);
             signedIn.setVisibility(View.VISIBLE);
             signedOut.setVisibility(View.GONE);
-//            if (!(user.getParseFile("qrCode") == null || TextUtils.isEmpty(user.getParseFile("qrCode").getUrl())))
-//                Glide.with(this).load(user.getParseFile("qrCode").getUrl()).into(qr);
-
-
 
             // barcode image
             Bitmap bitmap = null;

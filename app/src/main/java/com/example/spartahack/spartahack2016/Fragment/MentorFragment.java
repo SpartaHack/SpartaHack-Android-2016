@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
+import com.example.spartahack.spartahack2016.Adapters.MentorTicketAdapter;
 import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
@@ -170,32 +170,29 @@ public class MentorFragment extends BaseFragment {
             }
         });
 
-        mAdapter = new TicketAdapter(tickets);
+//        // add first section for either expired or current
+//        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
+//
+//        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, !mentorCategories.contains(tickets.get(0).getSubcategory()) ?  tickets.get(0).getSubcategory() : "Other Tickets"));
+//
+//        // find where the tix turn from current to expired
+//        int loc2 = 0;
+//        for (int i = 0; i < tickets.size(); i++) {
+//            if (mentorCategories.contains(tickets.get(i).getSubcategory())){
+//                loc2 = i;
+//                break;
+//            }
+//        }
+//
+//        // add another section if needed
+//        if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Other Tickets"));
+//
+//        // setup adapter with the sections
+//        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+//        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
+//        adapter.setSections(sections.toArray(dummy));
 
-        // add first section for either expired or current
-        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
-
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, !mentorCategories.contains(tickets.get(0).getSubcategory()) ?  tickets.get(0).getSubcategory() : "Other Tickets"));
-
-        // find where the tix turn from current to expired
-        int loc2 = 0;
-        for (int i = 0; i < tickets.size(); i++) {
-            if (mentorCategories.contains(tickets.get(i).getSubcategory())){
-                loc2 = i;
-                break;
-            }
-        }
-
-        // add another section if needed
-        if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Other Tickets"));
-
-        // setup adapter with the sections
-        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
-        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
-        adapter.setSections(sections.toArray(dummy));
-
-        ticketView.setAdapter(adapter);
+        ticketView.setAdapter(new MentorTicketAdapter(tickets));
     }
-
 
 }
