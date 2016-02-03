@@ -22,7 +22,6 @@ import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -86,7 +85,6 @@ public class HelpFragment extends BaseFragment {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
                     if (e == null) {
-                        String user_id = ParseUser.getCurrentUser().getObjectId();
                         for (ParseObject object : objects) {
                             tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
                         }

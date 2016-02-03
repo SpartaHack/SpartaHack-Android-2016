@@ -69,7 +69,7 @@ public class MentorViewTicketActivity extends BaseActivity {
         if (bundle != null) {
             ticket = (Ticket) bundle.get(I_TICKET);
             if (ticket != null) {
-                category.setText(ticket.getCategory());
+                category.setText(ticket.getSubcategory());
                 subject.setText(ticket.getSubject());
                 description.setText(ticket.getDescription());
                 status.setText(ticket.getStatus());
