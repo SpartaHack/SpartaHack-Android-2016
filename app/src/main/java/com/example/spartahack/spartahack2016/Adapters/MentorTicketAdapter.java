@@ -17,7 +17,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
-public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder>{
+/**
+ * Created by ryancasler on 2/2/16.
+ */
+public class MentorTicketAdapter extends RecyclerView.Adapter<MentorTicketAdapter.ViewHolder>{
+
     private ArrayList<Ticket> mDataset;
     public Context mContext;
 
@@ -46,23 +50,23 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public TicketAdapter(ArrayList<Ticket> myDataset) {
+    public MentorTicketAdapter(ArrayList<Ticket> myDataset) {
         mDataset = myDataset;
     }
 
 
     @Override
-    public TicketAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MentorTicketAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_ticket, parent, false);
         // set the view's size, margins, paddings and layout parameters
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(TicketAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(MentorTicketAdapter.ViewHolder holder, int position) {
         final Ticket ticket = mDataset.get(position);
         holder.title.setText(ticket.getSubject());
-        holder.status.setText(ticket.getStatus());
+        holder.status.setText(ticket.getSubcategory());
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override

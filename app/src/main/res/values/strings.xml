@@ -59,6 +59,7 @@
     <string name="category">Category</string>
     <string name="description">Description</string>
     <string name="status">Status</string>
+    <string name="my_tickets">My Tickets</string>
 
 
     <string-array name="roomArray">

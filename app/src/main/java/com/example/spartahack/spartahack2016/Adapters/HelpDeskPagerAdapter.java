@@ -22,7 +22,7 @@ public class HelpDeskPagerAdapter extends FragmentPagerAdapter {
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"Tickets", "Mentor"};
+    private String[] tabs = {"My Tickets", "Mentor Tickets"};
 
     public HelpDeskPagerAdapter(FragmentManager fm) {
         super(fm);

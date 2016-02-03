@@ -13,9 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Activity.CreateTicketActivity;
-import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
+import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.PushNotificationReceiver;
@@ -46,8 +45,6 @@ public class HelpFragment extends BaseFragment {
     @Bind(R.id.user) RelativeLayout userExists;
     @Bind(R.id.no_tix) TextView noTix;
 
-    private TicketAdapter mAdapter;
-
     private final String I_EXTRA_FROM = "from help";
 
     ParseUser user;
@@ -56,15 +53,13 @@ public class HelpFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view;
+        View view = inflater.inflate(R.layout.fragment_help, container, false);
 
         registerEventBus = true;
 
         tickets = new ArrayList<>();
 
         user = ParseUser.getCurrentUser();
-
-        view = inflater.inflate(R.layout.fragment_help, container, false);
 
         ButterKnife.bind(this, view);
 
@@ -77,8 +72,7 @@ public class HelpFragment extends BaseFragment {
             noUser.setVisibility(View.GONE);
             userExists.setVisibility(View.VISIBLE);
             noTix.setVisibility(View.GONE);
-
-
+            
             //RecyclerView
             ticketView.setHasFixedSize(true);
 
@@ -184,30 +178,7 @@ public class HelpFragment extends BaseFragment {
             }
         });
 
-        mAdapter = new TicketAdapter(tickets);
-
-        // add first section for either expired or current
-        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
-        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, tickets.get(0).getStatus().equals("Expired") ?  "Expired Tickets" : "Current Tickets"));
-
-        // find where the tix turn from current to expired
-        int loc2 = 0;
-        for (int i = 0; i < tickets.size(); i++) {
-            if (tickets.get(i).getStatus().equals("Expired")){
-                loc2 = i;
-                break;
-            }
-        }
-
-        // add another section if needed
-        if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Expired Tickets"));
-
-        // setup adapter with the sections
-        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
-        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
-        adapter.setSections(sections.toArray(dummy));
-
-        ticketView.setAdapter(adapter);
+        ticketView.setAdapter(new TicketAdapter(tickets));
     }
 
     public void refreshTicket(String objectID, String status, boolean not){
