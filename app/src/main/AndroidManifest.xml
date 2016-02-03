@@ -9,33 +9,29 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
+    <permission
+        android:name="com.spartahack.spartahack2016.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
-    <permission android:protectionLevel="signature"
-        android:name="com.spartahack.spartahack2016.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.spartahack.spartahack2016.permission.C2D_MESSAGE" />
-    
-    <application
-        android:theme="@style/AppTheme"
-        android:icon="@drawable/logo"
-        android:allowBackup="false"
-        android:name=".MyApplication">
 
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/logo"
+        android:theme="@style/AppTheme">
         <activity
             android:name=".Activity.CreateTicketActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_main">
-        </activity>
-
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Activity.ViewTicketActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_main">
-        </activity>
-
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Activity.MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,10 +39,11 @@
             </intent-filter>
         </activity>
 
-
-        <!-- parse shit  -->
+        <!-- parse shit -->
         <service android:name="com.parse.PushService" />
-        <receiver android:name="com.example.spartahack.spartahack2016.PushNotificationReceiver"
+
+        <receiver
+            android:name=".PushNotificationReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -54,7 +51,8 @@
                 <action android:name="com.parse.push.intent.OPEN" />
             </intent-filter>
         </receiver>
-        <receiver android:name="com.parse.GcmBroadcastReceiver"
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -63,6 +61,11 @@
                 <category android:name="com.spartahack.spartahack2016" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".Activity.MentorViewTicketActivity"
+            android:label="@string/title_activity_mentor_view_ticket"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

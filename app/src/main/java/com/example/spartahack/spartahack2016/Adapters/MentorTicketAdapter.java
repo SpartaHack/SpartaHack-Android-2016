@@ -71,7 +71,7 @@ public class MentorTicketAdapter extends RecyclerView.Adapter<MentorTicketAdapte
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EventBus.getDefault().post(new MainActivity.StartViewTicketActivity(ticket));
+                EventBus.getDefault().post(new MainActivity.StartMentorViewTicketActivity(ticket));
             }
         });
 

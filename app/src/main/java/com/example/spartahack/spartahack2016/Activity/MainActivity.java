@@ -243,4 +243,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         public Ticket ticket;
     }
 
+    public static class StartMentorViewTicketActivity {
+        public StartMentorViewTicketActivity(Ticket t) {this.ticket = t;}
+        public Ticket ticket;
+    }
+
+    public void onEvent(StartMentorViewTicketActivity a){
+        startActivity(MentorViewTicketActivity.getIntent(this, a.ticket));
+    }
+
+
+
+
+
 }

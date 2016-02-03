@@ -22,6 +22,7 @@ import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -101,9 +102,11 @@ public class HelpFragment extends BaseFragment {
                                     title = object.get("subject").toString();
 
                                 try {
-                                    tickets.add(new Ticket(title,
-                                            ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(),
-                                            object.get("description").toString(), status, object.getObjectId()));
+                                    String category = ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString();
+                                    String subCategory = category.equals("Mentorship")? object.get("subCategory").toString() : category;
+                                    String location = object.get("location").toString();
+                                    tickets.add(new Ticket(title, category,
+                                            object.get("description").toString(), status, object.getObjectId(), subCategory, location));
                                 } catch (ParseException e1) {
                                     e1.printStackTrace();
                                 }
