@@ -1,9 +1,6 @@
 package com.example.spartahack.spartahack2016.Adapters;
 
-
-import android.app.Fragment;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
-import com.example.spartahack.spartahack2016.Fragment.TicketFragment;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
 
@@ -19,6 +15,7 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder>{
     private ArrayList<Ticket> mDataset;
@@ -69,8 +66,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //remove(ticket);
-                fragmentJump(ticket);
+                EventBus.getDefault().post(new MainActivity.StartViewTicketActivity(ticket));
             }
         });
 
@@ -80,28 +76,6 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
     @Override
     public int getItemCount() {
         return mDataset.size();
-    }
-
-    Bundle mBundle;
-    TicketFragment mFragment;
-
-    private void fragmentJump(Ticket mItemSelected) {
-        mFragment = new TicketFragment();
-        mBundle = new Bundle();
-        mBundle.putSerializable(TicketFragment.I_TICKET, mItemSelected);
-        mFragment.setArguments(mBundle);
-        switchContent(R.id.container, mFragment);
-    }
-
-
-    public void switchContent(int id, Fragment fragment) {
-        if (mContext == null)
-            return;
-        if (mContext instanceof MainActivity) {
-            MainActivity mainActivity = (MainActivity) mContext;
-            mainActivity.switchContent(id, fragment);
-        }
-
     }
 
 }

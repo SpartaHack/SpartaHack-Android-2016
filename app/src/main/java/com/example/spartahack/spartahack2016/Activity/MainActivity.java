@@ -29,6 +29,7 @@ import com.example.spartahack.spartahack2016.Fragment.HelpDeskFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
 import com.example.spartahack.spartahack2016.Fragment.ProfileFragment;
 import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
+import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Utility;
 import com.parse.ParseUser;
@@ -231,7 +232,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     public void onEvent(String url){
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+    }
 
+    public void onEvent(StartViewTicketActivity a){
+        startActivity(ViewTicketActivity.getIntent(this, a.ticket));
+    }
+
+    public static class StartViewTicketActivity {
+        public StartViewTicketActivity(Ticket t) {this.ticket = t;}
+        public Ticket ticket;
     }
 
 }
