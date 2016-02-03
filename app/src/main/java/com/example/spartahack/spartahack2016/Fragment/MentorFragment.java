@@ -55,27 +55,51 @@ public class MentorFragment extends BaseFragment {
         user = ParseUser.getCurrentUser();
         tickets = new ArrayList<>();
 
-        if (user == null){
+        if (user == null) {
             authView.setVisibility(View.VISIBLE);
             notMentorView.setVisibility(View.GONE);
             mentorView.setVisibility(View.GONE);
             ticketView.setVisibility(View.GONE);
-        }
-        else{
+        } else {
 
             authView.setVisibility(View.GONE);
 
-            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("Mentors");
+
+            //RecyclerView setup
+            ticketView.setHasFixedSize(true);
+            mLayoutManager = new LinearLayoutManager(getActivity());
+            ticketView.setLayoutManager(mLayoutManager);
+
+
+            ParseQuery<ParseObject> query = new ParseQuery<>("Mentors");
             query.whereEqualTo("mentor", user);
             query.findInBackground(new FindCallback<ParseObject>() {
                 public void done(List<ParseObject> mentorList, ParseException e) {
                     if (e == null) {
-                        if(mentorList.isEmpty()){
+                        if (mentorList.isEmpty()) {
                             notMentorView.setVisibility(View.VISIBLE);
                             mentorView.setVisibility(View.GONE);
-                        }
-                        else{
+                        } else {
                             mentorCategories = mentorList.get(0).getList("categories");
+
+                            ParseQuery<ParseObject> query1 = new ParseQuery<>("HelpDeskTickets");
+                            query1.whereNotEqualTo("user", user);
+                            query1.whereContainedIn("subCategory", mentorCategories);
+                            query1.whereEqualTo("status", "Open");
+                            query1.findInBackground(new FindCallback<ParseObject>() {
+                                @Override
+                                public void done(List<ParseObject> objects, ParseException e) {
+                                    if (e == null) {
+                                        for (ParseObject object : objects) {
+                                            tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
+                                        }
+                                    }
+
+                                    // setup the recyclerview with the member var tickets
+                                    setRecyclerViewSections();
+                                }
+                            });
+
                         }
 
                     } else {
@@ -83,66 +107,6 @@ public class MentorFragment extends BaseFragment {
                     }
                 }
             });
-
-
-
-            //RecyclerView
-            ticketView.setHasFixedSize(true);
-
-            mLayoutManager = new LinearLayoutManager(getActivity());
-            ticketView.setLayoutManager(mLayoutManager);
-
-
-
-            query = ParseQuery.getQuery("HelpDesk");
-            query.whereEqualTo("category", "Mentorship");
-            try {
-                mentor = query.find().get(0);
-                Log.d("Mentor", mentor.get("Description").toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-
-            query = ParseQuery.getQuery("HelpDeskTickets");
-            query.whereNotEqualTo("user", user);
-            query.whereEqualTo("category", mentor);
-            query.whereExists("subCategory");
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> objects, ParseException e) {
-                    if (e == null) {
-                        for (ParseObject object : objects) {
-
-                            // pick the status
-                            String status = "None";
-                            if (object.containsKey("status"))
-                                status = object.get("status").toString();
-
-                            if (!status.equals("Deleted") && !status.equals("Expired")) {
-                                // pick the title
-                                String title = "No Subject";
-                                if (object.containsKey("subject"))
-                                    title = object.get("subject").toString();
-
-                                try {
-                                    String category = ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString();
-                                    String subCategory = category.equals("Mentorship")? object.get("subCategory").toString() : category;
-                                    String location = object.get("location").toString();
-                                    tickets.add(new Ticket(title, category,
-                                            object.get("description").toString(), status, object.getObjectId(), subCategory, location));
-                                } catch (ParseException e1) {
-                                    e1.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-
-                    // setup the recyclerview with the member var tickets
-                    setRecyclerViewSections();
-                }
-            });
-
         }
 
         return view;
@@ -151,8 +115,8 @@ public class MentorFragment extends BaseFragment {
     /**
      * Setup the recyclerview with the proper sections
      */
-    private void setRecyclerViewSections(){
-        if (tickets.isEmpty()){
+    private void setRecyclerViewSections() {
+        if (tickets.isEmpty()) {
             noTix.setVisibility(View.VISIBLE);
             return;
         }
@@ -171,29 +135,6 @@ public class MentorFragment extends BaseFragment {
             }
         });
 
-//        // add first section for either expired or current
-//        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
-//
-//        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, !mentorCategories.contains(tickets.get(0).getSubcategory()) ?  tickets.get(0).getSubcategory() : "Other Tickets"));
-//
-//        // find where the tix turn from current to expired
-//        int loc2 = 0;
-//        for (int i = 0; i < tickets.size(); i++) {
-//            if (mentorCategories.contains(tickets.get(i).getSubcategory())){
-//                loc2 = i;
-//                break;
-//            }
-//        }
-//
-//        // add another section if needed
-//        if (loc2 > 0) sections.add(new SimpleSectionedRecyclerViewAdapter.Section(loc2, "Other Tickets"));
-//
-//        // setup adapter with the sections
-//        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
-//        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_ticketz, R.id.section_text, mAdapter);
-//        adapter.setSections(sections.toArray(dummy));
-
         ticketView.setAdapter(new MentorTicketAdapter(tickets));
     }
-
 }

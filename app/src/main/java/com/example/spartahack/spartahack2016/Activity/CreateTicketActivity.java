@@ -156,7 +156,7 @@ public class CreateTicketActivity extends BaseActivity {
             data.put("subCategory", categorySpinner.getSelectedItem().toString());
         }
 
-        Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
+        //Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
 
         //Category Relation Object
         ParseObject categoryObject = null;
@@ -180,7 +180,7 @@ public class CreateTicketActivity extends BaseActivity {
         location.setText("");
         requestFocus(subject);
 
-        EventBus.getDefault().post(ticket);
+        //EventBus.getDefault().post(ticket);
 
         onBackPressed();
 

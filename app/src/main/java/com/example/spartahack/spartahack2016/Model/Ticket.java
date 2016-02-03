@@ -30,17 +30,17 @@ public class Ticket implements Serializable {
 
     private String status;
 
-    public Ticket(String subject, String category, String description, String status, String id) {
+    public Ticket(String subject, String category, String description, String status, String id, String subcategory) {
         this.subject = subject;
         this.category = category;
         this.description = description;
         this.status = status;
         this.id = id;
+        this.subcategory = subcategory;
     }
 
     public Ticket(String subject, String category, String description, String status, String id, String subcategory, String location) {
         this.subject = subject;
-        this.category = category;
         this.description = description;
         this.status = status;
         this.id = id;
