@@ -16,6 +16,8 @@ public class Ticket implements Serializable {
     // Description of the ticket
     private String description;
 
+    private String location;
+
     private String id;
 
     public String getId() {
@@ -36,14 +38,16 @@ public class Ticket implements Serializable {
         this.id = id;
     }
 
-    public Ticket(String subject, String category, String description, String status, String id, String subcategory) {
+    public Ticket(String subject, String category, String description, String status, String id, String subcategory, String location) {
         this.subject = subject;
         this.category = category;
         this.description = description;
         this.status = status;
         this.id = id;
         this.subcategory = subcategory;
+        this.location = location;
     }
+
 
     public String getSubject() {
         return subject;
@@ -76,5 +80,13 @@ public class Ticket implements Serializable {
 
     public void setSubcategory(String subcategory) {
         this.subcategory = subcategory;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

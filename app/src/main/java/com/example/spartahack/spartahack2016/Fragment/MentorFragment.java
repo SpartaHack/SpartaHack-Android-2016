@@ -126,10 +126,11 @@ public class MentorFragment extends BaseFragment {
                                     title = object.get("subject").toString();
 
                                 try {
-                                    tickets.add(new Ticket(title,
-                                            ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString(),
-                                            object.get("description").toString(), status, object.getObjectId(), object.get("subCategory").toString()));
-                                    Log.d("Title", title);
+                                    String category = ((ParseObject) object.get("category")).fetchIfNeeded().get("category").toString();
+                                    String subCategory = category.equals("Mentorship")? object.get("subCategory").toString() : category;
+                                    String location = object.get("location").toString();
+                                    tickets.add(new Ticket(title, category,
+                                            object.get("description").toString(), status, object.getObjectId(), subCategory, location));
                                 } catch (ParseException e1) {
                                     e1.printStackTrace();
                                 }

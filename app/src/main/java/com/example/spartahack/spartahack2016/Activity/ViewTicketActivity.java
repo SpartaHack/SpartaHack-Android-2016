@@ -20,6 +20,8 @@ import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.example.spartahack.spartahack2016.Utility;
 
+import org.w3c.dom.Text;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.Subscriber;
@@ -35,6 +37,7 @@ public class ViewTicketActivity extends BaseActivity {
     @Bind(R.id.subject) TextView subject;
     @Bind(R.id.description) TextView description;
     @Bind(R.id.status) TextView status;
+    @Bind(R.id.location) TextView location;
     @Bind(R.id.extend_reopen) Button extendReopenButton;
 
     private Ticket ticket;
@@ -77,7 +80,7 @@ public class ViewTicketActivity extends BaseActivity {
                 description.setText(ticket.getDescription());
                 status.setText(ticket.getStatus());
                 extendReopenButton.setText(ticket.getStatus().equals("Open") ? R.string.extend_ticket : R.string.reopen_ticket);
-
+                location.setText(ticket.getLocation());
             }
         } else {
             Snackbar.make(category, "Error Loading Ticket", Snackbar.LENGTH_SHORT).show();
