@@ -52,6 +52,9 @@
     <string name="company_logo">Company logo</string>
     <string name="spartahack_banner">spartahack banner</string>
     <string name="login_for_help">Login to create help desk ticket.</string>
+    <string name="reopen_ticket">Reopen Ticket</string>
+    <string name="extend_ticket">Extend Ticket</string>
+    <string name="delete_ticket">Delete Ticket</string>
 
 
     <string-array name="roomArray">

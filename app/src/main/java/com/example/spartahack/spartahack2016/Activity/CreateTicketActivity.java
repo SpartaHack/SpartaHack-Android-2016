@@ -48,7 +48,8 @@ public class CreateTicketActivity extends BaseActivity {
     @Bind(R.id.toolbar) Toolbar toolbar;
 
 
-    @Bind(R.id.subCategoryLayout) LinearLayout subCategoryLayout;
+    @Bind(R.id.subCategoryLayout)
+    LinearLayout subCategoryLayout;
 
     List<ParseObject> categoryList;
     List<String> subCategoryList;
@@ -72,8 +73,7 @@ public class CreateTicketActivity extends BaseActivity {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        toolbar.setTitleTextColor(getResources().getColor(R.color.accent, null));
-
+            toolbar.setTitleTextColor(getResources().getColor(R.color.accent, null));
 
 
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
@@ -86,7 +86,7 @@ public class CreateTicketActivity extends BaseActivity {
                     categoryList = markers;
                     for (ParseObject object : markers) {
                         categoryArray.add(object.get("category").toString());
-                        if (object.get("category").toString().equals("Mentorship")){
+                        if (object.get("category").toString().equals("Mentorship")) {
                             subCategoryList = object.getList("subCategory");
                         }
                     }
@@ -110,10 +110,9 @@ public class CreateTicketActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getActivity(), R.color.accent));
-                if (i == 0){
+                if (i == 0) {
                     subCategoryLayout.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     subCategoryLayout.setVisibility(View.GONE);
                 }
             }
@@ -123,7 +122,6 @@ public class CreateTicketActivity extends BaseActivity {
 
             }
         });
-
 
 
         subCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -142,7 +140,7 @@ public class CreateTicketActivity extends BaseActivity {
 
 
     @OnClick(R.id.submit)
-    public void submit(){
+    public void submit() {
         if (!validateSubject() || !validateDesc() || !validateLocation()) {
             return;
         }
@@ -152,10 +150,9 @@ public class CreateTicketActivity extends BaseActivity {
         data.put("subject", subject.getText().toString());
         data.put("location", location.getText().toString());
 
-        if(categorySpinner.getSelectedItem().toString().equals("Mentorship")){
+        if (categorySpinner.getSelectedItem().toString().equals("Mentorship")) {
             data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
-        }
-        else{
+        } else {
             data.put("subCategory", categorySpinner.getSelectedItem().toString());
         }
 

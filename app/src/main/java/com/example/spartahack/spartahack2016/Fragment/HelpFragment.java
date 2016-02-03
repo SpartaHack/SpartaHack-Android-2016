@@ -213,7 +213,7 @@ public class HelpFragment extends BaseFragment {
     public void refreshTicket(String objectID, String status, boolean not){
         ParseAPIService.INSTANCE.getRestAdapter()
                 .updateTicketStatus(objectID, new GSONMock.UpdateTicketStatusRequest(status, not))
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GSONMock.UpdateObj>() {
                     @Override
                     public void onCompleted() {

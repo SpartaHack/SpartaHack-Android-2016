@@ -85,7 +85,7 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     .setVibrate(pattern);
 
             // if there are actions add them to the notificaiton
-            if (!push.action.isEmpty()){
+            if ( push.action != null && !push.action.isEmpty()){
 
                 Intent extend = new Intent(context, MainActivity.class);
                 extend.putExtra(ACTION, EXTEND);
