@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.Model.Company;
@@ -42,7 +41,6 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.logo) ImageView logo;
-        @Bind(R.id.name) TextView name;
 
         public SimpleViewHolder(View itemView) {
             super(itemView);
@@ -69,7 +67,6 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
         final Company c = mData.get(position);
 
-        holder.name.setText(c.getName());
         if (c.getPicUrl().contains(".png")){
             Glide.with(mContext).load(c.getPicUrl()).into(holder.logo);
         } else {
