@@ -156,7 +156,6 @@ public class CreateTicketActivity extends BaseActivity {
             data.put("subCategory", categorySpinner.getSelectedItem().toString());
         }
 
-
         Ticket ticket = new Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
 
         //Category Relation Object
@@ -173,7 +172,6 @@ public class CreateTicketActivity extends BaseActivity {
         data.put("category", categoryObject);
         data.put("status", "Open");
         data.put("notifiedFlag", false);
-        data.put("subCategory", categoryObject.get("category").toString());
         data.put("notifiedFlag", false);
         data.saveInBackground();
         Toast.makeText(getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
