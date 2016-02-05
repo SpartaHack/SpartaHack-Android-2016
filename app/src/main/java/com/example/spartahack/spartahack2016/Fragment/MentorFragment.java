@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.spartahack.spartahack2016.Adapters.MentorTicketAdapter;
+import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
 import com.parse.FindCallback;
@@ -27,6 +28,9 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener{
 
@@ -76,6 +80,13 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
      * Setup the recyclerview with the proper sections
      */
     private void setRecyclerViewSections() {
+        Realm realm = Realm.getInstance(getActivity());
+        RealmQuery<Ticket> query = realm.where(Ticket.class);
+        RealmResults<Ticket> result1 = query.findAll();
+        for (Ticket ti: result1) {
+            tickets.add(new Ticket(ti.getSubject(), ti.getDescription(),ti.getStatus(), ti.getId(), ti.getSubcategory(), ti.getLocation(), true));
+        }
+
         if (tickets.isEmpty()) {
             ticketView.setAdapter(new MentorTicketAdapter(tickets));
             noTix.setVisibility(View.VISIBLE);
@@ -88,16 +99,35 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         Collections.sort(tickets, new Comparator<Ticket>() {
             @Override
             public int compare(Ticket lhs, Ticket rhs) {
-                if (mentorCategories.contains(lhs.getSubcategory()) && !mentorCategories.contains(rhs.getSubcategory()))
-                    return 1;
-//                            else if (!lhs.getStatus().equals("Expired") && rhs.getStatus().equals("Expired"))
-                else
-                    return -1;
-                // TODO: 1/27/16 Sort by time if neither
+                if (lhs.getMine() && rhs.getMine()) return 0;
+                else if (rhs.getMine()) return 1;
+                return -1;
             }
         });
 
-        ticketView.setAdapter(new MentorTicketAdapter(tickets));
+
+        MentorTicketAdapter mentorTicketAdapter = new MentorTicketAdapter(tickets);
+
+        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
+
+        int sectionLoc = 0;
+        if (tickets.get(0).getMine()){
+            sections.add(new SimpleSectionedRecyclerViewAdapter.Section(sectionLoc, "Tickets I Mentor"));
+            for (Ticket t : tickets){
+                if (!t.getMine()) break;
+                sectionLoc++;
+            }
+        }
+
+        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(sectionLoc, "Tickets needing a Mentor"));
+
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+
+        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.date_section, R.id.section_text, mentorTicketAdapter);
+
+        adapter.setSections(sections.toArray(dummy));
+
+        ticketView.setAdapter(adapter);
     }
 
     @Override

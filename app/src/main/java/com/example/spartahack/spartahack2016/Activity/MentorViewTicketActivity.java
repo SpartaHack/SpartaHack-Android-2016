@@ -21,6 +21,7 @@ import com.example.spartahack.spartahack2016.Utility;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import io.realm.Realm;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -106,6 +107,16 @@ public class MentorViewTicketActivity extends BaseActivity {
 
                     @Override
                     public void onNext(GSONMock.UpdateObj updateObj) {
+                        Realm realm = Realm.getInstance(MentorViewTicketActivity.this);
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                ticket.setStatus("Accepted");
+                                ticket.setMine(true);
+                                realm.copyToRealmOrUpdate(ticket);
+                            }
+                        });
+
                         Toast.makeText(MentorViewTicketActivity.this, confirmMessage, Toast.LENGTH_SHORT).show();
                         finish();
                     }

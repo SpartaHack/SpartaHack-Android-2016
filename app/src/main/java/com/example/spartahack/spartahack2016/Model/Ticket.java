@@ -3,7 +3,10 @@ package com.example.spartahack.spartahack2016.Model;
 
 import java.io.Serializable;
 
-public class Ticket implements Serializable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Ticket extends RealmObject implements Serializable {
 
     // Subject of the Ticket
     private String subject;
@@ -18,7 +21,20 @@ public class Ticket implements Serializable {
 
     private String location;
 
+    private boolean mine = false;
+
+    public boolean getMine() {
+        return mine;
+    }
+
+    public void setMine(boolean mine){
+        this.mine = mine;
+    }
+
+    @PrimaryKey
     private String id;
+
+    public void setId(String id){this.id = id;}
 
     public String getId() {
         return id;
@@ -43,6 +59,15 @@ public class Ticket implements Serializable {
         this.location = location;
     }
 
+    public Ticket(String subject, String description, String status, String id, String subcategory, String location, boolean mine) {
+        this.subject = subject;
+        this.description = description;
+        this.status = status;
+        this.id = id;
+        this.subcategory = subcategory;
+        this.location = location;
+        this.mine = mine;
+    }
 
     public String getSubject() {
         return subject;
