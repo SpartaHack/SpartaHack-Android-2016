@@ -106,7 +106,7 @@ public class ViewTicketActivity extends BaseActivity {
 
         } else {
             Snackbar.make(category, "Error Loading Ticket", Snackbar.LENGTH_SHORT).show();
-//            onBackPressed();
+            onBackPressed();
         }
 
     }

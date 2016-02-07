@@ -4,7 +4,6 @@ package com.example.spartahack.spartahack2016.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -128,23 +127,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (getIntent() == null || getIntent().getExtras() == null) {
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
         }else{
-
-            // cancel the notification
-            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            int notid = getIntent().getIntExtra(NOT_ID, -1);
-
-            manager.cancel(notid);
-
-            String id = getIntent().getExtras().getString(OBJECT_ID);
-            String action = getIntent().getExtras().getString(ACTION);
-            if (action != null) {
-                if (action.equals(EXTEND)) {
-                    refreshTicket(new GSONMock.UpdateTicketStatusRequest("Open", false), "Ticket Extended", id);
-                } else if (action.equals(CLOSE)) {
-                    refreshTicket(new GSONMock.UpdateTicketStatusRequest("Closed", true), "Ticket Closed", id);
-                }
-            }
-
             onNavigationItemSelected(navigationView.getMenu().getItem(2));
         }
 

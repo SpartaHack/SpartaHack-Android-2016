@@ -61,8 +61,18 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
             // convert the string into a PushNotification object
             final GSONMock.PushInfo push = gson.fromJson(jsonString, GSONMock.PushInfo.class);
 
+            int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
+
+            // create pending intent to open the notificaiton fragment
+            PendingIntent pIntent;
+
+            if (push.alert.contains("ticket will expire in 10 minutes") || push.alert.contains("ticket has expired") || push.alert.contains("you can mentor in")){
+                pIntent = PendingIntent.getActivity(context, uniqueInt, MainActivity.toHelpDesk(context), PendingIntent.FLAG_ONE_SHOT);
+            } else {
+                pIntent = PendingIntent.getActivity(context, uniqueInt, new Intent(context, MainActivity.class), PendingIntent.FLAG_ONE_SHOT);
+            }
+
             // intent opens to main activity
-            PendingIntent pIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
             // vibrate pattern 500 ms, pause 50ms, vibrate 500ms
             long[] pattern = {0, 500, 50, 500};
@@ -79,13 +89,8 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     .setLargeIcon(largeLogo)
                     .setVibrate(pattern);
 
-            int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
-
             // if there are actions add them to the notificaiton
             if ( push.action != null && !push.action.isEmpty()){
-//                builder.addAction(R.drawable.ic_add, push.action.get(0), MainActivity.getPendingIntent(context, push.ticketId, MainActivity.EXTEND, uniqueInt));
-//                builder.addAction(R.drawable.ic_delete, push.action.get(1), MainActivity.getPendingIntent(context, push.ticketId, MainActivity.CLOSE, uniqueInt+1));
-
                 builder.addAction(R.drawable.ic_add, push.action.get(0), ViewTicketActivity.getPendingIntent(context,uniqueInt, push.ticketId));
                 builder.addAction(R.drawable.ic_delete, push.action.get(1), ViewTicketActivity.getPendingIntent(context, uniqueInt+1, push.ticketId));
             }
@@ -94,9 +99,6 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             notificationManager.notify(0, builder.build());
-
         }
     }
-
-
 }

@@ -56,6 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/background"
             android:text="@string/login" />
 
         <TextView
@@ -106,6 +107,7 @@
                 android:padding="10dp"
                 android:text="@string/logout"
                 android:id="@+id/logout"
+                android:textColor="@color/background"
                 android:layout_gravity="center"/>
         </FrameLayout>
 
