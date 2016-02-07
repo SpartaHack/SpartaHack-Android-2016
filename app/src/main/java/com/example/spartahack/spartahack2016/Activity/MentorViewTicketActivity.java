@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.example.spartahack.spartahack2016.Utility;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import io.realm.Realm;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -36,6 +38,7 @@ public class MentorViewTicketActivity extends BaseActivity {
 
     private Ticket ticket;
     public static final String I_TICKET = "ticket";
+    public static final String TAG = "MentorTicketViewA";
 
     public static Intent getIntent(Activity a, Ticket ticket) {
         Intent intent = new Intent(a, MentorViewTicketActivity.class);
@@ -44,8 +47,7 @@ public class MentorViewTicketActivity extends BaseActivity {
         return intent;
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mentor_view_ticket);
 
@@ -84,8 +86,7 @@ public class MentorViewTicketActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.accept)
-    public void onAccept() {
+    @OnClick(R.id.accept) public void onAccept() {
         refreshTicket(new GSONMock.UpdateTicketStatusRequest("Accepted", false), "Ticket Accepted");
     }
 
@@ -94,26 +95,30 @@ public class MentorViewTicketActivity extends BaseActivity {
                 .updateTicketStatus(ticket.getId(), request)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GSONMock.UpdateObj>() {
-                    @Override
-                    public void onCompleted() {
+                    @Override public void onCompleted() { }
 
+                    @Override public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.toString());
                     }
 
-                    @Override
-                    public void onError(Throwable e) {
+                    @Override public void onNext(GSONMock.UpdateObj updateObj) {
+                        Realm realm = Realm.getInstance(MentorViewTicketActivity.this);
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                ticket.setStatus("Accepted");
+                                ticket.setMine(true);
+                                realm.copyToRealmOrUpdate(ticket);
+                            }
+                        });
 
-                    }
-
-                    @Override
-                    public void onNext(GSONMock.UpdateObj updateObj) {
                         Toast.makeText(MentorViewTicketActivity.this, confirmMessage, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
             case android.R.id.home:

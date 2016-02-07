@@ -4,6 +4,7 @@ package com.example.spartahack.spartahack2016.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,13 +17,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
 import com.example.spartahack.spartahack2016.Fragment.GuideFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpDeskFragment;
@@ -31,10 +31,14 @@ import com.example.spartahack.spartahack2016.Fragment.ProfileFragment;
 import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
+import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.example.spartahack.spartahack2016.Utility;
-import com.parse.ParseUser;
+import com.parse.ParseAnalytics;
 
 import butterknife.Bind;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -45,11 +49,32 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private View headerView;
     private String title = "Notifications";
+    private static final String TAG = "MainActivity";
+
+    public static String ACTION = "action";
+    public static String EXTEND = "extend";
+    public static String CLOSE = "close";
+    public static String OBJECT_ID = "objectid";
+    public static String NOT_ID = "notid";
 
     /**
      * Reference to the currently selected menu item in the nav drawer
      */
     private MenuItem currentItem;
+
+
+    public static PendingIntent getPendingIntent(Context context, String ticketId, String action, int pushID){
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra(ACTION, action);
+        intent.putExtra(OBJECT_ID, ticketId);
+        intent.putExtra(NOT_ID, pushID);
+
+        return PendingIntent.getActivity(context, pushID, intent, PendingIntent.FLAG_ONE_SHOT);
+    }
+
+    public static Intent toHelpDesk(Context c){
+        return new Intent(c, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra(ACTION, ACTION);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +107,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.accent));
 
-        if (getIntent() == null || getIntent().getExtras() == null) {
-            // opening fragment is notificaions
-            addFragment(new NotificationFragment());
-        }else{
-            HelpDeskFragment fragment = new HelpDeskFragment();
-            fragment.setArguments(getIntent().getExtras());
-            addFragment(fragment);
-        }
+        ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.navigationdrawerlogo);
     }
 
     @Override
@@ -107,25 +125,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
-
-        // set nav drawer header view
-        String url = "";
-        if (ParseUser.getCurrentUser() != null &&  ParseUser.getCurrentUser().getParseFile("qrCode")!=null) ParseUser.getCurrentUser().getParseFile("qrCode").getUrl();
-
-        if (!TextUtils.isEmpty(url)) {
-            Glide.with(this)
-                    .load(url)
-                    .into((ImageView) headerView.findViewById(R.id.header_image));
-            // add padding for transparent statusbar if > kitkat
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                if (headerView != null) headerView.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
-            }
-        } else {
-            ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.navigationdrawerlogo);
-            // remove padding for transparent statusbar if > kitkat
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                if (headerView != null) headerView.setPadding(0, 0, 0, 0);
-            }
+        if (getIntent() == null || getIntent().getExtras() == null) {
+            onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        }else{
+            ParseAnalytics.trackAppOpenedInBackground(getIntent());
+            onNavigationItemSelected(navigationView.getMenu().getItem(2));
         }
 
         toolbar.setTitle(title);
@@ -224,18 +228,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    protected void hideKeyboard(View view){
-        // hide keyboard!!! fuck android
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     public void onEvent(String url){
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
     public void onEvent(StartViewTicketActivity a){
-        startActivity(ViewTicketActivity.getIntent(this, a.ticket));
+        startActivity(ViewTicketActivity.getIntent(this, a.ticket, -1).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
     public static class StartViewTicketActivity {
@@ -249,7 +247,23 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     public void onEvent(StartMentorViewTicketActivity a){
-        startActivity(MentorViewTicketActivity.getIntent(this, a.ticket));
+        startActivity(MentorViewTicketActivity.getIntent(this, a.ticket).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
-    
+
+    public void refreshTicket(GSONMock.UpdateTicketStatusRequest request, final String confirmMessage, String id ) {
+        ParseAPIService.INSTANCE.getRestAdapter()
+                .updateTicketStatus(id, request)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GSONMock.UpdateObj>() {
+                    @Override public void onCompleted() { }
+
+                    @Override public void onError(Throwable e) {
+                        Log.e(TAG, "onError: " + e.toString());
+                    }
+
+                    @Override public void onNext(GSONMock.UpdateObj updateObj) {
+                        Toast.makeText(MainActivity.this, confirmMessage, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }

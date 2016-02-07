@@ -1,10 +1,13 @@
 package com.example.spartahack.spartahack2016.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
@@ -51,6 +54,16 @@ public class BaseActivity extends AppCompatActivity{
      */
     protected void start(Class<? extends BaseActivity> activity) {
         startActivity(new Intent(this, activity));
+    }
+
+    /**
+     * Hide the soft keyboard
+     * @param view to get window token
+     */
+    protected void hideKeyboard(View view){
+        // hide keyboard!!! fuck android
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

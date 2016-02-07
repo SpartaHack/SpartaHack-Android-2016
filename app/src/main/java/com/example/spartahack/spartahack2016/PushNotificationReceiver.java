@@ -11,13 +11,13 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
+import com.example.spartahack.spartahack2016.Activity.ViewTicketActivity;
+import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.ParsePushBroadcastReceiver;
-
-import java.util.ArrayList;
 
 import io.realm.RealmObject;
 
@@ -32,11 +32,6 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
      */
     @SuppressWarnings("FieldCanBeLocal")
     private static String TAG = "Push Receiver";
-
-    public static String ACTION = "action";
-    public static String EXTEND = "extend";
-    public static String CLOSE = "close";
-    public static String OBJECT_ID = "objectid";
 
 
     @Override
@@ -64,10 +59,20 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
                     }).create();
 
             // convert the string into a PushNotification object
-            final PushInfo push = gson.fromJson(jsonString, PushInfo.class);
+            final GSONMock.PushInfo push = gson.fromJson(jsonString, GSONMock.PushInfo.class);
+
+            int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
+
+            // create pending intent to open the notificaiton fragment
+            PendingIntent pIntent;
+
+            if (push.alert.contains("ticket will expire in 10 minutes") || push.alert.contains("ticket has expired") || push.alert.contains("you can mentor in")){
+                pIntent = PendingIntent.getActivity(context, uniqueInt, MainActivity.toHelpDesk(context), PendingIntent.FLAG_ONE_SHOT);
+            } else {
+                pIntent = PendingIntent.getActivity(context, uniqueInt, new Intent(context, MainActivity.class), PendingIntent.FLAG_ONE_SHOT);
+            }
 
             // intent opens to main activity
-            PendingIntent pIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
 
             // vibrate pattern 500 ms, pause 50ms, vibrate 500ms
             long[] pattern = {0, 500, 50, 500};
@@ -86,42 +91,14 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
             // if there are actions add them to the notificaiton
             if ( push.action != null && !push.action.isEmpty()){
-
-                Intent extend = new Intent(context, MainActivity.class);
-                extend.putExtra(ACTION, EXTEND);
-                extend.putExtra(OBJECT_ID, push.ticketId);
-
-                Intent close = new Intent(context, MainActivity.class);
-                close.putExtra(ACTION, CLOSE);
-                close.putExtra(OBJECT_ID, push.ticketId);
-
-                int uniqueInt = (int) (System.currentTimeMillis() & 0xfffffff);
-
-                PendingIntent pIntentExtend = PendingIntent.getActivity(context, uniqueInt, extend, PendingIntent.FLAG_UPDATE_CURRENT);
-                PendingIntent pIntentClose = PendingIntent.getActivity(context, uniqueInt+1, close, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                builder.addAction(R.drawable.ic_add, push.action.get(0), pIntentExtend);
-                builder.addAction(R.drawable.ic_delete, push.action.get(1), pIntentClose);
+                builder.addAction(R.drawable.ic_add, push.action.get(0), ViewTicketActivity.getPendingIntent(context,uniqueInt, push.ticketId));
+                builder.addAction(R.drawable.ic_delete, push.action.get(1), ViewTicketActivity.getPendingIntent(context, uniqueInt+1, push.ticketId));
             }
 
             // show notificaiton in notificaiton bar
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             notificationManager.notify(0, builder.build());
-
         }
-    }
-
-    /**
-     * Class for gson to parse out the json push object
-     */
-    private class PushInfo {
-        public String alert;
-        public String sound;
-        public String description;
-        public String category;
-        public ArrayList<String> action;
-        public boolean silent;
-        public String ticketId;
     }
 }

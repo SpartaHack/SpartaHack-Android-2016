@@ -48,7 +48,7 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
         updateNotifications();
 
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_green_light);
+        swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.background);
 
         notificationList.setEmptyView(emptyView);
 
