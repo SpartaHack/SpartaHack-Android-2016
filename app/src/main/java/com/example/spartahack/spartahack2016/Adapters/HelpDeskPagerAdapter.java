@@ -31,13 +31,6 @@ public class HelpDeskPagerAdapter extends FragmentPagerAdapter {
         fragments.add(new MentorFragment());
     }
 
-    public HelpDeskPagerAdapter(FragmentManager fm, HelpFragment help) {
-        super(fm);
-        fragments = new ArrayList<>();
-        fragments.add(help);
-        fragments.add(new MentorFragment());
-    }
-
     @Override
     public int getCount() {
         return fragments.size();

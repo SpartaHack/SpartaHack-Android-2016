@@ -46,4 +46,24 @@ public class GSONMock {
         public boolean notifiedFlag;
     }
 
+    /**
+     * Class for gson to parse out the json push object
+     */
+    public static class PushInfo {
+        public String alert;
+        public String description;
+        public String category;
+        public ArrayList<String> action;
+        public String ticketId;
+    }
+
+    public static class Ticket {
+        public String description;
+        public String location;
+        public String subject;
+        public String subCategory;
+        public String status;
+        public String objectId;
+    }
+
 }

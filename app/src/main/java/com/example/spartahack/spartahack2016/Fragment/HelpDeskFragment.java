@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.spartahack.spartahack2016.Adapters.HelpDeskPagerAdapter;
-import com.example.spartahack.spartahack2016.PushNotificationReceiver;
 import com.example.spartahack.spartahack2016.R;
 
 import butterknife.Bind;
@@ -28,18 +27,9 @@ public class HelpDeskFragment extends BaseFragment {
 
         ButterKnife.bind(this, view);
 
-        // args from main activity from push reciever for actionable pushes
-        Bundle args = this.getArguments();
-        if (args != null && args.containsKey(PushNotificationReceiver.ACTION)) {
+        // TODO: 2/5/16 setup empty view if not signed in
 
-            HelpFragment helpFragment = new HelpFragment();
-            helpFragment.setArguments(args);
-            viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager(), helpFragment));
-
-        } else {
-            viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
-        }
-
+        viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
 
         setUpTabBar(viewPager);
 
@@ -49,17 +39,5 @@ public class HelpDeskFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
-
-    public static class ModTix {
-        public String oid;
-        public String action;
-
-        public ModTix(String oid, String action) {
-            this.oid = oid;
-            this.action = action;
-        }
-    }
-
 }

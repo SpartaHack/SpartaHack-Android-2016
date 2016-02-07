@@ -26,5 +26,6 @@ public interface IParseAPIService {
     @PUT("/classes/HelpDeskTickets/{oid}")
     Observable<GSONMock.UpdateObj> updateTicketStatus(@Path("oid") String o, @Body GSONMock.UpdateTicketStatusRequest del);
 
-
+    @GET("/classes/HelpDeskTickets/{tid}")
+    Observable<GSONMock.Ticket> getTicket(@Path( "tid") String tid);
 }
