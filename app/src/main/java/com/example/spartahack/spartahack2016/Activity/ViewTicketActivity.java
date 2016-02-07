@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -22,6 +21,7 @@ import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.example.spartahack.spartahack2016.Utility;
+import com.parse.ParseAnalytics;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -95,6 +95,8 @@ public class ViewTicketActivity extends BaseActivity {
                 location.setText(ticket.getLocation());
             }
             else if (bundle.get(I_TICKET_ID) != null){
+                ParseAnalytics.trackAppOpenedInBackground(getIntent());
+
                 getTicket(bundle.getString(I_TICKET_ID));
                 ticket = new Ticket();
                 ticket.setStatus("Open");
@@ -105,7 +107,7 @@ public class ViewTicketActivity extends BaseActivity {
             refreshTicket(new GSONMock.UpdateTicketStatusRequest("Open", false), "Ticket Extended", false);
 
         } else {
-            Snackbar.make(category, "Error Loading Ticket", Snackbar.LENGTH_SHORT).show();
+            Toast.makeText(ViewTicketActivity.this, "Error Loading Ticket", Toast.LENGTH_SHORT).show();
             onBackPressed();
         }
 

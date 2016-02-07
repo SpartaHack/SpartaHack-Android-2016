@@ -34,6 +34,7 @@ import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.example.spartahack.spartahack2016.Utility;
+import com.parse.ParseAnalytics;
 
 import butterknife.Bind;
 import rx.Subscriber;
@@ -127,6 +128,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (getIntent() == null || getIntent().getExtras() == null) {
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
         }else{
+            ParseAnalytics.trackAppOpenedInBackground(getIntent());
             onNavigationItemSelected(navigationView.getMenu().getItem(2));
         }
 
