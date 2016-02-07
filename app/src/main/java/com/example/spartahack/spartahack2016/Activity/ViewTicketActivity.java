@@ -101,10 +101,10 @@ public class ViewTicketActivity extends BaseActivity {
                 ticket = new Ticket();
                 ticket.setStatus("Open");
                 ticket.setId(bundle.getString(I_TICKET_ID));
-            }
 
-            //reopen/ extend the ticket
-            refreshTicket(new GSONMock.UpdateTicketStatusRequest("Open", false), "Ticket Extended", false);
+                //reopen/ extend the ticket
+                refreshTicket(new GSONMock.UpdateTicketStatusRequest("Open", false), "Ticket Extended", false);
+            }
 
         } else {
             Toast.makeText(ViewTicketActivity.this, "Error Loading Ticket", Toast.LENGTH_SHORT).show();

@@ -20,7 +20,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.spartahack.spartahack2016.Fragment.AwardsFragment;
@@ -47,13 +46,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Bind(R.id.navigation_view) NavigationView navigationView;
     @Bind(R.id.tab_layout) TabLayout tabLayout;
 
-    private View headerView;
     private String title = "Notifications";
     private static final String TAG = "MainActivity";
 
     public static String ACTION = "action";
-    public static String EXTEND = "extend";
-    public static String CLOSE = "close";
     public static String OBJECT_ID = "objectid";
     public static String NOT_ID = "notid";
 
@@ -91,9 +87,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        // inflate header view manually b/c no get headerview yet
-        headerView = navigationView.inflateHeaderView(R.layout.nav_drawer_header);
-
         // add padding for transparent statusbar if > kitkat
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
@@ -106,8 +99,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.inflateMenu(R.menu.nav_drawer_items);
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.accent));
-
-        ((ImageView) headerView.findViewById(R.id.header_image)).setImageResource(R.drawable.navigationdrawerlogo);
     }
 
     @Override
