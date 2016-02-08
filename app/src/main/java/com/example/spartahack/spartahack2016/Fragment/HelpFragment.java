@@ -138,6 +138,7 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     public void onRefresh() {
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
         query.whereEqualTo("user", user);
+        query.whereNotEqualTo("status", "Deleted");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
