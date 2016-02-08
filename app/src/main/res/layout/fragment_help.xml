@@ -48,7 +48,8 @@
             android:layout_centerInParent="true"
             android:text="@string/no_tickets"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/abc_text_size_large_material" />
+            android:textSize="@dimen/abc_text_size_large_material"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
@@ -62,7 +63,7 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@android:id/empty"
+            android:id="@+id/auth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

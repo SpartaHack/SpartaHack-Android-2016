@@ -40,8 +40,11 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Bind(R.id.user) RelativeLayout userExists;
     @Bind(R.id.no_tix) TextView noTix;
     @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @Bind(R.id.auth) TextView authView;
 
     private ArrayList<Ticket> tickets;
+
+    ParseUser user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +59,9 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.background);
 
-        if (ParseUser.getCurrentUser() == null) {
+        user = ParseUser.getCurrentUser();
+
+        if (user == null) {
             noUser.setVisibility(View.VISIBLE);
             userExists.setVisibility(View.GONE);
             noTix.setVisibility(View.GONE);
@@ -64,6 +69,7 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             noUser.setVisibility(View.GONE);
             userExists.setVisibility(View.VISIBLE);
             noTix.setVisibility(View.GONE);
+            authView.setVisibility(View.GONE);
 
             //RecyclerView
             ticketView.setHasFixedSize(true);
@@ -131,6 +137,7 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
+        query.whereEqualTo("user", user);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {

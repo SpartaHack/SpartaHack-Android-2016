@@ -139,8 +139,8 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
             public void done(List<ParseObject> mentorList, ParseException e) {
                 if (e == null) {
                     if (mentorList.isEmpty()) {
-                        notMentorView.setVisibility(View.VISIBLE);
-                        mentorView.setVisibility(View.GONE);
+                        //notMentorView.setVisibility(View.VISIBLE);
+                        //mentorView.setVisibility(View.GONE);
                     } else {
                         mentorCategories = mentorList.get(0).getList("categories");
 
