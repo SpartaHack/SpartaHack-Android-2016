@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,7 +22,6 @@ import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.example.spartahack.spartahack2016.Utility;
-import com.parse.ParseAnalytics;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -46,6 +46,9 @@ public class ViewTicketActivity extends BaseActivity {
 
     public static final String I_TICKET_ID = "ticket id";
     public static String NOT_ID = "notid";
+    public static final String EXTEND = "extend";
+    public static final String ACTION = "action";
+    public static final String CLOSE = "close";
 
 
     public static Intent getIntent(Activity a, Ticket ticket, int pushID) {
@@ -54,6 +57,15 @@ public class ViewTicketActivity extends BaseActivity {
         intent.putExtra(NOT_ID, pushID);
 
         return intent;
+    }
+
+    public static PendingIntent getPendingIntent(Context context, int pushID, String ticketID, String act){
+        Intent intent = new Intent(context, ViewTicketActivity.class);
+        intent.putExtra(I_TICKET_ID, ticketID);
+        intent.putExtra(ACTION, act);
+        intent.putExtra(NOT_ID, pushID);
+
+        return PendingIntent.getActivity(context, act.equals(EXTEND) ? pushID : pushID + 1, intent, PendingIntent.FLAG_ONE_SHOT);
     }
 
     @Override
@@ -85,6 +97,7 @@ public class ViewTicketActivity extends BaseActivity {
             int notid = getIntent().getIntExtra(NOT_ID, -1);
 
             manager.cancel(notid);
+
             ticket = (Ticket) bundle.get(I_TICKET);
             if (ticket != null) {
                 category.setText(ticket.getSubcategory());
@@ -95,15 +108,24 @@ public class ViewTicketActivity extends BaseActivity {
                 location.setText(ticket.getLocation());
             }
             else if (bundle.get(I_TICKET_ID) != null){
-                ParseAnalytics.trackAppOpenedInBackground(getIntent());
 
+                // clear curren ticket in
                 getTicket(bundle.getString(I_TICKET_ID));
                 ticket = new Ticket();
-                ticket.setStatus("Open");
                 ticket.setId(bundle.getString(I_TICKET_ID));
 
-                //reopen/ extend the ticket
-                refreshTicket(new GSONMock.UpdateTicketStatusRequest("Open", false), "Ticket Extended", false);
+                String stat = bundle.getString(ACTION);
+                if (TextUtils.isEmpty(stat)){
+
+                } else if (stat.equals(EXTEND)){
+                    //set status to open and extend ticket
+                    ticket.setStatus("Open");
+                    refreshTicket(new GSONMock.UpdateTicketStatusRequest("Open", false), "Ticket Extended", false);
+                }else {
+                    // set status to closed and close ticket
+                    ticket.setStatus("Closed");
+                    refreshTicket(new GSONMock.UpdateTicketStatusRequest("Closed", true), "Ticket Closed", false);
+                }
             }
 
         } else {
@@ -173,12 +195,6 @@ public class ViewTicketActivity extends BaseActivity {
     }
 
 
-    public static PendingIntent getPendingIntent(Context context, int pushID, String ticketID){
-        Intent intent = new Intent(context, ViewTicketActivity.class);
-        intent.putExtra(I_TICKET_ID, ticketID);
-        return PendingIntent.getActivity(context, pushID, intent, PendingIntent.FLAG_ONE_SHOT);
-    }
-
     private void getTicket(final String tid) {
         ParseAPIService.INSTANCE.getRestAdapter().getTicket(tid)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -195,14 +211,14 @@ public class ViewTicketActivity extends BaseActivity {
 
                     @Override
                     public void onNext(GSONMock.Ticket t) {
-                        ticket = new Ticket(t.subject, t.description, t.status, t.objectId, t.subCategory, t.location);
+                        ticket = new Ticket(t.subject, t.description, ticket.getStatus(), t.objectId, t.subCategory, t.location);
 
-                        category.setText(t.subCategory);
-                        subject.setText(t.subject);
-                        description.setText(t.description);
-                        status.setText(t.status);
-                        extendReopenButton.setText(t.status.equals("Open") ? R.string.extend_ticket : R.string.reopen_ticket);
-                        location.setText(t.location);
+                        category.setText(ticket.getSubcategory());
+                        subject.setText(ticket.getSubject());
+                        description.setText(ticket.getDescription());
+                        status.setText(ticket.getStatus());
+                        extendReopenButton.setText(ticket.getStatus().equals("Open") ? R.string.extend_ticket : R.string.reopen_ticket);
+                        location.setText(ticket.getLocation());
                     }
                 });
     }
