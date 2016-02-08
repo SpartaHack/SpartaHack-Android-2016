@@ -87,15 +87,22 @@
             android:textColor="@android:color/darker_gray"
             tools:text="Signed in as"/>
 
-        <ImageView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="3"
-            android:contentDescription="@string/barcode"
+            android:layout_height="205dp"
             android:layout_gravity="center"
-            android:id="@+id/qr"
-            tools:src="@drawable/ic_help"
-            android:padding="5dp"/>
+            android:layout_margin="20dp"
+            android:background="@android:color/white">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:contentDescription="@string/barcode"
+                android:layout_gravity="center"
+                android:id="@+id/qr"
+                tools:src="@drawable/ic_help"
+                android:padding="5dp"/>
+        </FrameLayout>
+
 
         <FrameLayout
             android:layout_width="match_parent"
