@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="false"
     android:animateLayoutChanges="true"
+    android:background="@android:color/black"
     tools:context=".Fragment.ProfileFragment">
 
     <LinearLayout
