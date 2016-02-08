@@ -5,35 +5,13 @@
     tools:context=".Fragment.MentorFragment">
 
     <TextView
-        android:id="@+id/notMentor"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="@string/mentor"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="20sp"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/Mentor"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:text="Welcome Mentor."
-        android:textColor="@android:color/darker_gray"
-        android:textSize="20sp"
-        android:visibility="gone" />
-
-    <TextView
         android:id="@+id/auth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:layout_centerInParent="true"
         android:text="Authentication Required to use Help Desk"
         android:textColor="@android:color/darker_gray"
-        android:textSize="20sp"
-        android:visibility="gone" />
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/no_tixs"

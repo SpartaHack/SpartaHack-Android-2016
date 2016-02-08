@@ -34,8 +34,8 @@ import io.realm.RealmResults;
 
 public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener{
 
-    @Bind(R.id.notMentor) TextView notMentorView;
-    @Bind(R.id.Mentor) TextView mentorView;
+//    @Bind(R.id.notMentor) TextView notMentorView;
+//    @Bind(R.id.Mentor) TextView mentorView;
     @Bind(R.id.auth) TextView authView;
     @Bind(R.id.recyclers) RecyclerView ticketView;
     @Bind(R.id.no_tixs) TextView noTix;
@@ -63,9 +63,10 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
 
         if (ParseUser.getCurrentUser() == null) {
             authView.setVisibility(View.VISIBLE);
-            notMentorView.setVisibility(View.GONE);
-            mentorView.setVisibility(View.GONE);
+//            notMentorView.setVisibility(View.GONE);
+//            mentorView.setVisibility(View.GONE);
             ticketView.setVisibility(View.GONE);
+            noTix.setVisibility(View.GONE);
         } else {
 
             authView.setVisibility(View.GONE);
