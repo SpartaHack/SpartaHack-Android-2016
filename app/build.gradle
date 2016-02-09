@@ -49,5 +49,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.google.zxing:core:3.0.0'
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
 
 }

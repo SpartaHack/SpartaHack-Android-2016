@@ -1,6 +1,7 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,9 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 import com.example.spartahack.spartahack2016.R;
+import com.joanzapata.pdfview.PDFView;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,8 +22,9 @@ import butterknife.ButterKnife;
  */
 public class MapFragment extends BaseFragment {
 
+    public static final String MAP_FILE = "map-old.pdf";
 
-    @Bind(R.id.web_view) WebView webView;
+    @Bind(R.id.pdfview) PDFView pdfView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -28,9 +33,10 @@ public class MapFragment extends BaseFragment {
 
         ButterKnife.bind(this, v);
 
-        webView.getSettings().setJavaScriptEnabled(true);
-        String MAP_URL = "http://www.cse.msu.edu/~glxing/422/slides/Introduction.pdf";
-        webView.loadUrl("https://docs.google.com/gview?embedded=true&url=" + MAP_URL);
+
+        pdfView.fromAsset(MAP_FILE)
+                .swipeVertical(true)
+                .load();
 
 
         return v;
