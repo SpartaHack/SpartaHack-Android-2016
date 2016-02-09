@@ -117,7 +117,7 @@ public class ViewTicketActivity extends BaseActivity {
     public void onFabClick() {
         new AlertDialog.Builder(this)
                 .setTitle("Delete Ticket")
-                .setMessage("Are you sure you want to delete your ticket for" + ticket.getSubject() + "?")
+                .setMessage("Are you sure you want to delete your ticket for " + ticket.getSubject() + "?")
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {

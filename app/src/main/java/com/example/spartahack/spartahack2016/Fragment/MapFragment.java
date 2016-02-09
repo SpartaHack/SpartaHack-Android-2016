@@ -32,6 +32,7 @@ public class MapFragment extends BaseFragment {
         String MAP_URL = "http://www.cse.msu.edu/~glxing/422/slides/Introduction.pdf";
         webView.loadUrl("https://docs.google.com/gview?embedded=true&url=" + MAP_URL);
 
+
         return v;
     }
 
