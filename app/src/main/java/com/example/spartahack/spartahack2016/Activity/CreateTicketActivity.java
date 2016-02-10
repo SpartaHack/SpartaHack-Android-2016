@@ -251,4 +251,9 @@ public class CreateTicketActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(MainActivity.toHelpDesk(this));
+    }
+
 }

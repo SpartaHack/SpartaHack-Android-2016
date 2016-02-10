@@ -139,11 +139,21 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
         query.whereEqualTo("user", user);
         query.whereNotEqualTo("status", "Deleted");
+        query.include("user");
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
                 swipeRefreshLayout.setRefreshing(false);
 
+                Collections.sort(objects, new Comparator<ParseObject>() {
+                    @Override
+                    public int compare(ParseObject lhs, ParseObject rhs) {
+                        int lhsI = getStatusInt(lhs.getString("status"));
+                        int rhsI = getStatusInt(rhs.getString("status"));
+                        if (rhsI == lhsI) return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
+                        else return lhsI-rhsI;
+                    }
+                });
                 if (e == null) {
                     tickets = new ArrayList<>();
                     for (ParseObject object : objects) {
@@ -155,5 +165,12 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                 setRecyclerViewSections();
             }
         });
+    }
+
+    private int getStatusInt(String s){
+        if (s.equals("Open")) return 0;
+        if (s.equals("Expired")) return 1;
+        if (s.equals("Accepted")) return 2;
+        return 3;
     }
 }

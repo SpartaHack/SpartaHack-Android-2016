@@ -149,11 +149,18 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
                         query1.whereNotEqualTo("user", ParseUser.getCurrentUser());
                         query1.whereContainedIn("subCategory", mentorCategories);
                         query1.whereEqualTo("status", "Open");
+                        query1.include("user");
                         query1.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
                                 swipeRefreshLayout.setRefreshing(false);
                                 if (e == null) {
+                                    Collections.sort(objects, new Comparator<ParseObject>() {
+                                        @Override
+                                        public int compare(ParseObject lhs, ParseObject rhs) {
+                                            return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
+                                        }
+                                    });
                                     for (ParseObject object : objects) {
                                         tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
                                     }
@@ -170,4 +177,12 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         });
 
     }
+
+    private int getStatusInt(String s){
+        if (s.equals("Open")) return 0;
+        if (s.equals("Expired")) return 1;
+        if (s.equals("Accepted")) return 2;
+        return 3;
+    }
+
 }
