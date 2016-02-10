@@ -7,7 +7,7 @@
     <string name="title_activity_main">SpartaHack</string>
 
     <string name="sponsored_by">Sponsored by %s</string>
-    <string name="logged_in_as">Logged in as \n%s</string>
+    <string name="logged_in_as">Welcome \n%s!</string>
     <string name="ticket_number">Ticket # %d</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
