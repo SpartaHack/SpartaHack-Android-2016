@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,11 +35,9 @@ import butterknife.OnClick;
 public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recycler) RecyclerView ticketView;
-    @Bind(R.id.no_user) LinearLayout noUser;
     @Bind(R.id.user) RelativeLayout userExists;
     @Bind(R.id.no_tix) TextView noTix;
     @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
-    @Bind(R.id.auth) TextView authView;
 
     private ArrayList<Ticket> tickets;
 
@@ -61,23 +58,14 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
 
         user = ParseUser.getCurrentUser();
 
-        if (user == null) {
-            noUser.setVisibility(View.VISIBLE);
-            userExists.setVisibility(View.GONE);
-            noTix.setVisibility(View.GONE);
-        } else {
-            noUser.setVisibility(View.GONE);
-            userExists.setVisibility(View.VISIBLE);
-            noTix.setVisibility(View.GONE);
-            authView.setVisibility(View.GONE);
+        userExists.setVisibility(View.VISIBLE);
+        noTix.setVisibility(View.GONE);
 
-            //RecyclerView
-            ticketView.setHasFixedSize(true);
+        //RecyclerView
+        ticketView.setHasFixedSize(true);
 
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-            ticketView.setLayoutManager(mLayoutManager);
-
-        }
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        ticketView.setLayoutManager(mLayoutManager);
 
         return view;
     }
@@ -98,16 +86,6 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
     void viewTicket() {
         MainActivity activity = ((MainActivity) getActivity());
         activity.startActivity(new Intent(activity, CreateTicketActivity.class));
-    }
-
-    @OnClick(R.id.login)
-    void onLogin() {
-        MainActivity activity = ((MainActivity) getActivity());
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString(ProfileFragment.I_EXTRA_FROM, ProfileFragment.I_EXTRA_FROM);
-        fragment.setArguments(bundle);
-        activity.switchContent(R.id.container, fragment);
     }
 
     /**

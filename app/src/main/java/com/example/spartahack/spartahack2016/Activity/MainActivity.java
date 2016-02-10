@@ -177,7 +177,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      *
      * @param fragment to replace the current fragment
      */
-    private void addFragment(android.app.Fragment fragment) {
+    public void addFragment(android.app.Fragment fragment) {
         // use fragment transaction and add the fragment to the container
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
