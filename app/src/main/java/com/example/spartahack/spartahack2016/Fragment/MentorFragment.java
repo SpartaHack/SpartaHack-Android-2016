@@ -84,8 +84,8 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         Realm realm = Realm.getInstance(getActivity());
         RealmQuery<Ticket> query = realm.where(Ticket.class);
         RealmResults<Ticket> result1 = query.findAll();
-        for (Ticket ti: result1) {
-            tickets.add(new Ticket(ti.getSubject(), ti.getDescription(),ti.getStatus(), ti.getId(), ti.getSubcategory(), ti.getLocation(), true));
+        for (Ticket tix: result1) {
+            tickets.add(new Ticket(tix.getSubject(), tix.getDescription(),tix.getStatus(), tix.getId(), tix.getSubcategory(), tix.getLocation(), true, tix.getName()));
         }
 
         if (tickets.isEmpty()) {
@@ -162,7 +162,8 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
                                         }
                                     });
                                     for (ParseObject object : objects) {
-                                        tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
+                                        String name = object.getParseObject("user").getString("name");
+                                        tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location"), name));
                                     }
                                     setRecyclerViewSections();
                                 }

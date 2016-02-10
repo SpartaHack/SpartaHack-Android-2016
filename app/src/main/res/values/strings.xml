@@ -70,5 +70,6 @@
         <item>2900 Apartments</item>
     </string-array>
     <string name="title_activity_mentor_view_ticket">MentorViewTicketActivity</string>
+    <string name="name">Name</string>
 
 </resources>

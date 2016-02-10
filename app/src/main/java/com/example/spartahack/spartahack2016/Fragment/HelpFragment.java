@@ -131,7 +131,7 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
             }
         });
 
-        ticketView.setAdapter(new TicketAdapter(tickets));
+        if (ticketView!= null)ticketView.setAdapter(new TicketAdapter(tickets));
     }
 
     @Override
@@ -143,7 +143,7 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> objects, ParseException e) {
-                swipeRefreshLayout.setRefreshing(false);
+                if (swipeRefreshLayout != null)swipeRefreshLayout.setRefreshing(false);
 
                 Collections.sort(objects, new Comparator<ParseObject>() {
                     @Override

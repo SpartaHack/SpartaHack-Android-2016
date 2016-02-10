@@ -28,12 +28,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/accent"
+                android:layout_marginTop="10dp"
+                android:text="@string/name"/>
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:layout_marginBottom="10dp"
+                tools:text="Cha Boi Rampage" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/accent"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/subject"/>
 
             <TextView
@@ -42,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="25sp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:text="Subject goes here" />
 
             <TextView
@@ -57,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="25sp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:text="Category" />
 
             <TextView
@@ -72,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="25sp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:text="Description" />
 
             <TextView
@@ -87,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
                 android:textSize="25sp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
                 tools:text="Status" />
 
             <TextView
