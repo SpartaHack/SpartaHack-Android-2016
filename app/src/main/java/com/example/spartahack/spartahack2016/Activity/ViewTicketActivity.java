@@ -138,9 +138,7 @@ public class ViewTicketActivity extends BaseActivity {
     @OnClick(R.id.delete)
     public void onFabClick() {
         new AlertDialog.Builder(this)
-                .setTitle("Delete Ticket")
-                .setMessage("Are you sure you want to delete your ticket for " + ticket.getSubject() + "?")
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setMessage("Are you sure you want to delete your ticket " + ticket.getSubject() + "?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         refreshTicket(new GSONMock.UpdateTicketStatusRequest("Deleted", true), "Ticket Deleted", true);
