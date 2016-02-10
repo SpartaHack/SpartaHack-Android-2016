@@ -4,7 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
-import com.example.spartahack.spartahack2016.Fragment.HelpFragment;
+import com.example.spartahack.spartahack2016.Fragment.MyTicketsFragment;
 import com.example.spartahack.spartahack2016.Fragment.MentorFragment;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class HelpDeskPagerAdapter extends FragmentPagerAdapter {
     public HelpDeskPagerAdapter(FragmentManager fm) {
         super(fm);
         fragments = new ArrayList<>();
-        fragments.add(new HelpFragment());
+        fragments.add(new MyTicketsFragment());
         fragments.add(new MentorFragment());
     }
 

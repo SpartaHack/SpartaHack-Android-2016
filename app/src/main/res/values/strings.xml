@@ -7,7 +7,7 @@
     <string name="title_activity_main">SpartaHack</string>
 
     <string name="sponsored_by">Sponsored by %s</string>
-    <string name="logged_in_as">Logged in as \n%s</string>
+    <string name="logged_in_as">Welcome \n%s!</string>
     <string name="ticket_number">Ticket # %d</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -46,7 +46,7 @@
     <string name="no_tickets">No Tickets</string>
     <string name="hint_location">Location</string>
     <string name="spinner_subcategory">SubCategory</string>
-    <string name="authentication_required">Authentication Required to use Help Desk</string>
+    <string name="authentication_required">Authentication Required to use the Help Desk</string>
     <string name="criteria">Criteria</string>
     <string name="barcode">Barcode</string>
     <string name="company_logo">Company logo</string>
@@ -70,5 +70,6 @@
         <item>2900 Apartments</item>
     </string-array>
     <string name="title_activity_mentor_view_ticket">MentorViewTicketActivity</string>
+    <string name="name">Name</string>
 
 </resources>

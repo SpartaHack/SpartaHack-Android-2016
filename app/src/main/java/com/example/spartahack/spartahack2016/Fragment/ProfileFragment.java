@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -196,7 +197,7 @@ public class ProfileFragment extends BaseFragment {
                 e.printStackTrace();
             }
 
-            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), user.get("username")));
+            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), TextUtils.isEmpty((CharSequence) user.get("name")) ? user.getUsername() : user.get("name")));
 
         } else {
             bar.setVisibility(View.GONE);
@@ -237,8 +238,6 @@ public class ProfileFragment extends BaseFragment {
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
-
-
     /**************************************************************
      * getting from com.google.zxing.client.android.encode.QRCodeEncoder
      *
@@ -247,7 +246,6 @@ public class ProfileFragment extends BaseFragment {
      * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/EncodeActivity.java
      * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/QRCodeEncoder.java
      */
-
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
 

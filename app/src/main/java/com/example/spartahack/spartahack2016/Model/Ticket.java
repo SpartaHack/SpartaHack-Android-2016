@@ -21,6 +21,14 @@ public class Ticket extends RealmObject implements Serializable {
 
     private String location;
 
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name){this.name = name;}
+
     private boolean mine = false;
 
     public boolean getMine() {
@@ -50,7 +58,16 @@ public class Ticket extends RealmObject implements Serializable {
 
     public Ticket() {}
 
-    public Ticket(String subject, String description, String status, String id, String subcategory, String location) {
+    public Ticket(String subject, String description, String status, String id, String subcategory, String location, String name) {
+        this.subject = subject;
+        this.description = description;
+        this.status = status;
+        this.id = id;
+        this.subcategory = subcategory;
+        this.location = location;
+        this.name = name;
+    }
+        public Ticket(String subject, String description, String status, String id, String subcategory, String location) {
         this.subject = subject;
         this.description = description;
         this.status = status;
@@ -67,6 +84,17 @@ public class Ticket extends RealmObject implements Serializable {
         this.subcategory = subcategory;
         this.location = location;
         this.mine = mine;
+    }
+
+    public Ticket(String subject, String description, String status, String id, String subcategory, String location, boolean mine, String name) {
+        this.subject = subject;
+        this.description = description;
+        this.status = status;
+        this.id = id;
+        this.subcategory = subcategory;
+        this.location = location;
+        this.mine = mine;
+        this.name = name;
     }
 
     public String getSubject() {

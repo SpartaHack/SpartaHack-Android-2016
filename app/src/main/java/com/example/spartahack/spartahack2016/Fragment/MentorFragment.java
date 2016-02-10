@@ -84,8 +84,8 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         Realm realm = Realm.getInstance(getActivity());
         RealmQuery<Ticket> query = realm.where(Ticket.class);
         RealmResults<Ticket> result1 = query.findAll();
-        for (Ticket ti: result1) {
-            tickets.add(new Ticket(ti.getSubject(), ti.getDescription(),ti.getStatus(), ti.getId(), ti.getSubcategory(), ti.getLocation(), true));
+        for (Ticket tix: result1) {
+            tickets.add(new Ticket(tix.getSubject(), tix.getDescription(),tix.getStatus(), tix.getId(), tix.getSubcategory(), tix.getLocation(), true, tix.getName()));
         }
 
         if (tickets.isEmpty()) {
@@ -149,13 +149,21 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
                         query1.whereNotEqualTo("user", ParseUser.getCurrentUser());
                         query1.whereContainedIn("subCategory", mentorCategories);
                         query1.whereEqualTo("status", "Open");
+                        query1.include("user");
                         query1.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
-                                swipeRefreshLayout.setRefreshing(false);
+                                if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
                                 if (e == null) {
+                                    Collections.sort(objects, new Comparator<ParseObject>() {
+                                        @Override
+                                        public int compare(ParseObject lhs, ParseObject rhs) {
+                                            return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
+                                        }
+                                    });
                                     for (ParseObject object : objects) {
-                                        tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
+                                        String name = object.getParseObject("user").getString("name");
+                                        tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location"), name));
                                     }
                                     setRecyclerViewSections();
                                 }

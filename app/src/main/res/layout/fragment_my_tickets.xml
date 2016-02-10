@@ -5,7 +5,7 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     android:background="@android:color/black"
-    tools:context=".Fragment.HelpFragment">
+    tools:context=".Fragment.MyTicketsFragment">
 
     <RelativeLayout
         android:id="@+id/user"
@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/section_text"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:paddingBottom="72dp"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <FrameLayout
@@ -36,8 +37,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|right"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginBottom="@dimen/codelab_fab_margin_bottom"
+                android:layout_marginRight="@dimen/codelab_fab_margin_bottom"
                 android:src="@drawable/ic_add"
                 android:theme="@style/FloatingButton" />
         </FrameLayout>
@@ -53,32 +54,5 @@
             android:visibility="gone"/>
 
     </RelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/no_user"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/auth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/authentication_required"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:textColor="@android:color/black" />
-
-    </LinearLayout>
 
 </RelativeLayout>

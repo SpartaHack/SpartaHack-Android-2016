@@ -35,6 +35,7 @@ public class MentorViewTicketActivity extends BaseActivity {
     @Bind(R.id.status) TextView status;
     @Bind(R.id.location) TextView location;
     @Bind(R.id.accept) Button acceptButton;
+    @Bind(R.id.name) TextView name;
 
     private Ticket ticket;
     public static final String I_TICKET = "ticket";
@@ -75,6 +76,8 @@ public class MentorViewTicketActivity extends BaseActivity {
                 subject.setText(ticket.getSubject());
                 description.setText(ticket.getDescription());
                 status.setText(ticket.getStatus());
+                name.setText(ticket.getName());
+
                 if (status.getText().equals("Accepted")){
                     acceptButton.setVisibility(View.GONE);
                 }
@@ -129,5 +132,9 @@ public class MentorViewTicketActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        startActivity(MainActivity.toHelpDesk(this));
+    }
 
 }
