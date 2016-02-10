@@ -153,7 +153,7 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
                         query1.findInBackground(new FindCallback<ParseObject>() {
                             @Override
                             public void done(List<ParseObject> objects, ParseException e) {
-                                swipeRefreshLayout.setRefreshing(false);
+                                if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
                                 if (e == null) {
                                     Collections.sort(objects, new Comparator<ParseObject>() {
                                         @Override
