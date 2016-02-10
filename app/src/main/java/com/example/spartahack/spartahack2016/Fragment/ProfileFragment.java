@@ -186,19 +186,15 @@ public class ProfileFragment extends BaseFragment {
             signedOut.setVisibility(View.GONE);
 
             // barcode image
-            Bitmap bitmap = null;
+            Bitmap bitmap;
 
             try {
-
                 bitmap = encodeAsBitmap(user.getObjectId(), BarcodeFormat.CODE_128, 600, 300);
                 qr.setImageBitmap(bitmap);
 
             } catch (WriterException e) {
                 e.printStackTrace();
             }
-
-
-
 
             displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), user.get("username")));
 
@@ -284,8 +280,7 @@ public class ProfileFragment extends BaseFragment {
             }
         }
 
-        Bitmap bitmap = Bitmap.createBitmap(width, height,
-                Bitmap.Config.ARGB_8888);
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
         return bitmap;
     }

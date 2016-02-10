@@ -91,14 +91,14 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
 
             // if there are actions add them to the notificaiton
             if ( push.action != null && !push.action.isEmpty()){
-                builder.addAction(R.drawable.ic_add, push.action.get(0), ViewTicketActivity.getPendingIntent(context,uniqueInt, push.ticketId));
-                builder.addAction(R.drawable.ic_delete, push.action.get(1), ViewTicketActivity.getPendingIntent(context, uniqueInt+1, push.ticketId));
+                builder.addAction(R.drawable.ic_add, push.action.get(0), ViewTicketActivity.getPendingIntent(context,uniqueInt, push.ticketId, ViewTicketActivity.EXTEND));
+                builder.addAction(R.drawable.ic_delete, push.action.get(1), ViewTicketActivity.getPendingIntent(context, uniqueInt, push.ticketId, ViewTicketActivity.CLOSE));
             }
 
             // show notificaiton in notificaiton bar
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-            notificationManager.notify(0, builder.build());
+            notificationManager.notify(uniqueInt, builder.build());
         }
     }
 }
