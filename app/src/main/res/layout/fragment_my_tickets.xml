@@ -5,7 +5,7 @@
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     android:background="@android:color/black"
-    tools:context=".Fragment.HelpFragment">
+    tools:context=".Fragment.MyTicketsFragment">
 
     <RelativeLayout
         android:id="@+id/user"
@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/section_text"
-                android:scrollbars="vertical" />
+                android:scrollbars="vertical"
+                android:paddingBottom="72dp"/>
         </android.support.v4.widget.SwipeRefreshLayout>
 
         <FrameLayout

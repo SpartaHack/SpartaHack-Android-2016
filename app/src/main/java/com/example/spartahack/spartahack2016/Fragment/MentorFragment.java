@@ -178,12 +178,4 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         });
 
     }
-
-    private int getStatusInt(String s){
-        if (s.equals("Open")) return 0;
-        if (s.equals("Expired")) return 1;
-        if (s.equals("Accepted")) return 2;
-        return 3;
-    }
-
 }

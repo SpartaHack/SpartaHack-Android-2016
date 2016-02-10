@@ -33,7 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.recycler) RecyclerView ticketView;
     @Bind(R.id.no_user) LinearLayout noUser;
@@ -48,7 +48,7 @@ public class HelpFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_help, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_tickets, container, false);
 
         registerEventBus = true;
 
