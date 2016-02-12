@@ -6,9 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 
 import com.example.spartahack.spartahack2016.R;
-import com.joanzapata.pdfview.PDFView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,9 +18,8 @@ import butterknife.ButterKnife;
  */
 public class MapFragment extends BaseFragment {
 
-    public static final String MAP_FILE = "map-old.pdf";
 
-    @Bind(R.id.pdfview) PDFView pdfView;
+    @Bind(R.id.web_view) WebView webView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,10 +28,9 @@ public class MapFragment extends BaseFragment {
 
         ButterKnife.bind(this, v);
 
-        pdfView.fromAsset(MAP_FILE)
-                .swipeVertical(true)
-                .load();
-
+        webView.getSettings().setJavaScriptEnabled(true);
+        String MAP_URL = "https://spartahack.com/map";
+        webView.loadUrl("https://docs.google.com/gview?embedded=true&url=" + MAP_URL);
 
         return v;
     }
