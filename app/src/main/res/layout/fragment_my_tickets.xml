@@ -39,7 +39,7 @@
                 android:layout_gravity="bottom|right"
                 android:layout_marginBottom="@dimen/codelab_fab_margin_bottom"
                 android:layout_marginRight="@dimen/codelab_fab_margin_bottom"
-                android:src="@drawable/ic_add"
+                android:src="@drawable/ic_action_name"
                 android:theme="@style/FloatingButton" />
         </FrameLayout>
 

@@ -1,12 +1,14 @@
 package com.example.spartahack.spartahack2016.Activity;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +29,6 @@ import com.example.spartahack.spartahack2016.Fragment.GuideFragment;
 import com.example.spartahack.spartahack2016.Fragment.HelpDeskFragment;
 import com.example.spartahack.spartahack2016.Fragment.NotificationFragment;
 import com.example.spartahack.spartahack2016.Fragment.ProfileFragment;
-import com.example.spartahack.spartahack2016.Fragment.SettingsFragment;
 import com.example.spartahack.spartahack2016.Model.Ticket;
 import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private String title = "Notifications";
     private static final String TAG = "MainActivity";
+    public static final String PUSH_PREF = "push preference";
 
     public static String ACTION = "action";
     public static String OBJECT_ID = "objectid";
@@ -148,11 +150,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     addFragment(new NotificationFragment());
                     break;
 
-                case R.id.settings:
-                    title = getResources().getString(R.string.settings);
-                    addFragment(new SettingsFragment());
-                    break;
-
                 case R.id.schedule:
                     title = getResources().getString(R.string.guide);
                     addFragment(new GuideFragment());
@@ -239,7 +236,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         startActivity(MentorViewTicketActivity.getIntent(this, a.ticket).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
-    public void refreshTicket(GSONMock.UpdateTicketStatusRequest request, final String confirmMessage, String id ) {
+    public void onEvent(Boolean b) {
+        SharedPreferences preferences = getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE);;
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(PUSH_PREF, b);
+        editor.apply();
+    }
+
+        public void refreshTicket(GSONMock.UpdateTicketStatusRequest request, final String confirmMessage, String id ) {
         ParseAPIService.INSTANCE.getRestAdapter()
                 .updateTicketStatus(id, request)
                 .observeOn(AndroidSchedulers.mainThread())
