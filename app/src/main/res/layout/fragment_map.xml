@@ -1,13 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<WebView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout"
+    android:id="@+id/web_view"
     android:layout_width="match_parent"
-    android:background="@android:color/black"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.example.spartahack.spartahack2016.Fragment.MapFragment">
-    <com.joanzapata.pdfview.PDFView
-        android:id="@+id/pdfview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+</WebView>

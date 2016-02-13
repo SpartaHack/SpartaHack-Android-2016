@@ -1,5 +1,6 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,11 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -34,9 +39,10 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 
-public class ProfileFragment extends BaseFragment {
+public class ProfileFragment extends BaseFragment implements Switch.OnCheckedChangeListener {
 
     /**
      * URL to reset a password
@@ -55,6 +61,7 @@ public class ProfileFragment extends BaseFragment {
     @Bind(R.id.email_layout) TextInputLayout emailLayout;
     @Bind(R.id.password_layout) TextInputLayout passwordLayout;
     @Bind(R.id.login_page_title) TextView loginViewTitle;
+    @Bind(R.id.push_switch) Switch aSwitch;
 
     boolean fromHelp = false;
 
@@ -72,7 +79,26 @@ public class ProfileFragment extends BaseFragment {
             loginViewTitle.setText(R.string.login_for_help);
         }
 
+        // set switch to correct value
+        aSwitch.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true));
+
+        aSwitch.setOnCheckedChangeListener(this);
+
         return view;
+    }
+
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+        if (isChecked){
+            updateParseInstillation(false);
+            Toast.makeText(getActivity(), "Subscribed successfully", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(true);
+        } else {
+            updateParseInstillation(true);
+            Toast.makeText(getActivity(), "Unsubscribed successfully", Toast.LENGTH_SHORT).show();
+            EventBus.getDefault().post(false);
+        }
     }
 
     @Override

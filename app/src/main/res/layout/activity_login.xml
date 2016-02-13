@@ -82,10 +82,10 @@
         <TextView
             android:layout_width="match_parent"
             android:id="@+id/display_name"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="20sp"
+            android:layout_margin="20dp"
             android:textColor="@color/accent"
             tools:text="Signed in as"/>
 
@@ -95,6 +95,7 @@
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:background="@android:color/white">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
@@ -103,13 +104,48 @@
                 android:id="@+id/qr"
                 tools:src="@drawable/ic_help"
                 android:padding="5dp"/>
+
         </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_margin="20dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Push Notifications"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="Toggle push notifications from SpartaHack."/>
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/push_switch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
 
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,23 +167,6 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal"/>
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:orientation="horizontal">-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="Push Notificaitons"-->
-            <!--android:padding="5dp"/>-->
 
-        <!--<Switch-->
-            <!--android:id="@+id/push_switch"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:padding="5dp"/>-->
-
-    <!--</LinearLayout>-->
 
 </RelativeLayout>
