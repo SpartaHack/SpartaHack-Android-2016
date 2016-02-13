@@ -81,7 +81,19 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
                                 else if (rhs.getPinned())
                                     return 1;
                                 else
+                                    return compare_time(lhs, rhs);
+                            }
+
+                            public int compare_time(Announcement lhs, Announcement rhs) {
+                                int result = DateTimeComparator.getInstance().compare(lhs.getTime(), rhs.getTime());
+                                if (result == 1){
                                     return -1;
+                                }
+                                else if (result == -1){
+                                    return 1;
+                                }
+                                else
+                                    return result;
                             }
                         });
 

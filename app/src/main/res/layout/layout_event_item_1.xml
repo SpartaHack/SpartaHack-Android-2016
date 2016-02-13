@@ -31,7 +31,7 @@
             android:padding="2dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@android:color/white"
-            tools:text="at yo bitch crib" />
+            tools:text="at yo bitchs crib" />
     </LinearLayout>
 
     <View
@@ -64,7 +64,7 @@
             android:padding="2dp"
             android:textSize="12sp"
             android:textColor="@android:color/white"
-            tools:text="decriptoin of whatever is going on here" />
+            tools:text="description of whatever is going on here" />
     </LinearLayout>
 
 

@@ -150,7 +150,7 @@ public class CreateTicketActivity extends BaseActivity {
         subCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.accent));
+                //((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.accent));
             }
 
             @Override
