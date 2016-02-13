@@ -82,39 +82,43 @@
         </android.support.design.widget.TextInputLayout>
 
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:orientation="horizontal">
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:orientation="horizontal">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/spinner_category"
-                android:textColor="@android:color/darker_gray" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="center_vertical"-->
+                <!--android:text="@string/spinner_category"-->
+                <!--android:textColor="@android:color/darker_gray" />-->
 
-            <Spinner
-                android:id="@+id/categorySpinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
+            <!--<TextView-->
+                <!--android:id="@+id/categorySpinner"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textColor="@color/accent"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:text="Mentorship"-->
+                <!--android:textIsSelectable="true"-->
+                <!--android:textAppearance="?android:attr/textAppearanceMedium" />-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/subCategoryLayout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="10dp"
-            android:visibility="gone">
+            android:layout_marginLeft="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/spinner_subcategory"
+                android:text="Topics:"
                 android:textColor="@android:color/darker_gray" />
 
             <Spinner

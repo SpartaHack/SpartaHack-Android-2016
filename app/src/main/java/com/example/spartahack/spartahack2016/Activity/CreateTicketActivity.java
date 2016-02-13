@@ -3,16 +3,20 @@ package com.example.spartahack.spartahack2016.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spartahack.spartahack2016.Model.Ticket;
@@ -25,7 +29,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -36,7 +42,7 @@ import de.greenrobot.event.EventBus;
  */
 public class CreateTicketActivity extends BaseActivity {
 
-    @Bind(R.id.categorySpinner) Spinner categorySpinner;
+//    @Bind(R.id.categorySpinner) Spinner categorySpinner;
     @Bind(R.id.subCategorySpinner) Spinner subCategorySpinner;
     @Bind(R.id.subjectLayout) TextInputLayout inputLayoutSub;
     @Bind(R.id.descLayout) TextInputLayout inputLayoutDesc;
@@ -53,6 +59,7 @@ public class CreateTicketActivity extends BaseActivity {
 
     List<ParseObject> categoryList;
     List<String> subCategoryList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +83,9 @@ public class CreateTicketActivity extends BaseActivity {
             toolbar.setTitleTextColor(getResources().getColor(R.color.accent, null));
 
 
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
 
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("HelpDeskTickets");
+        final List<Map<String, String>> subItem  = new ArrayList<Map<String, String>>();
         final ArrayList<String> categoryArray = new ArrayList<String>();
         query = new ParseQuery<ParseObject>("HelpDesk");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -85,19 +93,34 @@ public class CreateTicketActivity extends BaseActivity {
                 if (e == null) {
                     categoryList = markers;
                     for (ParseObject object : markers) {
+                        Map<String, String> category = new HashMap<String, String>(2);
+                        category.put("text", object.get("category").toString());
+                        category.put("subText", object.get("Description").toString());
+                        subItem.add(category);
+
                         categoryArray.add(object.get("category").toString());
                         if (object.get("category").toString().equals("Mentorship")) {
                             subCategoryList = object.getList("subCategory");
                         }
                     }
-                    // Category Spinner
-                    ArrayAdapter<String> spinnerCategoryArrayAdapter = new ArrayAdapter<String>(CreateTicketActivity.this, R.layout.spinner_item, categoryArray);
-                    spinnerCategoryArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-                    categorySpinner.setAdapter(spinnerCategoryArrayAdapter);
+//                    // Category Spinner
+//                    ArrayAdapter<String> spinnerCategoryArrayAdapter = new ArrayAdapter<String>(CreateTicketActivity.this, R.layout.spinner_item, categoryArray);
+//                    spinnerCategoryArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+//                    categorySpinner.setAdapter(spinnerCategoryArrayAdapter);
+
+//                    SimpleAdapter spinnerCategoryArrayAdapter = new SimpleAdapter(getApplicationContext(), subItem,
+//                            android.R.layout.simple_spinner_item, // This is the layout that will be used for the standard/static part of the spinner. (You can use android.R.layout.simple_list_item_2 if you want the subText to also be shown here.)
+//                            new String[] {"text", "subText"},
+//                            new int[] {android.R.id.text1, android.R.id.text2}
+//                    );
+//
+//                    spinnerCategoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_list_item_2);
+//                    categorySpinner.setAdapter(spinnerCategoryArrayAdapter);
+
 
                     // subCategory Spinner
                     ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<String>(CreateTicketActivity.this, R.layout.spinner_item, subCategoryList);
-                    spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                    //spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
                     subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
 
                 } else {
@@ -106,28 +129,28 @@ public class CreateTicketActivity extends BaseActivity {
             }
         });
 
-        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getActivity(), R.color.accent));
-                if (i == 0) {
-                    subCategoryLayout.setVisibility(View.VISIBLE);
-                } else {
-                    subCategoryLayout.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
+//        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                ((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.accent));
+//                if (i == 0) {
+//                    subCategoryLayout.setVisibility(View.VISIBLE);
+//                } else {
+//                    subCategoryLayout.setVisibility(View.GONE);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
 
 
         subCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getActivity(), R.color.accent));
+                ((TextView) adapterView.getChildAt(0)).setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.accent));
             }
 
             @Override
@@ -157,27 +180,30 @@ public class CreateTicketActivity extends BaseActivity {
 
         data.put("location", location.getText().toString());
 
-        if (categorySpinner.getSelectedItem().toString().equals("Mentorship")) {
-            data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
-            ticket.setSubcategory(subCategorySpinner.getSelectedItem().toString());
-        } else {
-            data.put("subCategory", categorySpinner.getSelectedItem().toString());
-            ticket.setSubcategory(categorySpinner.getSelectedItem().toString());
-        }
+//        if (categorySpinner.getSelectedItem().toString().equals("Mentorship")) {
+//            data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
+//            ticket.setSubcategory(subCategorySpinner.getSelectedItem().toString());
+//        } else {
+//            data.put("subCategory", categorySpinner.getSelectedItem().toString());
+//            ticket.setSubcategory(categorySpinner.getSelectedItem().toString());
+//        }
 
 
         //Category Relation Object
-        ParseObject categoryObject = null;
-        for (ParseObject object : categoryList) {
-            if (object.get("category") == categorySpinner.getSelectedItem().toString()) {
-                categoryObject = object;
-            }
-        }
+        ParseObject categoryObject = categoryList.get(0);
+//        for (ParseObject object : categoryList) {
+//            if (object.get("category") == "Mentorship") {
+//                categoryObject = object;
+//            }
+//        }
 
         ParseUser user = ParseUser.getCurrentUser();
 
         data.put("user", user);
         data.put("category", categoryObject);
+        data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
+        ticket.setSubcategory(subCategorySpinner.getSelectedItem().toString());
+        ticket.setSubcategory("Mentorship");
 
         data.put("status", "Open");
         ticket.setStatus("Open");

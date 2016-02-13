@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     style="?android:attr/spinnerItemStyle"
     android:singleLine="true"
+    android:gravity="center_horizontal"
     android:ellipsize="marquee"
-    android:padding="15dp"
-    android:textColor="#80FFDB" />
+    android:padding="15dp" />

@@ -1,11 +1,13 @@
 package com.example.spartahack.spartahack2016.Fragment;
 
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 
 import com.example.spartahack.spartahack2016.R;
 import com.joanzapata.pdfview.PDFView;
