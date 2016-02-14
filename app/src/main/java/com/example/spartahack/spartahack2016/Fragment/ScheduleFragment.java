@@ -80,7 +80,7 @@ public class ScheduleFragment extends BaseFragment {
                         ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
                         DateTime date = events.get(0).getTime();
-                        SimpleDateFormat formatDate = new SimpleDateFormat("EEEE, MMMM d, y");
+                        SimpleDateFormat formatDate = new SimpleDateFormat("EEEE");
                         sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, formatDate.format(events.get(0).getTime().toDate())));
                         // location the header should go at
                         int sectionLoc = 0;
