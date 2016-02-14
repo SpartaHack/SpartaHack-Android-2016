@@ -100,6 +100,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.inflateMenu(R.menu.nav_drawer_items);
 
         toolbar.setTitleTextColor(getResources().getColor(R.color.accent));
+
+        if (getIntent() == null || getIntent().getExtras() == null) {
+            onNavigationItemSelected(navigationView.getMenu().getItem(0));
+        }else{
+            onNavigationItemSelected(navigationView.getMenu().getItem(2));
+        }
     }
 
     @Override
@@ -117,12 +123,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
-        if (getIntent() == null || getIntent().getExtras() == null) {
-            onNavigationItemSelected(navigationView.getMenu().getItem(0));
-        }else{
-            onNavigationItemSelected(navigationView.getMenu().getItem(2));
-        }
-
         toolbar.setTitle(title);
         drawerLayout.closeDrawers();
 
