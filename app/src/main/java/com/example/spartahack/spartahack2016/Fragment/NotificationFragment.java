@@ -77,7 +77,7 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
                             @Override
                             public int compare(Announcement lhs, Announcement rhs) {
                                 if (rhs.getPinned() && lhs.getPinned())
-                                    return DateTimeComparator.getInstance().compare(lhs.getTime(), rhs.getTime());
+                                    return compare_time(lhs, rhs);
                                 else if (rhs.getPinned())
                                     return 1;
                                 else
