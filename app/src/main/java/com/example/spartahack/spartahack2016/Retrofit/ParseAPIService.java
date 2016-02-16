@@ -1,6 +1,6 @@
 package com.example.spartahack.spartahack2016.Retrofit;
 
-import com.example.spartahack.spartahack2016.BuildConfig;
+import com.example.spartahack.spartahack16.BuildConfig;
 import com.example.spartahack.spartahack2016.Keys;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;

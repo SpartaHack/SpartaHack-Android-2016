@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
-import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack16.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;

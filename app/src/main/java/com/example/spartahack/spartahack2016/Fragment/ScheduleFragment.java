@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.example.spartahack.spartahack2016.Adapters.EventListAdapter;
 import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.example.spartahack.spartahack2016.Model.Event;
-import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack16.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 

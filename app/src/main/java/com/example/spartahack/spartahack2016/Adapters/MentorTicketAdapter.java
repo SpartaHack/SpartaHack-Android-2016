@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.spartahack.spartahack16.R;
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Model.Ticket;
-import com.example.spartahack.spartahack2016.R;
 
 import java.util.ArrayList;
 

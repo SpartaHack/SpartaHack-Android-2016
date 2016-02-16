@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.spartahack.spartahack2016.Adapters.GidePagerAdapter;
-import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack16.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

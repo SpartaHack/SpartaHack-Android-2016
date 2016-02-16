@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.spartahack.spartahack16.R;
 import com.example.spartahack.spartahack2016.Model.Company;
-import com.example.spartahack.spartahack2016.R;
 
 import java.util.ArrayList;
 import java.util.List;

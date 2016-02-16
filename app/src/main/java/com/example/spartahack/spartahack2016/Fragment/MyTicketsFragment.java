@@ -16,7 +16,7 @@ import com.example.spartahack.spartahack2016.Activity.CreateTicketActivity;
 import com.example.spartahack.spartahack2016.Activity.MainActivity;
 import com.example.spartahack.spartahack2016.Adapters.TicketAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
-import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack16.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

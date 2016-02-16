@@ -18,6 +18,7 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.parse.ParsePushBroadcastReceiver;
+import com.example.spartahack.spartahack16.R;
 
 import io.realm.RealmObject;
 

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 
-import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack16.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

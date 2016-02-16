@@ -17,8 +17,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.spartahack.spartahack16.R;
 import com.example.spartahack.spartahack2016.Model.Ticket;
-import com.example.spartahack.spartahack2016.R;
 import com.example.spartahack.spartahack2016.Retrofit.GSONMock;
 import com.example.spartahack.spartahack2016.Retrofit.ParseAPIService;
 import com.example.spartahack.spartahack2016.Utility;

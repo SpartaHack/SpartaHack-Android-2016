@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.example.spartahack.spartahack2016.Adapters.MentorTicketAdapter;
 import com.example.spartahack.spartahack2016.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.example.spartahack.spartahack2016.Model.Ticket;
-import com.example.spartahack.spartahack2016.R;
+import com.example.spartahack.spartahack16.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
