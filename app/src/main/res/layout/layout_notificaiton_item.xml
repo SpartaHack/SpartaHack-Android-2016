@@ -41,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/text_margin"
+        android:autoLink="web"
         android:paddingBottom="@dimen/text_margin"
         android:textColor="@android:color/white"
         android:textSize="@dimen/body_text_size"
