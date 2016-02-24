@@ -237,7 +237,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     public void onEvent(Boolean b) {
-        SharedPreferences preferences = getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE);;
+        SharedPreferences preferences = getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(PUSH_PREF, b);
         editor.apply();

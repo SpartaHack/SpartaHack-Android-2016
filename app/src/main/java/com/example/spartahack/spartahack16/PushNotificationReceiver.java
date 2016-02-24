@@ -1,5 +1,6 @@
 package com.example.spartahack.spartahack16;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -37,6 +38,12 @@ public class PushNotificationReceiver extends ParsePushBroadcastReceiver {
     @Override
     protected void onPushReceive(Context context, Intent intent) {
         Log.d(TAG, "Recieved");
+        boolean notify = context.getSharedPreferences(context.getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true);
+
+        if (!notify) {
+            Log.d(TAG, "onPushReceive: dont notify");
+            return;
+        }
 
         // get the json string form the push
         String jsonString = intent.getStringExtra(KEY_PUSH_DATA);

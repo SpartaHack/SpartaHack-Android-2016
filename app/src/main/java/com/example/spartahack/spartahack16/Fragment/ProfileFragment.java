@@ -62,6 +62,8 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     @Bind(R.id.password_layout) TextInputLayout passwordLayout;
     @Bind(R.id.login_page_title) TextView loginViewTitle;
     @Bind(R.id.push_switch) Switch aSwitch;
+    @Bind(R.id.push_switch2) Switch aSwitch2;
+
 
     boolean fromHelp = false;
 
@@ -81,9 +83,10 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
 
         // set switch to correct value
         aSwitch.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true));
+        aSwitch2.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true));
 
         aSwitch.setOnCheckedChangeListener(this);
-
+        aSwitch2.setOnCheckedChangeListener(this);
         return view;
     }
 
@@ -256,10 +259,15 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     private void updateParseInstillation(boolean logout){
         ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
 
-        if (logout)
+        if (logout){
             currentInstall.remove("user");
-        else
-            currentInstall.put("user", ParseUser.getCurrentUser());
+//            ParsePush.unsubscribeInBackground("");
+        }
+        else {
+            if (ParseUser.getCurrentUser()!=null) currentInstall.put("user", ParseUser.getCurrentUser());
+//            ParsePush.subscribeInBackground("");
+        }
+
 
         ParseInstallation.getCurrentInstallation().saveInBackground();
     }

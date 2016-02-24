@@ -67,8 +67,42 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/abc_button_padding_horizontal_material"
             android:layout_gravity="center"
-
             android:text="@string/forgot_password" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_margin="20dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="Push Notifications"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:text="Toggle push notifications from SpartaHack."/>
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/push_switch2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
