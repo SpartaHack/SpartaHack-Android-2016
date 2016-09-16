@@ -125,7 +125,7 @@
             android:id="@+id/accept"
             style="@style/StyleButtonBig"
             android:layout_alignParentBottom="true"
-            android:text="Accept Ticket" />
+            android:text="@string/accept_ticket" />
 
     </RelativeLayout>
 
