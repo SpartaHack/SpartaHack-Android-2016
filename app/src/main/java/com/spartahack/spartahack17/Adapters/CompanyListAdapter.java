@@ -71,12 +71,7 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
         } else {
             Glide.with(mContext).load(R.drawable.navigationdrawerlogo).into(holder.logo);
         }
-        holder.logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(c.getUrl());
-            }
-        });
+        holder.logo.setOnClickListener(view -> EventBus.getDefault().post(c.getUrl()));
     }
 
 

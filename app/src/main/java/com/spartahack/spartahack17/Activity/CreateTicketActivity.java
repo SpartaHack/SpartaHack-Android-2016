@@ -14,14 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.spartahack.spartahack17.Model.Ticket;
-import com.spartahack.spartahack17.R;
-import com.spartahack.spartahack17.Utility;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.spartahack.spartahack17.Model.Ticket;
+import com.spartahack.spartahack17.R;
+import com.spartahack.spartahack17.Utility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,28 +78,26 @@ public class CreateTicketActivity extends BaseActivity {
         final List<Map<String, String>> subItem  = new ArrayList<>();
         final ArrayList<String> categoryArray = new ArrayList<>();
         query = new ParseQuery<>("HelpDesk");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> markers, ParseException e) {
-                if (e == null) {
-                    categoryList = markers;
-                    for (ParseObject object : markers) {
-                        Map<String, String> category = new HashMap<>(2);
-                        category.put("text", object.get("category").toString());
-                        category.put("subText", object.get("Description").toString());
-                        subItem.add(category);
+        query.findInBackground((markers, e) -> {
+            if (e == null) {
+                categoryList = markers;
+                for (ParseObject object : markers) {
+                    Map<String, String> category = new HashMap<>(2);
+                    category.put("text", object.get("category").toString());
+                    category.put("subText", object.get("Description").toString());
+                    subItem.add(category);
 
-                        categoryArray.add(object.get("category").toString());
-                        if (object.get("category").toString().equals("Mentorship")) {
-                            subCategoryList = object.getList("subCategory");
-                        }
+                    categoryArray.add(object.get("category").toString());
+                    if (object.get("category").toString().equals("Mentorship")) {
+                        subCategoryList = object.getList("subCategory");
                     }
-
-                    // subCategory Spinner
-                    ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<>(CreateTicketActivity.this, R.layout.spinner_item, subCategoryList);
-                    //spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-                    subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
-
                 }
+
+                // subCategory Spinner
+                ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<>(CreateTicketActivity.this, R.layout.spinner_item, subCategoryList);
+                //spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
+
             }
         });
 

@@ -9,17 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.spartahack.spartahack17.Activity.MainActivity;
-import com.spartahack.spartahack17.Adapters.HelpDeskPagerAdapter;
-import com.spartahack.spartahack17.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.spartahack.spartahack17.Activity.MainActivity;
+import com.spartahack.spartahack17.Adapters.HelpDeskPagerAdapter;
+import com.spartahack.spartahack17.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -58,27 +55,24 @@ public class HelpDeskFragment extends BaseFragment {
             // see if this person is a mentor or not
             ParseQuery<ParseObject> query = new ParseQuery<>("Mentors");
             query.whereEqualTo("mentor", ParseUser.getCurrentUser());
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> objects, ParseException e) {
-                    // check if category array has objects or not
-                    ArrayList<String> cat = null;
-                    if (objects != null && objects.size()>0 && objects.get(0).get("categories") != null){
-                        try {
-                            cat = (ArrayList<String>) objects.get(0).get("categories");
-                        } catch (ClassCastException e1){
-                            Log.d("Cast", e1.toString());
-                        }
+            query.findInBackground((objects, e) -> {
+                // check if category array has objects or not
+                ArrayList<String> cat = null;
+                if (objects != null && objects.size()>0 && objects.get(0).get("categories") != null){
+                    try {
+                        cat = (ArrayList<String>) objects.get(0).get("categories");
+                    } catch (ClassCastException e1){
+                        Log.d("Cast", e1.toString());
                     }
+                }
 
-                    if ( cat == null  || cat.size() == 0){
-                        // not subscribed to any categories so only show their tickets
-                        ((MainActivity)getActivity()).addFragment(new MyTicketsFragment());
-                    }else {
-                        // subscribed to categories so show mentor view as well
-                        viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
-                        setUpTabBar(viewPager);
-                    }
+                if ( cat == null  || cat.size() == 0){
+                    // not subscribed to any categories so only show their tickets
+                    ((MainActivity)getActivity()).addFragment(new MyTicketsFragment());
+                }else {
+                    // subscribed to categories so show mentor view as well
+                    viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
+                    setUpTabBar(viewPager);
                 }
             });
 

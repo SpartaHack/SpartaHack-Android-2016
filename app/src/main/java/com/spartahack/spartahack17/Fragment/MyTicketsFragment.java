@@ -12,21 +12,18 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.spartahack.spartahack17.Activity.CreateTicketActivity;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Adapters.TicketAdapter;
 import com.spartahack.spartahack17.Model.Ticket;
 import com.spartahack.spartahack17.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -101,12 +98,9 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
         if (noTix != null) noTix.setVisibility(View.GONE);
 
         // sort tix first on expired or not, then by created date
-        Collections.sort(tickets, new Comparator<Ticket>() {
-            @Override
-            public int compare(Ticket lhs, Ticket rhs) {
-                if (lhs.getStatus().equals("Expired") && !rhs.getStatus().equals("Expired")) return 1;
-                return -1;
-            }
+        Collections.sort(tickets, (lhs, rhs) -> {
+            if (lhs.getStatus().equals("Expired") && !rhs.getStatus().equals("Expired")) return 1;
+            return -1;
         });
 
         if (ticketView!= null)ticketView.setAdapter(new TicketAdapter(tickets));
@@ -118,30 +112,27 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
         query.whereEqualTo("user", user);
         query.whereNotEqualTo("status", "Deleted");
         query.include("user");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-                if (swipeRefreshLayout != null)swipeRefreshLayout.setRefreshing(false);
+        query.findInBackground((objects, e) -> {
+            if (swipeRefreshLayout != null)swipeRefreshLayout.setRefreshing(false);
 
-                Collections.sort(objects, new Comparator<ParseObject>() {
-                    @Override
-                    public int compare(ParseObject lhs, ParseObject rhs) {
-                        int lhsI = getStatusInt(lhs.getString("status"));
-                        int rhsI = getStatusInt(rhs.getString("status"));
-                        if (rhsI == lhsI) return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
-                        else return lhsI-rhsI;
-                    }
-                });
-                if (e == null) {
-                    tickets = new ArrayList<>();
-                    for (ParseObject object : objects) {
-                        tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
-                    }
+            Collections.sort(objects, new Comparator<ParseObject>() {
+                @Override
+                public int compare(ParseObject lhs, ParseObject rhs) {
+                    int lhsI = getStatusInt(lhs.getString("status"));
+                    int rhsI = getStatusInt(rhs.getString("status"));
+                    if (rhsI == lhsI) return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
+                    else return lhsI-rhsI;
                 }
-
-                // setup the recyclerview with the member var tickets
-                setRecyclerViewSections();
+            });
+            if (e == null) {
+                tickets = new ArrayList<>();
+                for (ParseObject object : objects) {
+                    tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
+                }
             }
+
+            // setup the recyclerview with the member var tickets
+            setRecyclerViewSections();
         });
     }
 

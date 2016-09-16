@@ -16,7 +16,6 @@ import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,13 +53,10 @@ public class PrizeFragment extends BaseFragment {
                     public void onNext(GSONMock.Prizes prizes) {
                         ArrayList<Prize> prizeList = prizes.prizes;
 
-                        Collections.sort(prizeList, new Comparator<Prize>() {
-                            @Override
-                            public int compare(Prize lhs, Prize rhs) {
-                                if (lhs.getSponsor().getLevel() - rhs.getSponsor().getLevel() != 0)
-                                    return lhs.getSponsor().getLevel() - rhs.getSponsor().getLevel();
-                                return lhs.getName().compareTo(rhs.getName());
-                            }
+                        Collections.sort(prizeList, (lhs, rhs) -> {
+                            if (lhs.getSponsor().getLevel() - rhs.getSponsor().getLevel() != 0)
+                                return lhs.getSponsor().getLevel() - rhs.getSponsor().getLevel();
+                            return lhs.getName().compareTo(rhs.getName());
                         });
 
                         recyclerView.setAdapter(new PrizeAdapter(getActivity(), prizeList));

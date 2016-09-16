@@ -51,12 +51,9 @@ public class ParseAPIService {
                 .create();
 
         // add headers to any network requests made
-        RequestInterceptor requestInterceptor = new RequestInterceptor() {
-            @Override
-            public void intercept(RequestInterceptor.RequestFacade request) {
-                request.addHeader("X-Parse-Application-Id", Keys.PARSE_APP_ID);
-                request.addHeader("X-Parse-REST-API-Key", Keys.PARSE_REST_API_KEY);
-            }
+        RequestInterceptor requestInterceptor = request -> {
+            request.addHeader("X-Parse-Application-Id", Keys.PARSE_APP_ID);
+            request.addHeader("X-Parse-REST-API-Key", Keys.PARSE_REST_API_KEY);
         };
 
         // request base url

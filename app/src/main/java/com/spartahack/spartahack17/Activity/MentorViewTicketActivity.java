@@ -106,13 +106,10 @@ public class MentorViewTicketActivity extends BaseActivity {
 
                     @Override public void onNext(GSONMock.UpdateObj updateObj) {
                         Realm realm = Realm.getInstance(MentorViewTicketActivity.this);
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                ticket.setStatus("Accepted");
-                                ticket.setMine(true);
-                                realm.copyToRealmOrUpdate(ticket);
-                            }
+                        realm.executeTransaction(realm1 -> {
+                            ticket.setStatus("Accepted");
+                            ticket.setMine(true);
+                            realm1.copyToRealmOrUpdate(ticket);
                         });
 
                         Toast.makeText(MentorViewTicketActivity.this, confirmMessage, Toast.LENGTH_SHORT).show();

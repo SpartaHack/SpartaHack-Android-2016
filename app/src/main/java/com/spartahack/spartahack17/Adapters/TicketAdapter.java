@@ -64,12 +64,7 @@ public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder
         holder.title.setText(ticket.getSubject());
         holder.status.setText(ticket.getStatus());
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EventBus.getDefault().post(new MainActivity.StartViewTicketActivity(ticket));
-            }
-        });
+        holder.layout.setOnClickListener(view -> EventBus.getDefault().post(new MainActivity.StartViewTicketActivity(ticket)));
 
         holder.description.setText(ticket.getDescription());
     }

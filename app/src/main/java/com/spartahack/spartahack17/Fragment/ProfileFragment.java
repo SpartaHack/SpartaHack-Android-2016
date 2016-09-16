@@ -25,9 +25,6 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.parse.LogInCallback;
-import com.parse.LogOutCallback;
-import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 import com.spartahack.spartahack17.Activity.MainActivity;
@@ -152,25 +149,22 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         // change views shown
         toggleViews(true);
 
-        ParseUser.logInInBackground(email, passwordTextView.getText().toString().trim(), new LogInCallback() {
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                    Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
-                    updateParseInstillation(false);
-                    if (fromHelp) {
-                        getActivity().onBackPressed();
-                    } else {
-                        toggleViews(false);
-                    }
-
+        ParseUser.logInInBackground(email, passwordTextView.getText().toString().trim(), (user, e) -> {
+            if (user != null) {
+                Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
+                updateParseInstillation(false);
+                if (fromHelp) {
+                    getActivity().onBackPressed();
                 } else {
-                    Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
-                    Log.e("Login", e.toString());
-                    e.printStackTrace();
                     toggleViews(false);
                 }
-            }
 
+            } else {
+                Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
+                Log.e("Login", e.toString());
+                e.printStackTrace();
+                toggleViews(false);
+            }
         });
     }
 
@@ -189,13 +183,10 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     @OnClick(R.id.logout)
     public void onLogout() {
         toggleViews(true);
-        ParseUser.logOutInBackground(new LogOutCallback() {
-            @Override
-            public void done(ParseException e) {
-                updateParseInstillation(true);
-                toggleViews(false);
-                Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
-            }
+        ParseUser.logOutInBackground(e -> {
+            updateParseInstillation(true);
+            toggleViews(false);
+            Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
         });
     }
 

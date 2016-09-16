@@ -18,7 +18,6 @@ import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,14 +63,11 @@ public class CompanyFragment extends BaseFragment {
                         // TODO: 1/5/16 handle if list of companies returns empty/ null
                         if (companies == null || companies.isEmpty()) 
                             return;
-                        Collections.sort(companies, new Comparator<Company>() {
-                                    @Override
-                                    public int compare(Company lhs, Company rhs) {
-                                        if (lhs.getLevel() - rhs.getLevel() != 0)
-                                            return lhs.getLevel() - rhs.getLevel();
-                                        return lhs.getName().compareTo(rhs.getName());
-                                    }
-                                });
+                        Collections.sort(companies, (lhs, rhs) -> {
+                            if (lhs.getLevel() - rhs.getLevel() != 0)
+                                return lhs.getLevel() - rhs.getLevel();
+                            return lhs.getName().compareTo(rhs.getName());
+                        });
 
                         CompanyListAdapter simpleCompanyAdapter = new CompanyListAdapter(getActivity(), companies);
 

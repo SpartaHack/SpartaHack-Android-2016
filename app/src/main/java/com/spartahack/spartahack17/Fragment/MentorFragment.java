@@ -97,13 +97,10 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         noTix.setVisibility(View.GONE);
 
         // sort tix first on expired or not, then by created date
-        Collections.sort(tickets, new Comparator<Ticket>() {
-            @Override
-            public int compare(Ticket lhs, Ticket rhs) {
-                if (lhs.getMine() && rhs.getMine()) return 0;
-                else if (rhs.getMine()) return 1;
-                return -1;
-            }
+        Collections.sort(tickets, (lhs, rhs) -> {
+            if (lhs.getMine() && rhs.getMine()) return 0;
+            else if (rhs.getMine()) return 1;
+            return -1;
         });
 
 
@@ -136,40 +133,38 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         tickets = new ArrayList<>();
         ParseQuery<ParseObject> query = new ParseQuery<>("Mentors");
         query.whereEqualTo("mentor", ParseUser.getCurrentUser());
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> mentorList, ParseException e) {
-                if (e == null) {
-                        mentorCategories = mentorList.get(0).getList("categories");
+        query.findInBackground((mentorList, e) -> {
+            if (e == null) {
+                    mentorCategories = mentorList.get(0).getList("categories");
 
-                        ParseQuery<ParseObject> query1 = new ParseQuery<>("HelpDeskTickets");
-                        query1.whereNotEqualTo("user", ParseUser.getCurrentUser());
-                        query1.whereContainedIn("subCategory", mentorCategories);
-                        query1.whereEqualTo("status", "Open");
-                        query1.include("user");
-                        query1.findInBackground(new FindCallback<ParseObject>() {
-                            @Override
-                            public void done(List<ParseObject> objects, ParseException e) {
-                                if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
-                                if (e == null) {
-                                    Collections.sort(objects, new Comparator<ParseObject>() {
-                                        @Override
-                                        public int compare(ParseObject lhs, ParseObject rhs) {
-                                            return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
-                                        }
-                                    });
-                                    for (ParseObject object : objects) {
-                                        String name = object.getParseObject("user").getString("name");
-                                        tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location"), name));
+                    ParseQuery<ParseObject> query1 = new ParseQuery<>("HelpDeskTickets");
+                    query1.whereNotEqualTo("user", ParseUser.getCurrentUser());
+                    query1.whereContainedIn("subCategory", mentorCategories);
+                    query1.whereEqualTo("status", "Open");
+                    query1.include("user");
+                    query1.findInBackground(new FindCallback<ParseObject>() {
+                        @Override
+                        public void done(List<ParseObject> objects, ParseException e) {
+                            if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
+                            if (e == null) {
+                                Collections.sort(objects, new Comparator<ParseObject>() {
+                                    @Override
+                                    public int compare(ParseObject lhs, ParseObject rhs) {
+                                        return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
                                     }
-                                    setRecyclerViewSections();
+                                });
+                                for (ParseObject object : objects) {
+                                    String name = object.getParseObject("user").getString("name");
+                                    tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location"), name));
                                 }
+                                setRecyclerViewSections();
                             }
-                        });
+                        }
+                    });
 
 
-                } else {
-                    Log.e("Mentor", "Error: " + e.getMessage());
-                }
+            } else {
+                Log.e("Mentor", "Error: " + e.getMessage());
             }
         });
 

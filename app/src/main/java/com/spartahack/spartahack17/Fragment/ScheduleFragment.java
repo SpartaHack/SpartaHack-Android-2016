@@ -23,7 +23,6 @@ import org.joda.time.DateTimeComparator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Locale;
 
 import butterknife.Bind;
@@ -68,12 +67,7 @@ public class ScheduleFragment extends BaseFragment {
                         // TODO: 1/5/16 fix this being empty
                         if (events == null || events.isEmpty())
                             return;
-                        Collections.sort(events, new Comparator<Event>() {
-                            @Override
-                            public int compare(Event lhs, Event rhs) {
-                                return DateTimeComparator.getInstance().compare(lhs.getTime(), rhs.getTime());
-                            }
-                         });
+                        Collections.sort(events, (lhs, rhs) -> DateTimeComparator.getInstance().compare(lhs.getTime(), rhs.getTime()));
 
 
                         EventListAdapter eventListAdapter = new EventListAdapter(getActivity(), events);

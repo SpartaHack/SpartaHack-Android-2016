@@ -142,14 +142,9 @@ public class SimpleSectionedRecyclerViewAdapter extends RecyclerView.Adapter<Rec
         mSections.clear();
 
 
-        Arrays.sort(sections, new Comparator<Section>() {
-            @Override
-            public int compare(Section o, Section o1) {
-                return (o.firstPosition == o1.firstPosition)
-                        ? 0
-                        : ((o.firstPosition < o1.firstPosition) ? -1 : 1);
-            }
-        });
+        Arrays.sort(sections, (o, o1) -> (o.firstPosition == o1.firstPosition)
+                ? 0
+                : ((o.firstPosition < o1.firstPosition) ? -1 : 1));
 
 
         int offset = 0; // offset positions for the headers we're adding
