@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Model.Event;
+import com.spartahack.spartahack17.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +22,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
 
 
     private final Context context;
-    private List<Event> data;
+    private final List<Event> data;
 
 
     public void add(Event e,int position) {
@@ -43,7 +44,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
         @Bind(R.id.title) TextView title;
         @Bind(R.id.time) TextView time;
         @Bind(R.id.description) TextView description;
-        @Bind(R.id.location) TextView locaiton;
+        @Bind(R.id.location) TextView location;
 
         public SimpleViewHolder(View itemView) {
             super(itemView);
@@ -72,10 +73,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
 
         holder.title.setText(e.getTitle());
         holder.description.setText(e.getDescription());
-        holder.locaiton.setText(e.getEventLocation());
+        holder.location.setText(e.getEventLocation());
 
-        SimpleDateFormat f = new SimpleDateFormat("hh:mm a");
-        holder.time.setText(f.format(e.getTime().toDate()));
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm a", Locale.US);
+        holder.time.setText(format.format(e.getTime().toDate()));
 
     }
 

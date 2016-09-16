@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -99,7 +100,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // inflate the nav drawer items programmatically because it is dynamic based on roles
         navigationView.inflateMenu(R.menu.nav_drawer_items);
 
-        toolbar.setTitleTextColor(getResources().getColor(R.color.accent));
+        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.accent));
 
         if (getIntent() == null || getIntent().getExtras() == null) {
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
@@ -179,7 +180,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         fragmentTransaction.commit();
         if (toolbar != null) toolbar.setTitle(title);
         tabLayout.setVisibility(View.GONE);
@@ -201,7 +201,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(id, fragment, fragment.toString());
         ft.addToBackStack(null);
-        ft.setCustomAnimations(R.anim.abc_fade_in, R.anim.abc_fade_out);
         ft.commit();
     }
 

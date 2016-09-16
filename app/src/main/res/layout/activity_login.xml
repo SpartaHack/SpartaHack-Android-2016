@@ -85,12 +85,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Push Notifications"/>
+                    android:text="@string/push_notifications"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="Toggle push notifications from SpartaHack."/>
+                    android:text="@string/toggle_push"/>
             </LinearLayout>
 
             <Switch
@@ -156,12 +156,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
-                    android:text="Push Notifications"/>
+                    android:text="@string/push_notifications"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="14sp"
-                    android:text="Toggle push notifications from SpartaHack."/>
+                    android:text="@string/toggle_push"/>
             </LinearLayout>
 
             <Switch

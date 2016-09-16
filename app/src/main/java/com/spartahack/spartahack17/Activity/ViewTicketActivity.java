@@ -116,7 +116,6 @@ public class ViewTicketActivity extends BaseActivity {
 
                 String stat = bundle.getString(ACTION);
                 if (TextUtils.isEmpty(stat)){
-
                 } else if (stat.equals(EXTEND)){
                     //set status to open and extend ticket
                     ticket.setStatus("Open");

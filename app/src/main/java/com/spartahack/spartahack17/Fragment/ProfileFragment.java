@@ -20,8 +20,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.spartahack.spartahack17.Activity.MainActivity;
-import com.spartahack.spartahack17.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -32,8 +30,11 @@ import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.spartahack.spartahack17.Activity.MainActivity;
+import com.spartahack.spartahack17.R;
 
 import java.util.EnumMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -126,7 +127,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         boolean error = false;
 
         // validate email;
-        String email = userNameTextView.getText().toString().trim().toLowerCase();
+        String email = userNameTextView.getText().toString().trim().toLowerCase(Locale.US);
         if (!validateEmail(email)) {
             emailLayout.setError("Invalid Email");
             error = true;
@@ -284,12 +285,11 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     private static final int BLACK = 0xFF000000;
 
     Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
-        String contentsToEncode = contents;
-        if (contentsToEncode == null) {
+        if (contents == null) {
             return null;
         }
         Map<EncodeHintType, Object> hints = null;
-        String encoding = guessAppropriateEncoding(contentsToEncode);
+        String encoding = guessAppropriateEncoding(contents);
         if (encoding != null) {
             hints = new EnumMap<>(EncodeHintType.class);
             hints.put(EncodeHintType.CHARACTER_SET, encoding);
@@ -297,7 +297,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         MultiFormatWriter writer = new MultiFormatWriter();
         BitMatrix result;
         try {
-            result = writer.encode(contentsToEncode, format, img_width, img_height, hints);
+            result = writer.encode(contents, format, img_width, img_height, hints);
         } catch (IllegalArgumentException iae) {
             // Unsupported format
             return null;

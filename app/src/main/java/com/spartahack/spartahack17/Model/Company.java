@@ -2,6 +2,8 @@ package com.spartahack.spartahack17.Model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Locale;
+
 /**
  * Created by ryancasler on 1/4/16.
  */
@@ -19,10 +21,10 @@ public class Company {
 
     // used for sorting
     public int getLevel() {
-        if (level.toLowerCase().equals("partner")) return 5;
-        if (level.toLowerCase().equals("trainee")) return 4;
-        if (level.toLowerCase().equals("warrior")) return 3;
-        if (level.toLowerCase().equals("commander")) return 2;
+        if (level.toLowerCase(Locale.US).equals("partner")) return 5;
+        if (level.toLowerCase(Locale.US).equals("trainee")) return 4;
+        if (level.toLowerCase(Locale.US).equals("warrior")) return 3;
+        if (level.toLowerCase(Locale.US).equals("commander")) return 2;
         return 1;
     }
 

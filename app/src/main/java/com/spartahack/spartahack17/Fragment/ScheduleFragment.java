@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -80,7 +81,7 @@ public class ScheduleFragment extends BaseFragment {
                         ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
 
                         DateTime date = events.get(0).getTime();
-                        SimpleDateFormat formatDate = new SimpleDateFormat("EEEE");
+                        SimpleDateFormat formatDate = new SimpleDateFormat("EEEE", Locale.US);
                         sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, formatDate.format(events.get(0).getTime().toDate())));
                         // location the header should go at
                         int sectionLoc = 0;
