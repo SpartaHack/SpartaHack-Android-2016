@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    tools:context="com.example.spartahack.spartahack16.Fragment.HelpDeskFragment">
+    tools:context="com.spartahack.spartahack17.Fragment.HelpDeskFragment">
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
