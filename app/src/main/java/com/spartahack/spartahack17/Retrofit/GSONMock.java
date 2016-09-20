@@ -66,4 +66,9 @@ public class GSONMock {
         public String objectId;
     }
 
+    public static class Login {
+        public String password;
+        public String email;
+    }
+
 }

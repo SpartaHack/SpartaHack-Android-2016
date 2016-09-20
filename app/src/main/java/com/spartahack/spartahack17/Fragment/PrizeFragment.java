@@ -4,6 +4,7 @@ package com.spartahack.spartahack17.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.view.ViewGroup;
 import com.spartahack.spartahack17.Adapters.PrizeAdapter;
 import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.R;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 
 import java.util.ArrayList;
@@ -19,10 +19,12 @@ import java.util.Collections;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PrizeFragment extends BaseFragment {
+
+    private static final String TAG = "PrizeFragment";
 
     /** Recycler view that displays all objects */
     @Bind(android.R.id.list) RecyclerView recyclerView;
@@ -37,20 +39,9 @@ public class PrizeFragment extends BaseFragment {
 
 
         ParseAPIService.INSTANCE.getRestAdapter().getPrizes()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GSONMock.Prizes>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(GSONMock.Prizes prizes) {
+                .subscribe(prizes -> {
                         ArrayList<Prize> prizeList = prizes.prizes;
 
                         Collections.sort(prizeList, (lhs, rhs) -> {
@@ -61,8 +52,7 @@ public class PrizeFragment extends BaseFragment {
 
                         recyclerView.setAdapter(new PrizeAdapter(getActivity(), prizeList));
 
-                    }
-                });
+                    }, throwable -> Log.e(TAG, throwable.toString()));
 
 
 
