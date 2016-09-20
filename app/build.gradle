@@ -84,7 +84,4 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
-
-    compile 'com.android.support:multidex:1.0.1'
-
 }
