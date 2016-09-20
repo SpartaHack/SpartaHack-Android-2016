@@ -13,6 +13,7 @@ import com.spartahack.spartahack17.Adapters.CompanyListAdapter;
 import com.spartahack.spartahack17.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.R;
+import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 
 import java.util.ArrayList;
@@ -20,15 +21,13 @@ import java.util.Collections;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Fragments that displays the companies that are sponsors of our great event
  */
 public class CompanyFragment extends BaseFragment {
-
-    private static final String TAG = "CompanyFragment";
 
     /** Recycler view that displays all objects */
     @Bind(android.R.id.list) RecyclerView recyclerView;
@@ -43,9 +42,20 @@ public class CompanyFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ParseAPIService.INSTANCE.getRestAdapter().getCompany()
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(company -> {
+                .subscribe(new Subscriber<GSONMock.Companies>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.e("CompanyFragment", e.toString());
+                    }
+
+                    @Override
+                    public void onNext(GSONMock.Companies company) {
                         
                         // get results as array list 
                         ArrayList<Company> companies = company.companies;
@@ -86,7 +96,8 @@ public class CompanyFragment extends BaseFragment {
                         adapter.setSections(sections.toArray(dummy));
 
                         recyclerView.setAdapter(adapter);
-                }, throwable -> Log.e(TAG, throwable.toString()));
+                    }
+                });
 
         return view;
     }

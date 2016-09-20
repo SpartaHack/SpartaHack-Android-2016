@@ -29,7 +29,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,7 +49,6 @@ public class ScheduleFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ParseAPIService.INSTANCE.getRestAdapter().getSchedule()
-                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GSONMock.Schedules>() {
                     @Override

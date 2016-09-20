@@ -9,16 +9,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.spartahack.spartahack17.Model.Ticket;
 import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Utility;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by ryancasler on 2/2/16.
@@ -37,7 +47,7 @@ public class CreateTicketActivity extends BaseActivity {
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.subCategoryLayout) LinearLayout subCategoryLayout;
 
-//    List<ParseObject> categoryList;
+    List<ParseObject> categoryList;
     List<String> subCategoryList;
 
 
@@ -63,81 +73,81 @@ public class CreateTicketActivity extends BaseActivity {
             toolbar.setTitleTextColor(getResources().getColor(R.color.accent, null));
 
 
-//
-//        ParseQuery<ParseObject> query = new ParseQuery<>("HelpDeskTickets");
-//        final List<Map<String, String>> subItem  = new ArrayList<>();
-//        final ArrayList<String> categoryArray = new ArrayList<>();
-//        query = new ParseQuery<>("HelpDesk");
-//        query.findInBackground((markers, e) -> {
-//            if (e == null) {
-//                categoryList = markers;
-//                for (ParseObject object : markers) {
-//                    Map<String, String> category = new HashMap<>(2);
-//                    category.put("text", object.get("category").toString());
-//                    category.put("subText", object.get("Description").toString());
-//                    subItem.add(category);
-//
-//                    categoryArray.add(object.get("category").toString());
-//                    if (object.get("category").toString().equals("Mentorship")) {
-//                        subCategoryList = object.getList("subCategory");
-//                    }
-//                }
-//
-//                // subCategory Spinner
-//                ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<>(CreateTicketActivity.this, R.layout.spinner_item, subCategoryList);
-//                //spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-//                subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
-//
-//            }
-//        });
+
+        ParseQuery<ParseObject> query = new ParseQuery<>("HelpDeskTickets");
+        final List<Map<String, String>> subItem  = new ArrayList<>();
+        final ArrayList<String> categoryArray = new ArrayList<>();
+        query = new ParseQuery<>("HelpDesk");
+        query.findInBackground((markers, e) -> {
+            if (e == null) {
+                categoryList = markers;
+                for (ParseObject object : markers) {
+                    Map<String, String> category = new HashMap<>(2);
+                    category.put("text", object.get("category").toString());
+                    category.put("subText", object.get("Description").toString());
+                    subItem.add(category);
+
+                    categoryArray.add(object.get("category").toString());
+                    if (object.get("category").toString().equals("Mentorship")) {
+                        subCategoryList = object.getList("subCategory");
+                    }
+                }
+
+                // subCategory Spinner
+                ArrayAdapter<String> spinnerRoomArrayAdapter = new ArrayAdapter<>(CreateTicketActivity.this, R.layout.spinner_item, subCategoryList);
+                //spinnerRoomArrayAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+                subCategorySpinner.setAdapter(spinnerRoomArrayAdapter);
+
+            }
+        });
 
     }
 
 
     @OnClick(R.id.submit)
     public void submit() {
-//        if (!validateSubject() || !validateDesc() || !validateLocation()) {
-//            return;
-//        }
-//
-//        ParseObject data = new ParseObject("HelpDeskTickets");
-//
-//        Ticket ticket = new Ticket();//Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
-//
-//        data.put("description", description.getText().toString());
-//        ticket.setDescription(description.getText().toString());
-//
-//        data.put("subject", subject.getText().toString());
-//        ticket.setSubject(subject.getText().toString());
-//
-//        data.put("location", location.getText().toString());
-//
-//        //Category Relation Object
-//        ParseObject categoryObject = categoryList.get(0);
-//
-//        ParseUser user = ParseUser.getCurrentUser();
-//
-//        data.put("user", user);
-//        data.put("category", categoryObject);
-//        data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
-//        ticket.setSubcategory(subCategorySpinner.getSelectedItem().toString());
-//        ticket.setSubcategory("Mentorship");
-//
-//        data.put("status", "Open");
-//        ticket.setStatus("Open");
-//
-//        data.put("notifiedFlag", false);
-//        data.saveInBackground();
-//
-//        Toast.makeText(getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
-//        subject.setText("");
-//        description.setText("");
-//        location.setText("");
-//        requestFocus(subject);
-//
-//        EventBus.getDefault().post(ticket);
-//
-//        onBackPressed();
+        if (!validateSubject() || !validateDesc() || !validateLocation()) {
+            return;
+        }
+
+        ParseObject data = new ParseObject("HelpDeskTickets");
+
+        Ticket ticket = new Ticket();//Ticket(subject.getText().toString(), categorySpinner.getSelectedItem().toString(), subject.getText().toString(), "Open", null);
+
+        data.put("description", description.getText().toString());
+        ticket.setDescription(description.getText().toString());
+
+        data.put("subject", subject.getText().toString());
+        ticket.setSubject(subject.getText().toString());
+
+        data.put("location", location.getText().toString());
+
+        //Category Relation Object
+        ParseObject categoryObject = categoryList.get(0);
+
+        ParseUser user = ParseUser.getCurrentUser();
+
+        data.put("user", user);
+        data.put("category", categoryObject);
+        data.put("subCategory", subCategorySpinner.getSelectedItem().toString());
+        ticket.setSubcategory(subCategorySpinner.getSelectedItem().toString());
+        ticket.setSubcategory("Mentorship");
+
+        data.put("status", "Open");
+        ticket.setStatus("Open");
+
+        data.put("notifiedFlag", false);
+        data.saveInBackground();
+        
+        Toast.makeText(getBaseContext(), "Submitted Successfully", Toast.LENGTH_SHORT).show();
+        subject.setText("");
+        description.setText("");
+        location.setText("");
+        requestFocus(subject);
+
+        EventBus.getDefault().post(ticket);
+
+        onBackPressed();
 
     }
 
