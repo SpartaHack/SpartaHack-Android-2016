@@ -18,23 +18,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by ryancasler on 9/19/16.
  * SpartaHack2016-Android
  */
-public class SpartahackAPIService {
+public class SpartaHackAPIService {
     /**
      * Singleton instance of the api service
      */
-    public final static SpartahackAPIService INSTANCE = new SpartahackAPIService();
+    public final static SpartaHackAPIService INSTANCE = new SpartaHackAPIService();
 
     /**
      * Tag for logging
      */
-    private static final String TAG = "SpartahackAPIService";
+    private static final String TAG = "SpartaHackAPIService";
 
     /**
      * Retrofit network call interface
      */
-    private ISpartahackAPIService apiService;
+    private ISpartaHackAPIService apiService;
 
-    private SpartahackAPIService() {
+    private SpartaHackAPIService() {
 
         // create gson object
         Gson gson = new GsonBuilder()
@@ -86,9 +86,9 @@ public class SpartahackAPIService {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        apiService = restAdapter.create(ISpartahackAPIService.class);
+        apiService = restAdapter.create(ISpartaHackAPIService.class);
     }
 
 
-    public ISpartahackAPIService getRestAdapter() { return apiService; }
+    public ISpartaHackAPIService getRestAdapter() { return apiService; }
 }

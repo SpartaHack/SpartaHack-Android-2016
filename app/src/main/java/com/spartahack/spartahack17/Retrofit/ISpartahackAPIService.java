@@ -12,7 +12,7 @@ import rx.Observable;
  * Created by ryancasler on 9/19/16.
  * SpartaHack2016-Android
  */
-public interface ISpartahackAPIService {
+public interface ISpartaHackAPIService {
 
     @POST("sessions")
     Observable<Session> login(@Body GSONMock.Login login);

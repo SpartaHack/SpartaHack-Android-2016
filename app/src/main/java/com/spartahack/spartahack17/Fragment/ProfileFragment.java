@@ -28,7 +28,7 @@ import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Model.Session;
 import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
-import com.spartahack.spartahack17.Retrofit.SpartahackAPIService;
+import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 
 import java.util.EnumMap;
 import java.util.Locale;
@@ -155,7 +155,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         login.email =  email;
         login.password =  passwordTextView.getText().toString().trim();
 
-        SpartahackAPIService.INSTANCE.getRestAdapter()
+        SpartaHackAPIService.INSTANCE.getRestAdapter()
                 .login(login)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -197,7 +197,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     @OnClick(R.id.logout)
     public void onLogout() {
         toggleViews(true);
-        SpartahackAPIService.INSTANCE.getRestAdapter()
+        SpartaHackAPIService.INSTANCE.getRestAdapter()
                 .logout(session.getAuth_token())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
