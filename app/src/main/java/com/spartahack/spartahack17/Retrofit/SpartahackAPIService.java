@@ -5,6 +5,7 @@ import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.spartahack.spartahack17.BuildConfig;
+import com.spartahack.spartahack17.Keys;
 
 import io.realm.RealmObject;
 import okhttp3.OkHttpClient;
@@ -59,7 +60,7 @@ public class SpartaHackAPIService {
             // Customize the request
             Request request = original.newBuilder()
                     .header("Content-Type", "application/json")
-                    .header("Authorization", "Token token=\"be4d6332f6eedf4dbeaf758b3ea4cd2d\"")
+                    .header("Authorization", Keys.SPARTAHACK_API_KEY)
                     .method(original.method(), original.body())
                     .build();
 

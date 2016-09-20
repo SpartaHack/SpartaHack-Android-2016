@@ -30,6 +30,7 @@ import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 
+import java.net.HttpURLConnection;
 import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
@@ -43,6 +44,8 @@ import rx.schedulers.Schedulers;
 
 
 public class ProfileFragment extends BaseFragment implements Switch.OnCheckedChangeListener {
+
+    private static final String TAG = "ProfileFragment";
 
     /**
      * URL to reset a password
@@ -201,10 +204,16 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
                 .logout(session.getAuth_token())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(session1 -> {
-                    Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
+                .subscribe(voidResponse -> {
+                    if (voidResponse.code() == HttpURLConnection.HTTP_NO_CONTENT) {
+                        Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
+                        session = null;
+                    } else {
+                        Snackbar.make(signedOut, "Error Logging Out", Snackbar.LENGTH_LONG).show();
+                    }
                     toggleViews(false);
-                }, throwable -> {});
+
+                }, throwable -> Log.e(TAG, throwable.toString()));
 
     }
 

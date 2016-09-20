@@ -2,6 +2,7 @@ package com.spartahack.spartahack17.Retrofit;
 
 import com.spartahack.spartahack17.Model.Session;
 
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.POST;
@@ -18,5 +19,5 @@ public interface ISpartaHackAPIService {
     Observable<Session> login(@Body GSONMock.Login login);
 
     @DELETE("sessions/{token}")
-    Observable<Session> logout(@Path("token") String token);
+    Observable<Response<Void>> logout(@Path("token") String token);
 }
