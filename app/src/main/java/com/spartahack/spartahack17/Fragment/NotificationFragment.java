@@ -2,7 +2,6 @@ package com.spartahack.spartahack17.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Adapters.AnnouncementAdapter;
 import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.R;
+import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 
 import org.joda.time.DateTimeComparator;
@@ -23,15 +23,13 @@ import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Fragment that displays notifications in a list
  */
 public class NotificationFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
-
-    private static final String TAG = "NotificationFragment";
 
     /** Listview that notificaitons are in */
     @Bind(android.R.id.list) ListView notificationList;
@@ -60,8 +58,19 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
     private void updateNotifications() {
         ParseAPIService.INSTANCE.getRestAdapter().getAnnouncements()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(announcements -> {
+                .subscribe(new Subscriber<GSONMock.Announcements>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(GSONMock.Announcements announcements) {
                         ArrayList<Announcement> notifications = announcements.announcements;
 
                         Collections.sort(notifications, new Comparator<Announcement>() {
@@ -91,7 +100,8 @@ public class NotificationFragment extends BaseFragment implements SwipeRefreshLa
                         // create adapter and add to arraylist
                         AnnouncementAdapter adapter = new AnnouncementAdapter((MainActivity) getActivity(), notifications);
                         notificationList.setAdapter(adapter);
-                    }, throwable -> Log.e(TAG, throwable.toString()));
+                    }
+                });
     }
 
     @Override

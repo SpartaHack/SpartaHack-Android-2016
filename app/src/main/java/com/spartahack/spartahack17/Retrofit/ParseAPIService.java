@@ -1,18 +1,16 @@
 package com.spartahack.spartahack17.Retrofit;
 
+import com.spartahack.spartahack17.BuildConfig;
+import com.spartahack.spartahack17.Keys;
 import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.spartahack.spartahack17.Keys;
 
 import io.realm.RealmObject;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit.RequestInterceptor;
+import retrofit.RestAdapter;
+import retrofit.converter.GsonConverter;
 
 /**
  * Created by ryancasler on 1/4/16.
@@ -52,40 +50,21 @@ public class ParseAPIService {
                 .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
                 .create();
 
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(chain -> {
-            Request original = chain.request();
-
-            // Customize the request
-            Request request = original.newBuilder()
-                    .header("X-Parse-Application-Id", Keys.PARSE_APP_ID)
-                    .header("X-Parse-REST-API-Key", Keys.PARSE_REST_API_KEY)
-                    .method(original.method(), original.body())
-                    .build();
-
-            // Customize or return the response
-            return chain.proceed(request);
-        });
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-
-        // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        // add your other interceptors …
-
-        // add logging as last interceptor
-        httpClient.addInterceptor(logging);  // <-- this is the important line!
-        OkHttpClient client = httpClient.build();
+        // add headers to any network requests made
+        RequestInterceptor requestInterceptor = request -> {
+            request.addHeader("X-Parse-Application-Id", Keys.PARSE_APP_ID);
+            request.addHeader("X-Parse-REST-API-Key", Keys.PARSE_REST_API_KEY);
+        };
 
         // request base url
-        String serverAPI = "https://api.parse.com/1/";
+        String serverAPI = "https://api.parse.com/1";
 
         // create Retrofit rest adapter
-        Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl(serverAPI)
-                .client(client)
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(serverAPI)
+                .setRequestInterceptor(requestInterceptor)
+                .setConverter(new GsonConverter(gson))
+                .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)
                 .build();
 
         apiService = restAdapter.create(IParseAPIService.class);
