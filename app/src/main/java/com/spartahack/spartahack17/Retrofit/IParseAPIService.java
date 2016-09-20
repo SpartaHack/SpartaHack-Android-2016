@@ -1,9 +1,10 @@
 package com.spartahack.spartahack17.Retrofit;
 
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.PUT;
-import retrofit.http.Path;
+
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -11,21 +12,21 @@ import rx.Observable;
  */
 public interface IParseAPIService {
 
-    @GET("/classes/Company")
+    @GET("classes/Company")
     Observable<GSONMock.Companies> getCompany();
 
-    @GET("/classes/Schedule")
+    @GET("classes/Schedule")
     Observable<GSONMock.Schedules> getSchedule();
 
-    @GET("/classes/Prizes?include=sponsor")
+    @GET("classes/Prizes?include=sponsor")
     Observable<GSONMock.Prizes> getPrizes();
 
-    @GET("/classes/Announcements")
+    @GET("classes/Announcements")
     Observable<GSONMock.Announcements> getAnnouncements();
 
-    @PUT("/classes/HelpDeskTickets/{oid}")
+    @PUT("classes/HelpDeskTickets/{oid}")
     Observable<GSONMock.UpdateObj> updateTicketStatus(@Path("oid") String o, @Body GSONMock.UpdateTicketStatusRequest del);
 
-    @GET("/classes/HelpDeskTickets/{tid}")
+    @GET("classes/HelpDeskTickets/{tid}")
     Observable<GSONMock.Ticket> getTicket(@Path( "tid") String tid);
 }

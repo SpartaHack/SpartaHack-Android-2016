@@ -4,7 +4,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.spartahack.spartahack17.Keys;
+import com.spartahack.spartahack17.BuildConfig;
 
 import io.realm.RealmObject;
 import okhttp3.OkHttpClient;
@@ -15,26 +15,26 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by ryancasler on 1/4/16.
+ * Created by ryancasler on 9/19/16.
+ * SpartaHack2016-Android
  */
-public class ParseAPIService {
-
+public class SpartahackAPIService {
     /**
      * Singleton instance of the api service
      */
-    public final static ParseAPIService INSTANCE = new ParseAPIService();
+    public final static SpartahackAPIService INSTANCE = new SpartahackAPIService();
 
     /**
      * Tag for logging
      */
-    private static final String TAG = "ParseAPIService";
+    private static final String TAG = "SpartahackAPIService";
 
     /**
      * Retrofit network call interface
      */
-    private IParseAPIService apiService;
+    private ISpartahackAPIService apiService;
 
-    private ParseAPIService() {
+    private SpartahackAPIService() {
 
         // create gson object
         Gson gson = new GsonBuilder()
@@ -58,8 +58,8 @@ public class ParseAPIService {
 
             // Customize the request
             Request request = original.newBuilder()
-                    .header("X-Parse-Application-Id", Keys.PARSE_APP_ID)
-                    .header("X-Parse-REST-API-Key", Keys.PARSE_REST_API_KEY)
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", "Token token=\"be4d6332f6eedf4dbeaf758b3ea4cd2d\"")
                     .method(original.method(), original.body())
                     .build();
 
@@ -77,21 +77,18 @@ public class ParseAPIService {
         httpClient.addInterceptor(logging);  // <-- this is the important line!
         OkHttpClient client = httpClient.build();
 
-        // request base url
-        String serverAPI = "https://api.parse.com/1/";
 
         // create Retrofit rest adapter
         Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl(serverAPI)
+                .baseUrl(BuildConfig.HOST)
                 .client(client)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        apiService = restAdapter.create(IParseAPIService.class);
+        apiService = restAdapter.create(ISpartahackAPIService.class);
     }
 
 
-    public IParseAPIService getRestAdapter() { return apiService; }
-
+    public ISpartahackAPIService getRestAdapter() { return apiService; }
 }

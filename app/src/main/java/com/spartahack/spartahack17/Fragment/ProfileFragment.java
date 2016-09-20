@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +24,11 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.parse.ParseInstallation;
-import com.parse.ParseUser;
 import com.spartahack.spartahack17.Activity.MainActivity;
+import com.spartahack.spartahack17.Model.Session;
 import com.spartahack.spartahack17.R;
+import com.spartahack.spartahack17.Retrofit.GSONMock;
+import com.spartahack.spartahack17.Retrofit.SpartahackAPIService;
 
 import java.util.EnumMap;
 import java.util.Locale;
@@ -38,6 +38,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class ProfileFragment extends BaseFragment implements Switch.OnCheckedChangeListener {
@@ -55,7 +57,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     @Bind(R.id.signedOut) View signedOut;
     @Bind(R.id.qr) ImageView qr;
     @Bind(R.id.display_name) TextView displayName;
-    @Bind(R.id.progressBar) ProgressBar bar;
+    @Bind(R.id.progressBar) ProgressBar progressBar;
     @Bind(R.id.email_layout) TextInputLayout emailLayout;
     @Bind(R.id.password_layout) TextInputLayout passwordLayout;
     @Bind(R.id.login_page_title) TextView loginViewTitle;
@@ -64,6 +66,8 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
 
 
     boolean fromHelp = false;
+
+    private Session session;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -92,11 +96,9 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     @Override
     public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
         if (isChecked){
-            updateParseInstillation(false);
             Toast.makeText(getActivity(), "Subscribed successfully", Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(true);
         } else {
-            updateParseInstillation(true);
             Toast.makeText(getActivity(), "Unsubscribed successfully", Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(false);
         }
@@ -144,28 +146,40 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         // Don't submit call if errors
         if (error) return;
 
-        hideKeyboard(passwordTextView);
-
-        // change views shown
+        // show loading
         toggleViews(true);
 
-        ParseUser.logInInBackground(email, passwordTextView.getText().toString().trim(), (user, e) -> {
-            if (user != null) {
-                Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
-                updateParseInstillation(false);
-                if (fromHelp) {
-                    getActivity().onBackPressed();
-                } else {
-                    toggleViews(false);
-                }
+        hideKeyboard(passwordTextView);
 
-            } else {
-                Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
-                Log.e("Login", e.toString());
-                e.printStackTrace();
-                toggleViews(false);
-            }
-        });
+        GSONMock.Login login = new GSONMock.Login();
+        login.email =  email;
+        login.password =  passwordTextView.getText().toString().trim();
+
+        SpartahackAPIService.INSTANCE.getRestAdapter()
+                .login(login)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(session -> {
+
+                    if (session != null) {
+                        this.session = session;
+                        Snackbar.make(progressBar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
+
+                        // go back to the help screen
+                        if (fromHelp) getActivity().onBackPressed();
+                        // show the content
+                        else toggleViews(false);
+
+                    } else {
+                        Snackbar.make(progressBar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
+                        toggleViews(false);
+                    }
+
+                }, throwable -> {
+                    Snackbar.make(progressBar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
+                    Log.e("Login", throwable.toString());
+                    toggleViews(false);
+                });
     }
 
     /**
@@ -183,11 +197,15 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     @OnClick(R.id.logout)
     public void onLogout() {
         toggleViews(true);
-        ParseUser.logOutInBackground(e -> {
-            updateParseInstillation(true);
-            toggleViews(false);
-            Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
-        });
+        SpartahackAPIService.INSTANCE.getRestAdapter()
+                .logout(session.getAuth_token())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(session1 -> {
+                    Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
+                    toggleViews(false);
+                }, throwable -> {});
+
     }
 
     /**
@@ -197,13 +215,12 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
      * @param load if the loading circle should show or not
      */
     private void toggleViews(boolean load) {
-        ParseUser user = ParseUser.getCurrentUser();
         if (load) {
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.GONE);
-            bar.setVisibility(View.VISIBLE);
-        } else if (user != null) {
-            bar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+        } else if (session != null) {
+            progressBar.setVisibility(View.GONE);
             signedIn.setVisibility(View.VISIBLE);
             signedOut.setVisibility(View.GONE);
 
@@ -211,17 +228,17 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
             Bitmap bitmap;
 
             try {
-                bitmap = encodeAsBitmap(user.getObjectId(), BarcodeFormat.CODE_128, 600, 300);
+                bitmap = encodeAsBitmap(String.valueOf(session.getId()), BarcodeFormat.CODE_128, 600, 300);
                 qr.setImageBitmap(bitmap);
 
             } catch (WriterException e) {
                 e.printStackTrace();
             }
 
-            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), TextUtils.isEmpty((CharSequence) user.get("name")) ? user.getUsername() : user.get("name")));
+            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), session.getEmail()));
 
         } else {
-            bar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.VISIBLE);
         }
@@ -246,22 +263,6 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
      */
     private boolean validatePassword(String password) {
         return password.length() >= 4;
-    }
-
-    private void updateParseInstillation(boolean logout){
-        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
-
-        if (logout){
-            currentInstall.remove("user");
-//            ParsePush.unsubscribeInBackground("");
-        }
-        else {
-            if (ParseUser.getCurrentUser()!=null) currentInstall.put("user", ParseUser.getCurrentUser());
-//            ParsePush.subscribeInBackground("");
-        }
-
-
-        ParseInstallation.getCurrentInstallation().saveInBackground();
     }
 
     /**************************************************************

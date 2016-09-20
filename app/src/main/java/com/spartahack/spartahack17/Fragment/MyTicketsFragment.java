@@ -12,9 +12,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.spartahack.spartahack17.Activity.CreateTicketActivity;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Adapters.TicketAdapter;
@@ -23,7 +20,6 @@ import com.spartahack.spartahack17.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +34,7 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
 
     private ArrayList<Ticket> tickets;
 
-    ParseUser user;
+//    ParseUser user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +49,7 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.background);
 
-        user = ParseUser.getCurrentUser();
+//        user = ParseUser.getCurrentUser();
 
         userExists.setVisibility(View.VISIBLE);
         noTix.setVisibility(View.GONE);
@@ -108,32 +104,32 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        ParseQuery<ParseObject> query = new ParseQuery<>("HelpDeskTickets");
-        query.whereEqualTo("user", user);
-        query.whereNotEqualTo("status", "Deleted");
-        query.include("user");
-        query.findInBackground((objects, e) -> {
-            if (swipeRefreshLayout != null)swipeRefreshLayout.setRefreshing(false);
-
-            Collections.sort(objects, new Comparator<ParseObject>() {
-                @Override
-                public int compare(ParseObject lhs, ParseObject rhs) {
-                    int lhsI = getStatusInt(lhs.getString("status"));
-                    int rhsI = getStatusInt(rhs.getString("status"));
-                    if (rhsI == lhsI) return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
-                    else return lhsI-rhsI;
-                }
-            });
-            if (e == null) {
-                tickets = new ArrayList<>();
-                for (ParseObject object : objects) {
-                    tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
-                }
-            }
-
-            // setup the recyclerview with the member var tickets
-            setRecyclerViewSections();
-        });
+//        ParseQuery<ParseObject> query = new ParseQuery<>("HelpDeskTickets");
+//        query.whereEqualTo("user", user);
+//        query.whereNotEqualTo("status", "Deleted");
+//        query.include("user");
+//        query.findInBackground((objects, e) -> {
+//            if (swipeRefreshLayout != null)swipeRefreshLayout.setRefreshing(false);
+//
+//            Collections.sort(objects, new Comparator<ParseObject>() {
+//                @Override
+//                public int compare(ParseObject lhs, ParseObject rhs) {
+//                    int lhsI = getStatusInt(lhs.getString("status"));
+//                    int rhsI = getStatusInt(rhs.getString("status"));
+//                    if (rhsI == lhsI) return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
+//                    else return lhsI-rhsI;
+//                }
+//            });
+//            if (e == null) {
+//                tickets = new ArrayList<>();
+//                for (ParseObject object : objects) {
+//                    tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location")));
+//                }
+//            }
+//
+//            // setup the recyclerview with the member var tickets
+//            setRecyclerViewSections();
+//        });
     }
 
     private int getStatusInt(String s){

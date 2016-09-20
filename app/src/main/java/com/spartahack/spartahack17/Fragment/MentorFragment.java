@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +14,9 @@ import com.spartahack.spartahack17.Adapters.MentorTicketAdapter;
 import com.spartahack.spartahack17.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.spartahack.spartahack17.Model.Ticket;
 import com.spartahack.spartahack17.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -61,18 +54,14 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.background);
 
 
-        if (ParseUser.getCurrentUser() == null) {
-            authView.setVisibility(View.VISIBLE);
-//            notMentorView.setVisibility(View.GONE);
-//            mentorView.setVisibility(View.GONE);
-            ticketView.setVisibility(View.GONE);
-            noTix.setVisibility(View.GONE);
-        } else {
-
-            authView.setVisibility(View.GONE);
-
-            onRefresh();
-        }
+//        if (ParseUser.getCurrentUser() == null) {
+//            authView.setVisibility(View.VISIBLE);
+//            ticketView.setVisibility(View.GONE);
+//            noTix.setVisibility(View.GONE);
+//        } else {
+//            authView.setVisibility(View.GONE);
+//            onRefresh();
+//        }
 
         return view;
     }
@@ -130,43 +119,43 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        tickets = new ArrayList<>();
-        ParseQuery<ParseObject> query = new ParseQuery<>("Mentors");
-        query.whereEqualTo("mentor", ParseUser.getCurrentUser());
-        query.findInBackground((mentorList, e) -> {
-            if (e == null) {
-                    mentorCategories = mentorList.get(0).getList("categories");
-
-                    ParseQuery<ParseObject> query1 = new ParseQuery<>("HelpDeskTickets");
-                    query1.whereNotEqualTo("user", ParseUser.getCurrentUser());
-                    query1.whereContainedIn("subCategory", mentorCategories);
-                    query1.whereEqualTo("status", "Open");
-                    query1.include("user");
-                    query1.findInBackground(new FindCallback<ParseObject>() {
-                        @Override
-                        public void done(List<ParseObject> objects, ParseException e) {
-                            if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
-                            if (e == null) {
-                                Collections.sort(objects, new Comparator<ParseObject>() {
-                                    @Override
-                                    public int compare(ParseObject lhs, ParseObject rhs) {
-                                        return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
-                                    }
-                                });
-                                for (ParseObject object : objects) {
-                                    String name = object.getParseObject("user").getString("name");
-                                    tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location"), name));
-                                }
-                                setRecyclerViewSections();
-                            }
-                        }
-                    });
-
-
-            } else {
-                Log.e("Mentor", "Error: " + e.getMessage());
-            }
-        });
+//        tickets = new ArrayList<>();
+//        ParseQuery<ParseObject> query = new ParseQuery<>("Mentors");
+//        query.whereEqualTo("mentor", ParseUser.getCurrentUser());
+//        query.findInBackground((mentorList, e) -> {
+//            if (e == null) {
+//                    mentorCategories = mentorList.get(0).getList("categories");
+//
+//                    ParseQuery<ParseObject> query1 = new ParseQuery<>("HelpDeskTickets");
+//                    query1.whereNotEqualTo("user", ParseUser.getCurrentUser());
+//                    query1.whereContainedIn("subCategory", mentorCategories);
+//                    query1.whereEqualTo("status", "Open");
+//                    query1.include("user");
+//                    query1.findInBackground(new FindCallback<ParseObject>() {
+//                        @Override
+//                        public void done(List<ParseObject> objects, ParseException e) {
+//                            if (swipeRefreshLayout != null) swipeRefreshLayout.setRefreshing(false);
+//                            if (e == null) {
+//                                Collections.sort(objects, new Comparator<ParseObject>() {
+//                                    @Override
+//                                    public int compare(ParseObject lhs, ParseObject rhs) {
+//                                        return rhs.getUpdatedAt().compareTo(lhs.getUpdatedAt());
+//                                    }
+//                                });
+//                                for (ParseObject object : objects) {
+//                                    String name = object.getParseObject("user").getString("name");
+//                                    tickets.add(0, new Ticket(object.getString("subject"), object.getString("description"), object.getString("status"), object.getObjectId(), object.getString("subCategory"), object.getString("location"), name));
+//                                }
+//                                setRecyclerViewSections();
+//                            }
+//                        }
+//                    });
+//
+//
+//            } else {
+//                Log.e("Mentor", "Error: " + e.getMessage());
+//            }
+//        });
 
     }
 }
