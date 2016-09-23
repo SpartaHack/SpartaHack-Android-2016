@@ -1,6 +1,8 @@
 package com.spartahack.spartahack17;
 
 import android.content.Context;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * Created by ryan on 10/22/15.
@@ -18,5 +20,15 @@ public class Utility {
             result = c.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
+    }
+
+    /**
+     * Hide the soft keyboard
+     * @param view to get window token
+     */
+    protected void hideKeyboard(View view){
+        // hide keyboard!!! fuck android
+        InputMethodManager imm = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

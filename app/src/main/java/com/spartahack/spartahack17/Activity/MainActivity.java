@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
 import com.spartahack.spartahack17.Fragment.HelpDeskFragment;
-import com.spartahack.spartahack17.Fragment.NotificationFragment;
+import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
 import com.spartahack.spartahack17.Model.Ticket;
 import com.spartahack.spartahack17.R;
@@ -148,7 +148,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
                 case R.id.notifications:
                     title = getResources().getString(R.string.notifications);
-                    addFragment(new NotificationFragment());
+                    addFragment(new AnnouncementFragment());
                     break;
 
                 case R.id.schedule:
