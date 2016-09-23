@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.0'
+        classpath 'com.android.tools.build:gradle:2.2.0'
         classpath 'me.tatarka:gradle-retrolambda:3.2.3'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -17,4 +17,12 @@ allprojects {
     repositories {
         jcenter()
     }
+}
+
+ext {
+    // App dependencies
+    junitVersion = '4.12'
+    mockitoVersion = '1.10.19'
+    powerMockito = '1.6.2'
+    hamcrestVersion = '1.3'
 }
