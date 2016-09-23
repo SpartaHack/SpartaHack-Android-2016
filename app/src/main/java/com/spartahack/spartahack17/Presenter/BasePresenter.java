@@ -22,7 +22,7 @@ public abstract class BasePresenter<V extends BaseView> {
     /**
      * @return if there is a view attached or not
      */
-    protected boolean isViewAttached() {return view == null;}
+    protected boolean isViewAttached() {return view != null;}
 
     /**
      * @param view to attach to this presenter
