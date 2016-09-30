@@ -39,6 +39,26 @@ public class Announcement {
     public boolean getPinned() {
         return pinned;
     }
+
+    public boolean isPinned() {
+        return pinned;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPinned(boolean pinned) {
+        this.pinned = pinned;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 }
 
 

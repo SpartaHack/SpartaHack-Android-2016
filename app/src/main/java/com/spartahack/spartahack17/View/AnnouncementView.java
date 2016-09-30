@@ -9,6 +9,6 @@ import java.util.ArrayList;
  * SpartaHack2016-Android
  */
 
-public interface AnnouncementView extends BaseView{
+public interface AnnouncementView extends BaseView {
     void showAnnouncements(ArrayList<Announcement> announcements);
 }

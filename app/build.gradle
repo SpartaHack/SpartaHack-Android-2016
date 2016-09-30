@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "0.1"
         vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -84,12 +85,32 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
-
-    // Dependencies for local unit tests
+// Dependencies for local unit tests
     testCompile "junit:junit:$rootProject.ext.junitVersion"
     testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
     testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
     testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
     testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
 
+}
+
+/*
+Resolves dependency versions across test and production APKs, specifically, transitive
+dependencies. This is required since Espresso internally has a dependency on support-annotations.
+*/
+configurations.all {
+    resolutionStrategy.force "com.android.support:support-annotations:$rootProject.supportLibraryVersion"
+}
+
+/*
+All direct/transitive dependencies shared between your test and production APKs need to be
+excluded from the test APK! This is necessary because both APKs will contain the same classes. Not
+excluding these dependencies from your test configuration will result in an dex pre-verifier error
+at runtime. More info in this tools bug: (https://code.google.com/p/android/issues/detail?id=192497)
+*/
+configurations.compile.dependencies.each { compileDependency ->
+    println "Excluding compile dependency: ${compileDependency.getName()}"
+    configurations.androidTestCompile.dependencies.each { androidTestCompileDependency ->
+        configurations.androidTestCompile.exclude module: "${compileDependency.getName()}"
+    }
 }

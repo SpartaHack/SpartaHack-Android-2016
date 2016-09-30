@@ -74,4 +74,14 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
         AnnouncementAdapter adapter = new AnnouncementAdapter((MainActivity) getActivity(), announcements);
         notificationList.setAdapter(adapter);
     }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void onError(String error) {
+
+    }
 }

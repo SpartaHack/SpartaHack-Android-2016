@@ -6,4 +6,6 @@ package com.spartahack.spartahack17.View;
  */
 
 public interface BaseView {
+    void showLoading();
+    void onError(String error);
 }
