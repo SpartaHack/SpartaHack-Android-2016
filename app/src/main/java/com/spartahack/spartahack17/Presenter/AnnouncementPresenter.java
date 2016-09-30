@@ -20,6 +20,8 @@ import rx.schedulers.Schedulers;
  * SpartaHack2016-Android
  */
 public class AnnouncementPresenter extends BasePresenter<AnnouncementView> implements Comparator<Announcement> {
+    private static final int RIGHT_FIRST = 1;
+    private static final int LEFT_FIRST = -1;
 
     private static final String TAG = "AnnouncementPresenter";
 
@@ -40,22 +42,11 @@ public class AnnouncementPresenter extends BasePresenter<AnnouncementView> imple
     }
 
     @Override public int compare(Announcement lhs, Announcement rhs) {
-        if (rhs.getPinned() && lhs.getPinned())
-            return compare_time(lhs, rhs);
+        if (!rhs.getPinned() && !lhs.getPinned())
+            return DateTimeComparator.getInstance().compare(rhs.getTime(), lhs.getTime());
         else if (rhs.getPinned())
-            return 1;
-        else
-            return compare_time(lhs, rhs);
-    }
-
-    private int compare_time(Announcement lhs, Announcement rhs) {
-        int result = DateTimeComparator.getInstance().compare(lhs.getTime(), rhs.getTime());
-        if (result == 1) {
-            return -1;
-        } else if (result == -1) {
-            return 1;
-        } else
-            return result;
+            return RIGHT_FIRST;
+        return LEFT_FIRST;
     }
 
 }
