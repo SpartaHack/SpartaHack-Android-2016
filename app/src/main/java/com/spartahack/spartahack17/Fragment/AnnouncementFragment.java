@@ -75,13 +75,9 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
         notificationList.setAdapter(adapter);
     }
 
-    @Override
-    public void showLoading() {
-
+    @Override public void showLoading() {
     }
 
-    @Override
-    public void onError(String error) {
-
+    @Override public void onError(String error) {
     }
 }

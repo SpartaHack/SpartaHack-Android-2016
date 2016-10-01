@@ -3,6 +3,7 @@ package com.spartahack.spartahack17.Presenter;
 import android.util.Log;
 
 import com.spartahack.spartahack17.Model.Announcement;
+import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 import com.spartahack.spartahack17.View.AnnouncementView;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -19,26 +21,22 @@ import rx.schedulers.Schedulers;
  * Created by ryancasler on 9/23/16.
  * SpartaHack2016-Android
  */
-public class AnnouncementPresenter extends BasePresenter<AnnouncementView> implements Comparator<Announcement> {
+public class AnnouncementPresenter extends RxPresenter<AnnouncementView, GSONMock.Announcements> implements Comparator<Announcement> {
     private static final int RIGHT_FIRST = 1;
     private static final int LEFT_FIRST = -1;
 
     private static final String TAG = "AnnouncementPresenter";
 
     public void updateAnnouncements() {
-        ParseAPIService.INSTANCE.getRestAdapter().getAnnouncements()
+        if (isViewAttached()) {
+            getView().showLoading();
+        }
+
+        Observable observable = ParseAPIService.INSTANCE.getRestAdapter().getAnnouncements()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(announcements -> {
-                    ArrayList<Announcement> notifications = announcements.announcements;
+                .subscribeOn(Schedulers.io());
 
-                    Collections.sort(notifications, this);
-
-                    if (isViewAttached()) {
-                        getView().showAnnouncements(notifications);
-                    }
-
-                }, throwable -> Log.e(TAG, throwable.toString()));
+        subscribe(observable);
     }
 
     @Override public int compare(Announcement lhs, Announcement rhs) {
@@ -49,4 +47,18 @@ public class AnnouncementPresenter extends BasePresenter<AnnouncementView> imple
         return LEFT_FIRST;
     }
 
+    @Override void onError(Throwable e) {
+        Log.e(TAG, e.toString());
+        if (isViewAttached()) {
+            getView().onError(e.toString());
+        }
+    }
+
+    @Override void onNext(GSONMock.Announcements data) {
+        ArrayList<Announcement> notifications = data.announcements;
+        Collections.sort(notifications, this);
+        if (isViewAttached()) {
+            getView().showAnnouncements(notifications);
+        }
+    }
 }
