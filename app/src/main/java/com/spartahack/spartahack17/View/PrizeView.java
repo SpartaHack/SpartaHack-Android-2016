@@ -1,7 +1,6 @@
 package com.spartahack.spartahack17.View;
 
 import com.spartahack.spartahack17.Model.Prize;
-
 import java.util.ArrayList;
 
 /**
