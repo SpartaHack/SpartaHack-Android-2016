@@ -32,29 +32,24 @@ public class PrizeFragment extends MVPFragment<PrizeView, PrizePresenter> implem
     /**
      * Recycler view that displays all objects
      */
-    @Bind(android.R.id.list)
-    RecyclerView recyclerView;
+    @Bind(android.R.id.list) RecyclerView recyclerView;
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         getMVPPresenter().updatePrizes();
     }
 
-    @NonNull @Override
-    public PrizePresenter createPresenter() {
+    @NonNull @Override public PrizePresenter createPresenter() {
         return new PrizePresenter();
     }
 
-    @Override
-    int getLayout() {
+    @Override int getLayout() {
         return R.layout.fragment_prizes;
     }
 
-    @Override
-    boolean registerEventbus() {
+    @Override boolean registerEventbus() {
         return false;
     }
 

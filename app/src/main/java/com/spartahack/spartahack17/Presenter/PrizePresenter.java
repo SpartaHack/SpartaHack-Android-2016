@@ -19,7 +19,6 @@ import rx.schedulers.Schedulers;
  * Created by memuyskens on 10/5/16.
  * SpartaHack-Android
  */
-
 public class PrizePresenter extends RxPresenter<PrizeView, GSONMock.Prizes> {
 
     private static final String TAG = "PrizePresenter";
