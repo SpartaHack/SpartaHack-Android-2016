@@ -48,7 +48,6 @@ public class AnnouncementPresenter extends RxPresenter<AnnouncementView, GSONMoc
     }
 
     @Override void onError(Throwable e) {
-        Log.e(TAG, e.toString());
         if (isViewAttached()) {
             getView().onError(e.toString());
         }
