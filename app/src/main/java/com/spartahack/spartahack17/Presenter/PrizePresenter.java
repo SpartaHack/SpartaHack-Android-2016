@@ -43,7 +43,6 @@ public class PrizePresenter extends RxPresenter<PrizeView, GSONMock.Prizes> impl
     }
 
     @Override void onError(Throwable e) {
-        Log.e(TAG, e.toString());
         if (isViewAttached()) {
             getView().onError(e.toString());
         }
