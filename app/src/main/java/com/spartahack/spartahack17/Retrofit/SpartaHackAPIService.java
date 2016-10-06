@@ -33,7 +33,7 @@ public class SpartaHackAPIService {
     /**
      * Retrofit network call interface
      */
-    private ISpartaHackAPIService apiService;
+    private final ISpartaHackAPIService apiService;
 
     private SpartaHackAPIService() {
 

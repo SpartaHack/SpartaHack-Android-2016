@@ -28,7 +28,8 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
 /**
- * Created by ryancasler on 2/2/16.
+ * Created by ryancasler on 2/2/16
+ * SpartaHack2016-Android
  */
 public class ViewTicketActivity extends BaseActivity {
 
@@ -44,7 +45,7 @@ public class ViewTicketActivity extends BaseActivity {
     public static final String I_TICKET = "ticket";
 
     public static final String I_TICKET_ID = "ticket id";
-    public static String NOT_ID = "notid";
+    public static final String NOT_ID = "notid";
     public static final String EXTEND = "extend";
     public static final String ACTION = "action";
     public static final String CLOSE = "close";
@@ -137,9 +138,7 @@ public class ViewTicketActivity extends BaseActivity {
     public void onFabClick() {
         new AlertDialog.Builder(this)
                 .setMessage("Are you sure you want to delete your ticket " + ticket.getSubject() + "?")
-                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> {
-                    refreshTicket(new GSONMock.UpdateTicketStatusRequest("Deleted", true), "Ticket Deleted", true);
-                })
+                .setPositiveButton(android.R.string.yes, (dialog, whichButton) -> refreshTicket(new GSONMock.UpdateTicketStatusRequest("Deleted", true), "Ticket Deleted", true))
                 .setNegativeButton(android.R.string.no, null)
                 .show();
     }

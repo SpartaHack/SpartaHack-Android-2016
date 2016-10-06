@@ -25,10 +25,10 @@ import butterknife.ButterKnife;
 public class NotificationAdapter extends BaseAdapter {
 
     /** Reference to the main activity for context to get images as well as get the layout inflater */
-    private MainActivity context;
+    private final MainActivity context;
 
     /** The list of notifications that is being displayed */
-    private List<PushNotification> notifications;
+    private final List<PushNotification> notifications;
 
     public NotificationAdapter(MainActivity context, @SuppressWarnings("SameParameterValue") int resource, List<PushNotification> notifications) {
         this.context = context;

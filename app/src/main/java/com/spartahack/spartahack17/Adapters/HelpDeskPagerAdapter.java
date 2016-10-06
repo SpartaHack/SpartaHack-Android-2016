@@ -10,19 +10,20 @@ import com.spartahack.spartahack17.Fragment.MentorFragment;
 import java.util.ArrayList;
 
 /**
- * Created by ryancasler on 1/22/16.
+ * Created by ryancasler on 1/22/16
+ * SpartaHack2016-Android
  */
 public class HelpDeskPagerAdapter extends FragmentPagerAdapter {
 
     /**
      * list of fragments in the adapter
      */
-    private ArrayList<Fragment> fragments;
+    private final ArrayList<Fragment> fragments;
 
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"My Tickets", "Mentor Tickets"};
+    private final String[] tabs = {"My Tickets", "Mentor Tickets"};
 
     public HelpDeskPagerAdapter(FragmentManager fm) {
         super(fm);

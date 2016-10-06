@@ -73,6 +73,7 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         Realm realm = Realm.getInstance(getActivity());
         RealmQuery<Ticket> query = realm.where(Ticket.class);
         RealmResults<Ticket> result1 = query.findAll();
+        //noinspection Convert2streamapi
         for (Ticket tix: result1) {
             tickets.add(new Ticket(tix.getSubject(), tix.getDescription(),tix.getStatus(), tix.getId(), tix.getSubcategory(), tix.getLocation(), true, tix.getName()));
         }

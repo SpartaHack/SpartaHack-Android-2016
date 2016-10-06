@@ -15,7 +15,8 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by ryancasler on 1/4/16.
+ * Created by ryancasler on 1/4/16
+ * SpartaHack2016-Android
  */
 public class ParseAPIService {
 

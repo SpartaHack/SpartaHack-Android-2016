@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:textColor="@android:color/darker_gray"
-            android:textSize="@dimen/abc_text_size_small_material"
+            android:textSize="@dimen/body_text_size"
             tools:text="Amazon Alexa" />
 
     </LinearLayout>

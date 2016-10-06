@@ -1,7 +1,8 @@
 package com.spartahack.spartahack17;
 
 /**
- * Created by ryan on 11/5/15.
+ * Created by ryan on 11/5/15
+ * SpartaHack2016-Android
  */
 public class Cache {
 

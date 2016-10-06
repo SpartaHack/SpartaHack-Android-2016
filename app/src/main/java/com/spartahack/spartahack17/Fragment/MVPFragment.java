@@ -43,16 +43,20 @@ public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
      * This base fragment implements {@link BaseView} so that it is always the view
      * @return the view
      */
-    protected V getMVPView() {return (V) this;}
+    protected V getMVPView() {
+        return (V) this;
+    }
 
     /**
      * @return the res layout id for the fragment
      */
+    @SuppressWarnings("SameReturnValue")
     @LayoutRes  abstract int getLayout();
 
     /**
      * @return if the fragment should register for event bus
      */
+    @SuppressWarnings("SameReturnValue")
     abstract boolean registerEventbus();
 
     /**
@@ -62,7 +66,7 @@ public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
 
     /**
      * Sets up the tabbar with the view pager
-     * @param viewPager
+     * @param viewPager the view pager to set up tabs with
      */
     protected void setUpTabBar(ViewPager viewPager){
         EventBus.getDefault().post(viewPager);
@@ -83,7 +87,7 @@ public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
         super.onViewCreated(view, savedInstanceState);
         
         // attach the view to the presenter 
-        // TODO: 9/23/16 figure out unchecked call 
+        // TODO: 9/23/16 figure out unchecked call
         getMVPPresenter().attachView(getMVPView());
     }
 

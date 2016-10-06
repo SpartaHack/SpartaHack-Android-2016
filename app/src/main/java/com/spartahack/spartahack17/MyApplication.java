@@ -11,7 +11,8 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
 /**
- * Created by ryan on 11/3/15.
+ * Created by ryancasler on 11/3/15
+ * SpartaHack2016-Android
  */
 public class MyApplication extends Application {
 

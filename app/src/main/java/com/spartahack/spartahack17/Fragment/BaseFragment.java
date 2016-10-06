@@ -10,7 +10,8 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by ryan on 10/22/15.
+ * Created by ryan on 10/22/15
+ * SpartaHack2016-Android
  */
 public class BaseFragment extends Fragment{
 

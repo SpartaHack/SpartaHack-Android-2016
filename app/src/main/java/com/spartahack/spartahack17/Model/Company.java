@@ -5,11 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Locale;
 
 /**
- * Created by ryancasler on 1/4/16.
+ * Created by ryancasler on 1/4/16
+ * SpartaHack2016-Android
  */
 public class Company {
-    private String level;
-    private String name;
+    private final String level;
+    private final String name;
     private String url;
     @SerializedName("png")
     private pic pic;

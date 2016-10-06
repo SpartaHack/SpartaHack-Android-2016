@@ -9,7 +9,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
 /**
- * Created by ryancasler on 1/4/16.
+ * Created by ryancasler on 1/4/16
+ * SpartaHack2016-Android
  */
 public class GSONMock {
     public static class Companies {
@@ -42,8 +43,8 @@ public class GSONMock {
             this.notifiedFlag = notifiedFlag;
         }
 
-        public String status;
-        public boolean notifiedFlag;
+        public final String status;
+        public final boolean notifiedFlag;
     }
 
     /**

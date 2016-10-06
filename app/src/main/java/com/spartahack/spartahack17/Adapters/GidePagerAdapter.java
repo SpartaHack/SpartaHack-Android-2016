@@ -10,19 +10,20 @@ import com.spartahack.spartahack17.Fragment.ScheduleFragment;
 import java.util.ArrayList;
 
 /**
- * Created by ryancasler on 1/24/16.
+ * Created by ryancasler on 1/24/16
+ * SpartaHack2016-Android
  */
 public class GidePagerAdapter extends FragmentPagerAdapter {
 
     /**
      * list of fragments in the adapter
      */
-    private ArrayList<Fragment> fragments;
+    private final ArrayList<Fragment> fragments;
 
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"Schedule", "Map"};
+    private final String[] tabs = {"Schedule", "Map"};
 
     public GidePagerAdapter(FragmentManager fm) {
         super(fm);

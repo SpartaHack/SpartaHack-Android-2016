@@ -18,11 +18,12 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by ryancasler on 2/2/16.
+ * Created by ryancasler on 2/2/16
+ * SpartaHack2016-Android
  */
 public class MentorTicketAdapter extends RecyclerView.Adapter<MentorTicketAdapter.ViewHolder>{
 
-    private ArrayList<Ticket> mDataset;
+    private final ArrayList<Ticket> mDataset;
     public Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder{

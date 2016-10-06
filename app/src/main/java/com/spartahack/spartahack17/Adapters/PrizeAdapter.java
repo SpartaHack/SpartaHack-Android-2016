@@ -17,7 +17,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by ryancasler on 1/5/16.
+ * Created by ryancasler on 1/5/16
+ * SpartaHack2016-Android
  */
 public class PrizeAdapter  extends RecyclerView.Adapter<PrizeAdapter.SimpleViewHolder> {
 

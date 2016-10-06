@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import org.joda.time.DateTime;
 
 /**
- * Created by ryancasler on 1/5/16.
+ * Created by ryancasler on 1/5/16
+ * SpartaHack2016-Android
  */
 public class Event {
     @SerializedName("eventTitle")

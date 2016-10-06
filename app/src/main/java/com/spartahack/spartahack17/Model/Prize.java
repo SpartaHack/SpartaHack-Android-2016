@@ -1,7 +1,8 @@
 package com.spartahack.spartahack17.Model;
 
 /**
- * Created by ryancasler on 1/5/16.
+ * Created by ryancasler on 1/5/16
+ * SpartaHack2016-Android
  */
 public class Prize {
     private String description;
