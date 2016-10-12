@@ -70,7 +70,7 @@ public class SpartaHackAPIService {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 
         // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         // add your other interceptors …
 
