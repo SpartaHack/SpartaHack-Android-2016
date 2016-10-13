@@ -37,23 +37,19 @@ public class AnnouncementAdapter extends BaseAdapter {
         this.announcements = announcements;
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return announcements.size();
     }
 
-    @Override
-    public Object getItem(int position) {
+    @Override public Object getItem(int position) {
         return announcements.get(position);
     }
 
-    @Override
-    public long getItemId(int position) {
+    @Override public long getItemId(int position) {
         return position;
     }
 
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    @Override public View getView(int position, View view, ViewGroup parent) {
 
         AnnouncementViewHolder holder;
 
@@ -84,14 +80,11 @@ public class AnnouncementAdapter extends BaseAdapter {
      * Class for the Viewholder pattern
      */
     static class AnnouncementViewHolder {
-        @Bind(R.id.title)
-        TextView title;
-        @Bind(R.id.message)
-        TextView message;
-        @Bind(R.id.pinned_icon)
-        ImageView pinned;
+        @Bind(R.id.title) TextView title;
+        @Bind(R.id.message) TextView message;
+        @Bind(R.id.pinned_icon) ImageView pinned;
 
-        public AnnouncementViewHolder(View view) {
+        AnnouncementViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }

@@ -5,12 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,30 +19,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Model.Session;
+import com.spartahack.spartahack17.Presenter.ProfilePresenter;
 import com.spartahack.spartahack17.R;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
-import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
+import com.spartahack.spartahack17.Utility;
+import com.spartahack.spartahack17.View.ProfileView;
 
-import java.net.HttpURLConnection;
-import java.util.EnumMap;
 import java.util.Locale;
-import java.util.Map;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 
-public class ProfileFragment extends BaseFragment implements Switch.OnCheckedChangeListener {
+public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
+        implements Switch.OnCheckedChangeListener, ProfileView{
 
     private static final String TAG = "ProfileFragment";
 
@@ -67,18 +59,23 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     @Bind(R.id.push_switch) Switch aSwitch;
     @Bind(R.id.push_switch2) Switch aSwitch2;
 
-
     boolean fromHelp = false;
-
     private Session session;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    @Override int getLayout() {
+        return R.layout.activity_login;
+    }
 
-        View view = inflater.inflate(R.layout.activity_login, container, false);
+    @Override boolean registerEventbus() {
+        return false;
+    }
 
-        ButterKnife.bind(this, view);
+    @NonNull @Override public ProfilePresenter createPresenter() {
+        return new ProfilePresenter();
+    }
+
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Bundle args = this.getArguments();
         if (args != null && args.containsKey(I_EXTRA_FROM)){
@@ -92,12 +89,9 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
 
         aSwitch.setOnCheckedChangeListener(this);
         aSwitch2.setOnCheckedChangeListener(this);
-        return view;
     }
 
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+    @Override public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
         if (isChecked){
             Toast.makeText(getActivity(), "Subscribed successfully", Toast.LENGTH_SHORT).show();
             EventBus.getDefault().post(true);
@@ -107,14 +101,12 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         }
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         toggleViews(false);
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         hideKeyboard(passwordTextView);
     }
@@ -122,15 +114,14 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     /**
      * Called when the login button is pressed
      */
-    @OnClick(R.id.login_button)
-    public void onLogin() {
+    @OnClick(R.id.login_button) public void onLogin() {
 
         // flag for if there are any errors
         boolean error = false;
 
         // validate email;
         String email = userNameTextView.getText().toString().trim().toLowerCase(Locale.US);
-        if (!validateEmail(email)) {
+        if (!Utility.isValidEmail(email)) {
             emailLayout.setError("Invalid Email");
             error = true;
         } else {
@@ -139,7 +130,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
 
         // validate password
         String password = passwordTextView.getText().toString().trim();
-        if (!validatePassword(password)) {
+        if (!Utility.isPasswordValid(password)) {
             passwordLayout.setError("Password not long enough");
             error = true;
         } else {
@@ -154,42 +145,13 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
 
         hideKeyboard(passwordTextView);
 
-        GSONMock.Login login = new GSONMock.Login();
-        login.email =  email;
-        login.password =  passwordTextView.getText().toString().trim();
-
-        SpartaHackAPIService.INSTANCE.getRestAdapter()
-                .login(login)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(session -> {
-
-                    if (session != null) {
-                        this.session = session;
-                        Snackbar.make(progressBar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
-
-                        // go back to the help screen
-                        if (fromHelp) getActivity().onBackPressed();
-                        // show the content
-                        else toggleViews(false);
-
-                    } else {
-                        Snackbar.make(progressBar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
-                        toggleViews(false);
-                    }
-
-                }, throwable -> {
-                    Snackbar.make(progressBar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
-                    Log.e("Login", throwable.toString());
-                    toggleViews(false);
-                });
+        getMVPPresenter().attemptLogin(email, passwordTextView.getText().toString().trim());
     }
 
     /**
      * Called when a user clicks on forgot password. This will open the users browser of choice
      */
-    @OnClick(R.id.forgot_passowrd)
-    public void onForgotPassword() {
+    @OnClick(R.id.forgot_passowrd) public void onForgotPassword() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(RESET_URL)));
     }
 
@@ -197,24 +159,8 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
      * Called when logout is clicked. This will log out and show a snackbar
      * when the logout is done
      */
-    @OnClick(R.id.logout)
-    public void onLogout() {
-        toggleViews(true);
-        SpartaHackAPIService.INSTANCE.getRestAdapter()
-                .logout(session.getAuth_token())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(voidResponse -> {
-                    if (voidResponse.code() == HttpURLConnection.HTTP_NO_CONTENT) {
-                        Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
-                        session = null;
-                    } else {
-                        Snackbar.make(signedOut, "Error Logging Out", Snackbar.LENGTH_LONG).show();
-                    }
-                    toggleViews(false);
-
-                }, throwable -> Log.e(TAG, throwable.toString()));
-
+    @OnClick(R.id.logout) public void onLogout() {
+        getMVPPresenter().logOut(session.getAuth_token());
     }
 
     /**
@@ -237,7 +183,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
             Bitmap bitmap;
 
             try {
-                bitmap = encodeAsBitmap(String.valueOf(session.getId()), BarcodeFormat.CODE_128, 600, 300);
+                bitmap = Utility.encodeAsBitmap(String.valueOf(session.getId()), BarcodeFormat.CODE_128, 600, 300);
                 qr.setImageBitmap(bitmap);
 
             } catch (WriterException e) {
@@ -253,79 +199,35 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         }
     }
 
-    /**
-     * Makes sure email address is valid
-     *
-     * @param email a string which is the email address
-     * @return if it is valid or not
-     */
-    private boolean validateEmail(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
+    @Override public void logOutSuccess() {
+        Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
+        session = null;
+        toggleViews(false);
     }
 
-    /**
-     * @param password string which is the password entered
-     * @return if the password is long enough
-     */
-    private boolean validatePassword(String password) {
-        return password.length() >= 4;
+    @Override public void logOutError() {
+        Snackbar.make(signedOut, "Error Logging Out", Snackbar.LENGTH_LONG).show();
+        toggleViews(false);
     }
 
-    /**************************************************************
-     * getting from com.google.zxing.client.android.encode.QRCodeEncoder
-     *
-     * See the sites below
-     * http://code.google.com/p/zxing/
-     * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/EncodeActivity.java
-     * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/QRCodeEncoder.java
-     */
-    private static final int WHITE = 0xFFFFFFFF;
-    private static final int BLACK = 0xFF000000;
+    @Override public void loginSuccess(Session data) {
+        this.session = data;
+        Snackbar.make(progressBar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
-    Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
-        if (contents == null) {
-            return null;
-        }
-        Map<EncodeHintType, Object> hints = null;
-        String encoding = guessAppropriateEncoding(contents);
-        if (encoding != null) {
-            hints = new EnumMap<>(EncodeHintType.class);
-            hints.put(EncodeHintType.CHARACTER_SET, encoding);
-        }
-        MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix result;
-        try {
-            result = writer.encode(contents, format, img_width, img_height, hints);
-        } catch (IllegalArgumentException iae) {
-            // Unsupported format
-            return null;
-        }
-        int width = result.getWidth();
-        int height = result.getHeight();
-        int[] pixels = new int[width * height];
-        for (int y = 0; y < height; y++) {
-            int offset = y * width;
-            for (int x = 0; x < width; x++) {
-                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
-            }
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        return bitmap;
+        // go back to the help screen
+        if (fromHelp) getActivity().onBackPressed();
+            // show the content
+        else toggleViews(false);
     }
 
-    private static String guessAppropriateEncoding(CharSequence contents) {
-        // Very crude at the moment
-        for (int i = 0; i < contents.length(); i++) {
-            if (contents.charAt(i) > 0xFF) {
-                return "UTF-8";
-            }
-        }
-        return null;
+    @Override public void showLoading() {
+        toggleViews(true);
+    }
+
+    @Override public void onError(String error) {
+        Snackbar.make(progressBar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
+        Log.e("Login", error);
+        toggleViews(false);
     }
 
 }
