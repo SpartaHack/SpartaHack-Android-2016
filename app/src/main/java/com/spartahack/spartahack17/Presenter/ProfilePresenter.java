@@ -23,8 +23,8 @@ public class ProfilePresenter extends RxPresenter<ProfileView, Session> {
 
     public void attemptLogin(String email, String password) {
         GSONMock.Login login = new GSONMock.Login();
-        login.email =  email;
-        login.password =  password;
+        login.email = email;
+        login.password = password;
 
         Observable<Session> observable = SpartaHackAPIService.INSTANCE.getRestAdapter()
                 .login(login)
@@ -35,7 +35,7 @@ public class ProfilePresenter extends RxPresenter<ProfileView, Session> {
     }
 
     public void logOut(String authToken) {
-        if (isViewAttached()){
+        if (isViewAttached()) {
             getView().showLoading();
         }
 
@@ -58,7 +58,7 @@ public class ProfilePresenter extends RxPresenter<ProfileView, Session> {
     }
 
     @Override void onError(Throwable e) {
-        if (isViewAttached()){
+        if (isViewAttached()) {
             getView().onError(e.toString());
         }
     }
