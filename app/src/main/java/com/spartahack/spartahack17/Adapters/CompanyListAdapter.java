@@ -21,7 +21,7 @@ import de.greenrobot.event.EventBus;
 public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.SimpleViewHolder> {
 
     private final Context mContext;
-    private List<Company> mData;
+    private final List<Company> mData;
 
 
     public void add(Company c,int position) {

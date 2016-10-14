@@ -17,19 +17,20 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by ryancasler on 1/9/16.
+ * Created by ryancasler on 1/9/16
+ * SpartaHack2016-Android
  */
 public class AnnouncementAdapter extends BaseAdapter {
 
     /**
      * Reference to the main activity for context to get images as well as get the layout inflater
      */
-    private MainActivity context;
+    private final MainActivity context;
 
     /**
      * The list of notifications that is being displayed
      */
-    private List<Announcement> announcements;
+    private final List<Announcement> announcements;
 
     public AnnouncementAdapter(MainActivity context, List<Announcement> announcements) {
         this.context = context;

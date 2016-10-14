@@ -5,7 +5,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 /**
- * Created by ryan on 10/22/15.
+ * Created by ryan on 10/22/15
+ * SpartaHack2016-Android
  */
 public class Utility {
     /**

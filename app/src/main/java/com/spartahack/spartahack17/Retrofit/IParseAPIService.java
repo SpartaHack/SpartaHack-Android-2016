@@ -8,7 +8,8 @@ import retrofit2.http.Path;
 import rx.Observable;
 
 /**
- * Created by ryancasler on 1/4/16.
+ * Created by ryancasler on 1/4/16
+ * SpartaHack2016-Android
  */
 public interface IParseAPIService {
 

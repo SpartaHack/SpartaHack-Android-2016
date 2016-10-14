@@ -17,12 +17,12 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
     /**
      * list of fragments in the adapter
      */
-    private ArrayList<Fragment> fragments;
+    private final ArrayList<Fragment> fragments;
 
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"Prizes", "Sponsors"};
+    private final String[] tabs = {"Prizes", "Sponsors"};
 
     public AwardsPagerAdapter(FragmentManager fm) {
         super(fm);

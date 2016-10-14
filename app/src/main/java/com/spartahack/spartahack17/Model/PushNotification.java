@@ -4,7 +4,8 @@ import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 /**
- * Created by ryancasler on 12/22/15.
+ * Created by ryancasler on 12/22/15
+ * SpartaHack2016-Android
  */
 public class PushNotification extends RealmObject {
 

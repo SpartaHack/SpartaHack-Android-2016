@@ -21,7 +21,8 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * Created by ryancasler on 2/2/16.
+ * Created by ryancasler on 2/2/16
+ * SpartaHack2016-Android
  */
 public class CreateTicketActivity extends BaseActivity {
 

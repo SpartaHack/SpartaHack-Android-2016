@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -51,9 +52,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private static final String TAG = "MainActivity";
     public static final String PUSH_PREF = "push preference";
 
-    public static String ACTION = "action";
-    public static String OBJECT_ID = "objectid";
-    public static String NOT_ID = "notid";
+    public static final String ACTION = "action";
+    public static final String OBJECT_ID = "objectid";
+    public static final String NOT_ID = "notid";
 
     /**
      * Reference to the currently selected menu item in the nav drawer
@@ -130,7 +131,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         if (currentItem == null || currentItem != item) {
             item.setChecked(true);
@@ -223,12 +224,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     public static class StartViewTicketActivity {
         public StartViewTicketActivity(Ticket t) {this.ticket = t;}
-        public Ticket ticket;
+        public final Ticket ticket;
     }
 
     public static class StartMentorViewTicketActivity {
         public StartMentorViewTicketActivity(Ticket t) {this.ticket = t;}
-        public Ticket ticket;
+        public final Ticket ticket;
     }
 
     public void onEvent(StartMentorViewTicketActivity a){

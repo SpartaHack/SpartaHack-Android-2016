@@ -18,8 +18,8 @@ import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 public class TicketAdapter extends RecyclerView.Adapter<TicketAdapter.ViewHolder>{
-    private ArrayList<Ticket> mDataset;
-    public Context mContext;
+    private final ArrayList<Ticket> mDataset;
+    private Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.title) TextView title;

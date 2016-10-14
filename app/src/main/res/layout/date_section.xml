@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:gravity="center_vertical"
-    android:singleLine="true"
     android:padding="5dp"
     android:textAllCaps="true"
     android:textColor="@color/accent"
@@ -12,4 +11,5 @@
     android:textSize="@dimen/sub_header_text_size"
     android:id="@+id/section_text"
     tools:text="Section header"
-    android:textStyle="bold" />
+    android:textStyle="bold"
+    android:maxLines="1" />
