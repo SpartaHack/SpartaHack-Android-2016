@@ -16,6 +16,7 @@ import com.spartahack.spartahack17.Presenter.BasePresenter;
 import com.spartahack.spartahack17.View.BaseView;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -25,6 +26,8 @@ import de.greenrobot.event.EventBus;
 
 public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
         extends Fragment implements BaseView {
+
+    private Unbinder unbinder;
 
     /**
      * Presenter for the activity.
@@ -80,7 +83,7 @@ public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
         View view = inflater.inflate(getLayout(), container, false);
 
         // bind to butterknife
-        ButterKnife.bind(this, view);
+        unbinder = ButterKnife.bind(this, view);
 
         return view;
     }
@@ -108,7 +111,7 @@ public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
     @Override public void onDestroyView() {
         super.onDestroyView();
         // have to unbind ButterKnife from fragments 
-        ButterKnife.unbind(this);
+        unbinder.unbind();
     }
 
     protected void hideKeyboard(View view){

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
 public class ScheduleFragment extends BaseFragment {
 
     /** Recycler view that displays all objects */
-    @Bind(android.R.id.list) RecyclerView recyclerView;
+    @BindView(android.R.id.list) RecyclerView recyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

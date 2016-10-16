@@ -16,7 +16,7 @@ import com.spartahack.spartahack17.View.CompanyView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Fragments that displays the companies that are sponsors of our great event
@@ -26,7 +26,7 @@ public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> 
     private static final String TAG = "CompanyFragment";
 
     /** Recycler view that displays all objects */
-    @Bind(android.R.id.list) RecyclerView recyclerView;
+    @BindView(android.R.id.list) RecyclerView recyclerView;
 
     @Override int getLayout() {
         return R.layout.fragment_company;

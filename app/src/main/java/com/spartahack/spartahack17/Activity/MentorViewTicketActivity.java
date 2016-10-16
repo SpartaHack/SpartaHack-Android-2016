@@ -20,7 +20,7 @@ import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 import com.spartahack.spartahack17.Utility;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.Realm;
 import rx.Subscriber;
@@ -28,14 +28,14 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class MentorViewTicketActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.category) TextView category;
-    @Bind(R.id.subject) TextView subject;
-    @Bind(R.id.description) TextView description;
-    @Bind(R.id.status) TextView status;
-    @Bind(R.id.location) TextView location;
-    @Bind(R.id.accept) Button acceptButton;
-    @Bind(R.id.name) TextView name;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.category) TextView category;
+    @BindView(R.id.subject) TextView subject;
+    @BindView(R.id.description) TextView description;
+    @BindView(R.id.status) TextView status;
+    @BindView(R.id.location) TextView location;
+    @BindView(R.id.accept) Button acceptButton;
+    @BindView(R.id.name) TextView name;
 
     private Ticket ticket;
     public static final String I_TICKET = "ticket";

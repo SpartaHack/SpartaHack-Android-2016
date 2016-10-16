@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Model.Ticket;
+import com.spartahack.spartahack17.R;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
@@ -27,10 +27,10 @@ public class MentorTicketAdapter extends RecyclerView.Adapter<MentorTicketAdapte
     public Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.title) TextView title;
-        @Bind(R.id.description) TextView description;
-        @Bind(R.id.ticket_layout) View layout;
-        @Bind(R.id.status) TextView status;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.description) TextView description;
+        @BindView(R.id.ticket_layout) View layout;
+        @BindView(R.id.status) TextView status;
 
         public ViewHolder(View itemView) {
             super(itemView);

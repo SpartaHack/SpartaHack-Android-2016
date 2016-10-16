@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.spartahack.spartahack17.Adapters.GidePagerAdapter;
 import com.spartahack.spartahack17.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
  */
 public class GuideFragment extends BaseFragment {
 
-    @Bind(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.view_pager) ViewPager viewPager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

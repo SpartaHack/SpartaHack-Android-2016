@@ -7,13 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Model.Prize;
+import com.spartahack.spartahack17.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -43,9 +43,9 @@ public class PrizeAdapter  extends RecyclerView.Adapter<PrizeAdapter.SimpleViewH
 
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title) TextView title;
-        @Bind(R.id.sponsor) TextView sponsor;
-        @Bind(R.id.description) TextView description;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.sponsor) TextView sponsor;
+        @BindView(R.id.description) TextView description;
 
         public SimpleViewHolder(View itemView) {
             super(itemView);

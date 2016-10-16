@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -27,12 +27,12 @@ import io.realm.RealmResults;
 
 public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener{
 
-//    @Bind(R.id.notMentor) TextView notMentorView;
-//    @Bind(R.id.Mentor) TextView mentorView;
-    @Bind(R.id.auth) TextView authView;
-    @Bind(R.id.recyclers) RecyclerView ticketView;
-    @Bind(R.id.no_tixs) TextView noTix;
-    @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+//    @BindView(R.id.notMentor) TextView notMentorView;
+//    @BindView(R.id.Mentor) TextView mentorView;
+    @BindView(R.id.auth) TextView authView;
+    @BindView(R.id.recyclers) RecyclerView ticketView;
+    @BindView(R.id.no_tixs) TextView noTix;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     List<String> mentorCategories;
     private ArrayList<Ticket> tickets;

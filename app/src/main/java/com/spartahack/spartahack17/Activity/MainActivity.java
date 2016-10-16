@@ -26,10 +26,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
 import com.spartahack.spartahack17.Fragment.HelpDeskFragment;
-import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
 import com.spartahack.spartahack17.Model.Ticket;
 import com.spartahack.spartahack17.R;
@@ -37,16 +37,16 @@ import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 import com.spartahack.spartahack17.Utility;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @Bind(R.id.navigation_view) NavigationView navigationView;
-    @Bind(R.id.tab_layout) TabLayout tabLayout;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
+    @BindView(R.id.navigation_view) NavigationView navigationView;
+    @BindView(R.id.tab_layout) TabLayout tabLayout;
 
     private String title = "Notifications";
     private static final String TAG = "MainActivity";

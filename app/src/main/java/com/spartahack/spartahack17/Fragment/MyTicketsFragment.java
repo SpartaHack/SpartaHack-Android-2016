@@ -21,16 +21,16 @@ import com.spartahack.spartahack17.R;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recycler) RecyclerView ticketView;
-    @Bind(R.id.user) RelativeLayout userExists;
-    @Bind(R.id.no_tix) TextView noTix;
-    @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler) RecyclerView ticketView;
+    @BindView(R.id.user) RelativeLayout userExists;
+    @BindView(R.id.no_tix) TextView noTix;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     private ArrayList<Ticket> tickets;
 

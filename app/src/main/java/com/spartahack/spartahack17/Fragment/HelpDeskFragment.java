@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -19,8 +19,8 @@ import butterknife.OnClick;
  */
 public class HelpDeskFragment extends BaseFragment {
 
-    @Bind(R.id.view_pager) ViewPager viewPager;
-    @Bind(R.id.no_user) LinearLayout noUser;
+    @BindView(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.no_user) LinearLayout noUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
