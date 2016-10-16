@@ -2,16 +2,12 @@ package com.spartahack.spartahack17.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -22,17 +18,13 @@ public class HelpDeskFragment extends BaseFragment {
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.no_user) LinearLayout noUser;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_help_desk, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
         setView();
+    }
+
+    @Override int getLayout() {
+        return R.layout.fragment_help_desk;
     }
 
     private void setView(){
@@ -72,8 +64,7 @@ public class HelpDeskFragment extends BaseFragment {
 
     }
 
-    @OnClick(R.id.login)
-    void onLogin() {
+    @OnClick(R.id.login) void onLogin() {
         MainActivity activity = ((MainActivity) getActivity());
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();

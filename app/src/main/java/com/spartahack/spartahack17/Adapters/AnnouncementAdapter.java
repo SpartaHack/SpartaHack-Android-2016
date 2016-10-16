@@ -80,23 +80,14 @@ public class AnnouncementAdapter extends BaseAdapter {
      * Class for the Viewholder pattern
      */
     static class AnnouncementViewHolder {
-<<<<<<< dfec5de82eef9ee2f7705f7d27e53012ff3f0448
-        @Bind(R.id.title) TextView title;
-        @Bind(R.id.message) TextView message;
-        @Bind(R.id.pinned_icon) ImageView pinned;
-
-        AnnouncementViewHolder(View view) {
-=======
         @BindView(R.id.title) TextView title;
         @BindView(R.id.message) TextView message;
         @BindView(R.id.pinned_icon) ImageView pinned;
 
         public AnnouncementViewHolder(View view) {
->>>>>>> start to upgrade butterknife
             ButterKnife.bind(this, view);
         }
     }
-
 }
 
 
