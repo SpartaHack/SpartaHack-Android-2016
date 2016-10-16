@@ -17,7 +17,7 @@ public interface IParseAPIService {
     Observable<GSONMock.Companies> getCompany();
 
     @GET("classes/Schedule")
-    Observable<GSONMock.Schedules> getSchedule();
+    Observable<GSONMock.Events> getSchedule();
 
     @GET("classes/Prizes?include=sponsor")
     Observable<GSONMock.Prizes> getPrizes();

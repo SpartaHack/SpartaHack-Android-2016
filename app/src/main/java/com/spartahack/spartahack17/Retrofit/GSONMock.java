@@ -18,7 +18,7 @@ public class GSONMock {
         public ArrayList<Company> companies;
     }
 
-    public static class Schedules {
+    public static class Events {
         @SerializedName("results")
         public ArrayList<Event> events;
     }
