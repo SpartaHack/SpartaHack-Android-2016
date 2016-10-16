@@ -6,9 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,30 +19,25 @@ import com.spartahack.spartahack17.R;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.recycler) RecyclerView ticketView;
-    @Bind(R.id.user) RelativeLayout userExists;
-    @Bind(R.id.no_tix) TextView noTix;
-    @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler) RecyclerView ticketView;
+    @BindView(R.id.user) RelativeLayout userExists;
+    @BindView(R.id.no_tix) TextView noTix;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     private ArrayList<Ticket> tickets;
 
 //    ParseUser user;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_tickets, container, false);
-
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         registerEventBus = true;
 
         tickets = new ArrayList<>();
-
-        ButterKnife.bind(this, view);
 
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(R.color.accent, R.color.background);
@@ -59,12 +52,13 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         ticketView.setLayoutManager(mLayoutManager);
-
-        return view;
     }
 
-    @Override
-    public void onResume() {
+    @Override int getLayout() {
+        return R.layout.fragment_my_tickets;
+    }
+
+    @Override public void onResume() {
         super.onResume();
         onRefresh();
     }
@@ -75,8 +69,7 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
         setRecyclerViewSections();
     }
 
-    @OnClick(R.id.fab)
-    void viewTicket() {
+    @OnClick(R.id.fab) void viewTicket() {
         MainActivity activity = ((MainActivity) getActivity());
         activity.startActivity(new Intent(activity, CreateTicketActivity.class));
     }
@@ -102,8 +95,7 @@ public class MyTicketsFragment extends BaseFragment implements SwipeRefreshLayou
         if (ticketView!= null)ticketView.setAdapter(new TicketAdapter(tickets));
     }
 
-    @Override
-    public void onRefresh() {
+    @Override public void onRefresh() {
 //        ParseQuery<ParseObject> query = new ParseQuery<>("HelpDeskTickets");
 //        query.whereEqualTo("user", user);
 //        query.whereNotEqualTo("status", "Deleted");

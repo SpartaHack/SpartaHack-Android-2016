@@ -29,7 +29,7 @@ import com.spartahack.spartahack17.View.ProfileView;
 
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
@@ -46,18 +46,18 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
     public static final String I_EXTRA_FROM = "From help";
 
-    @Bind(R.id.password) EditText passwordTextView;
-    @Bind(R.id.user_name) EditText userNameTextView;
-    @Bind(R.id.signedIn) View signedIn;
-    @Bind(R.id.signedOut) View signedOut;
-    @Bind(R.id.qr) ImageView qr;
-    @Bind(R.id.display_name) TextView displayName;
-    @Bind(R.id.progressBar) ProgressBar progressBar;
-    @Bind(R.id.email_layout) TextInputLayout emailLayout;
-    @Bind(R.id.password_layout) TextInputLayout passwordLayout;
-    @Bind(R.id.login_page_title) TextView loginViewTitle;
-    @Bind(R.id.push_switch) Switch aSwitch;
-    @Bind(R.id.push_switch2) Switch aSwitch2;
+    @BindView(R.id.password) EditText passwordTextView;
+    @BindView(R.id.user_name) EditText userNameTextView;
+    @BindView(R.id.signedIn) View signedIn;
+    @BindView(R.id.signedOut) View signedOut;
+    @BindView(R.id.qr) ImageView qr;
+    @BindView(R.id.display_name) TextView displayName;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.email_layout) TextInputLayout emailLayout;
+    @BindView(R.id.password_layout) TextInputLayout passwordLayout;
+    @BindView(R.id.login_page_title) TextView loginViewTitle;
+    @BindView(R.id.push_switch) Switch aSwitch;
+    @BindView(R.id.push_switch2) Switch aSwitch2;
 
     boolean fromHelp = false;
     private Session session;

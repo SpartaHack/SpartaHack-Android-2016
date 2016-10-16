@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.spartahack.spartahack17.Adapters.EventListAdapter;
 import com.spartahack.spartahack17.Adapters.SimpleSectionedRecyclerViewAdapter;
@@ -25,8 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Locale;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -37,15 +34,10 @@ import rx.schedulers.Schedulers;
 public class ScheduleFragment extends BaseFragment {
 
     /** Recycler view that displays all objects */
-    @Bind(android.R.id.list) RecyclerView recyclerView;
+    @BindView(android.R.id.list) RecyclerView recyclerView;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_schedule, container, false);
-
-        ButterKnife.bind(this, v);
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -100,7 +92,10 @@ public class ScheduleFragment extends BaseFragment {
                     }
                 });
 
-        return v;
+    }
+
+    @Override int getLayout() {
+        return R.layout.fragment_schedule;
     }
 
 }

@@ -7,13 +7,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Model.PushNotification;
+import com.spartahack.spartahack17.R;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -76,9 +76,9 @@ public class NotificationAdapter extends BaseAdapter {
      * Class for the Viewholder pattern
      */
     static class NotificationViewHolder {
-        @Bind(R.id.title) TextView title;
-        @Bind(R.id.message)TextView message;
-        @Bind(R.id.pinned_icon)ImageView pinned;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.message)TextView message;
+        @BindView(R.id.pinned_icon)ImageView pinned;
 
         public NotificationViewHolder(View view) {ButterKnife.bind(this, view);}
     }

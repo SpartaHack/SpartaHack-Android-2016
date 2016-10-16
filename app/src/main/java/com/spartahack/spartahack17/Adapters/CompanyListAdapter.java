@@ -8,13 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Model.Company;
+import com.spartahack.spartahack17.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
@@ -39,7 +39,7 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
 
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.logo) ImageView logo;
+        @BindView(R.id.logo) ImageView logo;
 
         public SimpleViewHolder(View itemView) {
             super(itemView);
