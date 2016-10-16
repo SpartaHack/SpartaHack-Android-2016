@@ -26,7 +26,7 @@ import butterknife.OnClick;
  */
 public class CreateTicketActivity extends BaseActivity {
 
-//    @BindViewView(R.id.categorySpinner) Spinner categorySpinner;
+//    @BindView(R.id.categorySpinner) Spinner categorySpinner;
     @BindView(R.id.subCategorySpinner) Spinner subCategorySpinner;
     @BindView(R.id.subjectLayout) TextInputLayout inputLayoutSub;
     @BindView(R.id.descLayout) TextInputLayout inputLayoutDesc;
