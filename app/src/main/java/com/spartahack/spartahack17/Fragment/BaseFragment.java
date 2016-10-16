@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
-import com.spartahack.spartahack17.R;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import de.greenrobot.event.EventBus;
@@ -32,7 +30,7 @@ public abstract class BaseFragment extends Fragment{
 
     @Nullable @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_map, container, false);
+        View v =  inflater.inflate(getLayout(), container, false);
 
         unbinder = ButterKnife.bind(this, v);
 
