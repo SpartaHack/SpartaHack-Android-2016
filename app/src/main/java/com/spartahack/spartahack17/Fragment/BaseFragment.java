@@ -19,7 +19,7 @@ import de.greenrobot.event.EventBus;
  * Created by ryan on 10/22/15
  * SpartaHack2016-Android
  */
-public abstract class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment {
 
     protected boolean registerEventBus = false;
 
@@ -49,7 +49,7 @@ public abstract class BaseFragment extends Fragment{
         super.onPause();
     }
 
-    protected void hideKeyboard(View view){
+    protected void hideKeyboard(View view) {
         // hide keyboard!!! fuck android
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
