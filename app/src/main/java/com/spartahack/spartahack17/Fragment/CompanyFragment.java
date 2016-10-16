@@ -2,93 +2,85 @@ package com.spartahack.spartahack17.Fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.spartahack.spartahack17.Adapters.CompanyListAdapter;
 import com.spartahack.spartahack17.Adapters.SimpleSectionedRecyclerViewAdapter;
 import com.spartahack.spartahack17.Model.Company;
+import com.spartahack.spartahack17.Presenter.CompanyPresenter;
 import com.spartahack.spartahack17.R;
-import com.spartahack.spartahack17.Retrofit.ParseAPIService;
+import com.spartahack.spartahack17.View.CompanyView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import butterknife.BindView;
 
 /**
  * Fragments that displays the companies that are sponsors of our great event
  */
-public class CompanyFragment extends BaseFragment {
+public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> implements CompanyView {
 
     private static final String TAG = "CompanyFragment";
 
     /** Recycler view that displays all objects */
-    @Bind(android.R.id.list) RecyclerView recyclerView;
+    @BindView(android.R.id.list) RecyclerView recyclerView;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_company, container, false);
-
-        ButterKnife.bind(this, view);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        ParseAPIService.INSTANCE.getRestAdapter().getCompany()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(company -> {
-                        
-                        // get results as array list 
-                        ArrayList<Company> companies = company.companies;
-                        
-                        // TODO: 1/5/16 handle if list of companies returns empty/ null
-                        if (companies == null || companies.isEmpty()) 
-                            return;
-                        Collections.sort(companies, (lhs, rhs) -> {
-                            if (lhs.getLevel() - rhs.getLevel() != 0)
-                                return lhs.getLevel() - rhs.getLevel();
-                            return lhs.getName().compareTo(rhs.getName());
-                        });
-
-                        CompanyListAdapter simpleCompanyAdapter = new CompanyListAdapter(getActivity(), companies);
-
-                        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
-
-                        // add section header for first tier that has sponsors
-//                        sections.add(new SimpleSectionedRecyclerViewAdapter.Section(0, companies.get(0).getLevelName()));
-
-                        // the level from the last header used to track what level needs to add a header next
-                        int companyLevelTemp = -1;
-
-                        // location the header should go at
-                        int sectionLoc = 0;
-                        for (Company c : companies){
-                            if (c.getLevel() != companyLevelTemp){
-                                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(sectionLoc, c.getLevelName()));
-                                companyLevelTemp = c.getLevel();
-                            }
-                            sectionLoc++;
-                        }
-
-                        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
-
-                        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section, R.id.section_text, simpleCompanyAdapter);
-
-                        adapter.setSections(sections.toArray(dummy));
-
-                        recyclerView.setAdapter(adapter);
-                }, throwable -> Log.e(TAG, throwable.toString()));
-
-        return view;
+    @Override int getLayout() {
+        return R.layout.fragment_company;
     }
 
+    @Override boolean registerEventbus() {
+        return false;
+    }
+
+    @NonNull @Override public CompanyPresenter createPresenter() {
+        return new CompanyPresenter();
+    }
+
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        getMVPPresenter().loadCompanies();
+    }
+
+    @Override public void showLoading() {
+    }
+
+    @Override public void onError(String error) {
+    }
+
+    @Override public void showCompanies(ArrayList<Company> companies) {
+        // setup the sectioned list adapter
+        CompanyListAdapter simpleCompanyAdapter = new CompanyListAdapter(getActivity(), companies);
+
+        ArrayList<SimpleSectionedRecyclerViewAdapter.Section> sections = new ArrayList<>();
+
+        // the level from the last header used to track what level needs to add a header next
+        int companyLevelTemp = -1;
+
+        // location the header should go at
+        int sectionLoc = 0;
+        for (Company c : companies){
+            if (c.getLevel() != companyLevelTemp){
+                sections.add(new SimpleSectionedRecyclerViewAdapter.Section(sectionLoc, c.getLevelName()));
+                companyLevelTemp = c.getLevel();
+            }
+            sectionLoc++;
+        }
+
+        SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
+
+        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section, R.id.section_text, simpleCompanyAdapter);
+
+        adapter.setSections(sections.toArray(dummy));
+
+        recyclerView.setAdapter(adapter);
+    }
 }

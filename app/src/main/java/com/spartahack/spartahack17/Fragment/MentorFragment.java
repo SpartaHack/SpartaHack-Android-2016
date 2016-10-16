@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.spartahack.spartahack17.Adapters.MentorTicketAdapter;
@@ -19,33 +17,27 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 
 public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.OnRefreshListener{
 
-//    @Bind(R.id.notMentor) TextView notMentorView;
-//    @Bind(R.id.Mentor) TextView mentorView;
-    @Bind(R.id.auth) TextView authView;
-    @Bind(R.id.recyclers) RecyclerView ticketView;
-    @Bind(R.id.no_tixs) TextView noTix;
-    @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+//    @BindView(R.id.notMentor) TextView notMentorView;
+//    @BindView(R.id.Mentor) TextView mentorView;
+    @BindView(R.id.auth) TextView authView;
+    @BindView(R.id.recyclers) RecyclerView ticketView;
+    @BindView(R.id.no_tixs) TextView noTix;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     List<String> mentorCategories;
     private ArrayList<Ticket> tickets;
 
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_mentor, container, false);
-
-        ButterKnife.bind(this, view);
-
-        //RecyclerView setup
+    //RecyclerView setup
         ticketView.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         ticketView.setLayoutManager(mLayoutManager);
@@ -63,7 +55,10 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
 //            onRefresh();
 //        }
 
-        return view;
+    }
+
+    @Override int getLayout() {
+        return R.layout.fragment_mentor;
     }
 
     /**
@@ -118,8 +113,7 @@ public class MentorFragment extends BaseFragment  implements SwipeRefreshLayout.
         ticketView.setAdapter(adapter);
     }
 
-    @Override
-    public void onRefresh() {
+    @Override public void onRefresh() {
 //        tickets = new ArrayList<>();
 //        ParseQuery<ParseObject> query = new ParseQuery<>("Mentors");
 //        query.whereEqualTo("mentor", ParseUser.getCurrentUser());

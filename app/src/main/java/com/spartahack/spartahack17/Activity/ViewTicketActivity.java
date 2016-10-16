@@ -22,7 +22,7 @@ import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 import com.spartahack.spartahack17.Utility;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,13 +33,13 @@ import rx.android.schedulers.AndroidSchedulers;
  */
 public class ViewTicketActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.category) TextView category;
-    @Bind(R.id.subject) TextView subject;
-    @Bind(R.id.description) TextView description;
-    @Bind(R.id.status) TextView status;
-    @Bind(R.id.location) TextView location;
-    @Bind(R.id.extend_reopen) Button extendReopenButton;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.category) TextView category;
+    @BindView(R.id.subject) TextView subject;
+    @BindView(R.id.description) TextView description;
+    @BindView(R.id.status) TextView status;
+    @BindView(R.id.location) TextView location;
+    @BindView(R.id.extend_reopen) Button extendReopenButton;
 
     private Ticket ticket;
     public static final String I_TICKET = "ticket";

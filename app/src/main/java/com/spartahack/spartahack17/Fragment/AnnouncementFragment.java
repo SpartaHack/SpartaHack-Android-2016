@@ -16,7 +16,7 @@ import com.spartahack.spartahack17.View.AnnouncementView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Fragment that displays notifications in a list
@@ -27,11 +27,11 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
     private static final String TAG = "AnnouncementFragment";
 
     /** Listview that notificaitons are in */
-    @Bind(android.R.id.list) ListView notificationList;
-    @Bind(android.R.id.empty) TextView emptyView;
+    @BindView(android.R.id.list) ListView notificationList;
+    @BindView(android.R.id.empty) TextView emptyView;
 
     /** Swipe refresh layout for refreshing the list */
-    @Bind(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
     @Override int getLayout() {
         return R.layout.fragment_notification;

@@ -6,14 +6,9 @@ import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.View.AnnouncementView;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,18 +21,13 @@ import static org.mockito.Mockito.verify;
  * SpartaHack2016-Android
  * Unit tests for {@link AnnouncementPresenter}
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Log.class, Collections.class})
-public class AnnouncementPresenterTest {
+public class AnnouncementPresenterTest extends BaseUnitTest {
 
     @Mock private AnnouncementView view;
-
     private AnnouncementPresenter presenter;
 
-    @Before public void before() throws Exception {
-        // Mockito has a very convenient way to inject mocks by using the @Mock annotation. To
-        // inject the mocks in the test the initMocks method needs to be called.
-        MockitoAnnotations.initMocks(this);
+    @Override public void before() throws Exception {
+        super.before();
 
         // mock all the static methods
         PowerMockito.mockStatic(Collections.class);
@@ -93,9 +83,6 @@ public class AnnouncementPresenterTest {
     }
 
     @Test public void testOnError() throws Exception {
-        // call on error with the error stirng from the throwable
-        String errorMessage = "ERROR NULLPTR";
-        Throwable throwable = new Throwable(errorMessage);
         presenter.onError(throwable);
         verify(view).onError(throwable.toString());
     }

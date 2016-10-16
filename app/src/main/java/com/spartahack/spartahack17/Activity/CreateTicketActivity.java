@@ -17,7 +17,7 @@ import com.spartahack.spartahack17.Utility;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -26,17 +26,17 @@ import butterknife.OnClick;
  */
 public class CreateTicketActivity extends BaseActivity {
 
-//    @Bind(R.id.categorySpinner) Spinner categorySpinner;
-    @Bind(R.id.subCategorySpinner) Spinner subCategorySpinner;
-    @Bind(R.id.subjectLayout) TextInputLayout inputLayoutSub;
-    @Bind(R.id.descLayout) TextInputLayout inputLayoutDesc;
-    @Bind(R.id.locationLayout) TextInputLayout inputLayoutLoc;
-    @Bind(R.id.description) AppCompatEditText description;
-    @Bind(R.id.subject) AppCompatEditText subject;
-    @Bind(R.id.location) AppCompatEditText location;
-    @Bind(R.id.rootLayout) View view;
-    @Bind(R.id.toolbar) Toolbar toolbar;
-    @Bind(R.id.subCategoryLayout) LinearLayout subCategoryLayout;
+//    @BindView(R.id.categorySpinner) Spinner categorySpinner;
+    @BindView(R.id.subCategorySpinner) Spinner subCategorySpinner;
+    @BindView(R.id.subjectLayout) TextInputLayout inputLayoutSub;
+    @BindView(R.id.descLayout) TextInputLayout inputLayoutDesc;
+    @BindView(R.id.locationLayout) TextInputLayout inputLayoutLoc;
+    @BindView(R.id.description) AppCompatEditText description;
+    @BindView(R.id.subject) AppCompatEditText subject;
+    @BindView(R.id.location) AppCompatEditText location;
+    @BindView(R.id.rootLayout) View view;
+    @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.subCategoryLayout) LinearLayout subCategoryLayout;
 
 //    List<ParseObject> categoryList;
     List<String> subCategoryList;

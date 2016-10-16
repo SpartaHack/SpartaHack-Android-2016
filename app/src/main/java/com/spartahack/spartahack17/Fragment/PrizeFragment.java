@@ -5,25 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.spartahack.spartahack17.Adapters.PrizeAdapter;
 import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.Presenter.PrizePresenter;
 import com.spartahack.spartahack17.R;
-import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 import com.spartahack.spartahack17.View.PrizeView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import butterknife.BindView;
 
 public class PrizeFragment extends MVPFragment<PrizeView, PrizePresenter> implements PrizeView {
 
@@ -32,7 +24,7 @@ public class PrizeFragment extends MVPFragment<PrizeView, PrizePresenter> implem
     /**
      * Recycler view that displays all objects
      */
-    @Bind(android.R.id.list) RecyclerView recyclerView;
+    @BindView(android.R.id.list) RecyclerView recyclerView;
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
