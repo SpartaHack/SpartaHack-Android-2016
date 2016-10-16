@@ -3,6 +3,7 @@ package com.spartahack.spartahack17.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
@@ -18,7 +19,8 @@ import de.greenrobot.event.EventBus;
  */
 
 public abstract class MVPActivity<V extends BaseView, P extends BasePresenter> extends AppCompatActivity
-    implements BaseView{
+    implements BaseView {
+
 
     /**
      * Presenter for the activity.
@@ -26,12 +28,40 @@ public abstract class MVPActivity<V extends BaseView, P extends BasePresenter> e
     private P presenter;
 
     /**
-     * View for the activity.
+     * If the presenter does not exist yet, create then return
+     * @return the presenter
      */
-    private V view;
+    protected P getMVPPresenter() {
+        if (presenter == null)
+            this.presenter = createPresenter();
+        return presenter;
+    }
 
-    protected P getMVPPresenter() {return  presenter;}
-    protected V getMVPView() {return view;}
+    /**
+     * This base activity implements {@link BaseView} so that it is always the view
+     * @return the view
+     */
+    protected V getMVPView() {
+        return (V) this;
+    }
+
+    /**
+     * @return the res layout id for the activity
+     */
+    @SuppressWarnings("SameReturnValue")
+    @LayoutRes  abstract int getLayout();
+
+    /**
+     * @return if the activity should register for event bus
+     */
+    @SuppressWarnings("SameReturnValue")
+    abstract boolean registerEventbus();
+
+    /**
+     * @return a new instance of the presenter
+     */
+    @NonNull
+    public abstract P createPresenter();
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,11 +83,9 @@ public abstract class MVPActivity<V extends BaseView, P extends BasePresenter> e
         super.onPause();
     }
 
-    @LayoutRes abstract int getLayout();
-    abstract boolean registerEventbus();
-
     @Override public void setContentView(int layoutResID) {
         super.setContentView(getLayout());
         ButterKnife.bind(this);
+        getMVPPresenter().attachView(getMVPView());
     }
 }
