@@ -1,7 +1,5 @@
 package com.spartahack.spartahack17.Presenter;
 
-import android.util.Log;
-
 import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.ParseAPIService;

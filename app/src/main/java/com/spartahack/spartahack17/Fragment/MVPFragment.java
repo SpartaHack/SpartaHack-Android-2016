@@ -1,6 +1,7 @@
 package com.spartahack.spartahack17.Fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.spartahack.spartahack17.Presenter.BasePresenter;
 import com.spartahack.spartahack17.View.BaseView;
@@ -107,5 +109,11 @@ public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
         super.onDestroyView();
         // have to unbind ButterKnife from fragments 
         ButterKnife.unbind(this);
+    }
+
+    protected void hideKeyboard(View view){
+        // hide keyboard!!! fuck android
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
