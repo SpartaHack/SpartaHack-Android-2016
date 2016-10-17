@@ -2,8 +2,8 @@ language: android
 android:
   components:
     # use the latest revision of Android SDK Tools
-    # - platform-tools
-    # - tools
+    - platform-tools
+    - tools
 
     # The BuildTools version used by your project
     - build-tools-23.0.3
@@ -22,3 +22,6 @@ android:
     - sys-img-armeabi-v7a-android-22
     - sys-img-x86-android-17
 
+jdk:
+  - oraclejdk8
+  - oraclejdk7
