@@ -1,2 +1,2 @@
-# SpartaHack2016-Android
-The 2016 android application for SpartaHack 
+# SpartaHack Android
+The 2017 Android application for SpartaHack 
