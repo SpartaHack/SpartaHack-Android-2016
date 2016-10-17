@@ -27,24 +27,19 @@ import static org.mockito.Mockito.when;
  */
 public class SchedulePresenterTest extends BaseUnitTest {
 
-    @Mock
-    private ScheduleView view;
+    @Mock private ScheduleView view;
 
     private SchedulePresenter presenter;
 
-    @Before
-    public void before() throws Exception {
+    @Before public void before() throws Exception {
         super.before();
-
-        MockitoAnnotations.initMocks(this);
 
         // create the presenter and attach the view
         presenter = new SchedulePresenter();
         presenter.attachView(view);
     }
 
-    @Test
-    public void testCompare() throws Exception {
+    @Test public void testCompare() throws Exception {
         Event rhsEvent = mock(Event.class);
         Event lhsEvent = mock(Event.class);
 

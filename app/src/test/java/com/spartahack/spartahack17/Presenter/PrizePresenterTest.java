@@ -37,8 +37,6 @@ public class PrizePresenterTest extends BaseUnitTest {
     @Before public void before() throws Exception {
         super.before();
 
-        MockitoAnnotations.initMocks(this);
-
         // create the presenter and attach the view
         presenter = new PrizePresenter();
         presenter.attachView(view);
