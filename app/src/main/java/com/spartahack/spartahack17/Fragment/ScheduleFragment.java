@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +31,7 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
     private static final String TAG = "ScheduleFragment";
 
     /** Recycler view that displays all objects */
-    @Bind(android.R.id.list) RecyclerView recyclerView;
+    @BindView(android.R.id.list) RecyclerView recyclerView;
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
