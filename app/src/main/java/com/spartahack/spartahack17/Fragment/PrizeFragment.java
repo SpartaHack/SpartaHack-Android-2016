@@ -49,11 +49,9 @@ public class PrizeFragment extends MVPFragment<PrizeView, PrizePresenter> implem
         recyclerView.setAdapter(new PrizeAdapter(getActivity(), prizes));
     }
 
-    @Override
-    public void showLoading() {
+    @Override public void showLoading() {
     }
 
-    @Override
-    public void onError(String error) {
+    @Override public void onError(String error) {
     }
 }
