@@ -2,7 +2,7 @@ package com.spartahack.spartahack17.Presenter;
 
 import com.spartahack.spartahack17.Model.Event;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
-import com.spartahack.spartahack17.Retrofit.ParseAPIService;
+import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.ScheduleView;
 
 import org.joda.time.DateTimeComparator;
@@ -28,7 +28,7 @@ public class SchedulePresenter extends RxPresenter<ScheduleView, GSONMock.Events
             getView().showLoading();
         }
 
-        Observable observable = ParseAPIService.INSTANCE.getRestAdapter().getSchedule()
+        Observable observable = SpartaHackAPIService.INSTANCE.getRestAdapter().getSchedule()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
 

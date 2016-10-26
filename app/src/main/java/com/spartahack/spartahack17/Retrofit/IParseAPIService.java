@@ -13,18 +13,6 @@ import rx.Observable;
  */
 public interface IParseAPIService {
 
-    @GET("classes/Company")
-    Observable<GSONMock.Companies> getCompany();
-
-    @GET("classes/Schedule")
-    Observable<GSONMock.Events> getSchedule();
-
-    @GET("classes/Prizes?include=sponsor")
-    Observable<GSONMock.Prizes> getPrizes();
-
-    @GET("classes/Announcements")
-    Observable<GSONMock.Announcements> getAnnouncements();
-
     @PUT("classes/HelpDeskTickets/{oid}")
     Observable<GSONMock.UpdateObj> updateTicketStatus(@Path("oid") String o, @Body GSONMock.UpdateTicketStatusRequest del);
 

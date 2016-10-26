@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.spartahack.spartahack17.Adapters.PrizeAdapter;
@@ -53,5 +54,6 @@ public class PrizeFragment extends MVPFragment<PrizeView, PrizePresenter> implem
     }
 
     @Override public void onError(String error) {
+        Log.e(TAG, error);
     }
 }
