@@ -3,7 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_vertical_margin"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:animateLayoutChanges="true"
     tools:context="com.spartahack.spartahack17.Fragment.ScheduleFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Time til hacking ends "
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="1:23:47"
+        android:textSize="40sp"
+        android:id="@+id/text_clock"
+        android:gravity="center"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
