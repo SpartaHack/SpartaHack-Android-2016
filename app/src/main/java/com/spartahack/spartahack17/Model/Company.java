@@ -1,7 +1,5 @@
 package com.spartahack.spartahack17.Model;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.util.Locale;
 
 /**
@@ -9,11 +7,11 @@ import java.util.Locale;
  * SpartaHack2016-Android
  */
 public class Company {
+    private int id;
     private final String level;
     private final String name;
     private String url;
-    @SerializedName("png")
-    private pic pic;
+    private String logo_png;
 
     public Company(String level, String name) {
         this.level = level;
@@ -40,10 +38,7 @@ public class Company {
     }
 
     public String getPicUrl() {
-        return pic.url;
+        return logo_png;
     }
 
-    private class pic{
-        public String url;
-    }
 }

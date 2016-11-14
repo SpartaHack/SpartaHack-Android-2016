@@ -14,22 +14,22 @@ import java.util.ArrayList;
  */
 public class GSONMock {
     public static class Companies {
-        @SerializedName("results")
+        @SerializedName("companies")
         public ArrayList<Company> companies;
     }
 
     public static class Events {
-        @SerializedName("results")
+        @SerializedName("schedule")
         public ArrayList<Event> events;
     }
 
     public static class Prizes {
-        @SerializedName("results")
+        @SerializedName("prizes")
         public ArrayList<Prize> prizes;
     }
 
     public static class Announcements {
-        @SerializedName("results")
+        @SerializedName("announcements")
         public ArrayList<Announcement> announcements;
     }
 

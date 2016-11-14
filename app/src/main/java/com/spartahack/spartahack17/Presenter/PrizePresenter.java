@@ -1,11 +1,8 @@
 package com.spartahack.spartahack17.Presenter;
 
-import android.util.Log;
-
-import com.spartahack.spartahack17.Adapters.PrizeAdapter;
 import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
-import com.spartahack.spartahack17.Retrofit.ParseAPIService;
+import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.PrizeView;
 
 import java.util.ArrayList;
@@ -29,7 +26,7 @@ public class PrizePresenter extends RxPresenter<PrizeView, GSONMock.Prizes> impl
             getView().showLoading();
         }
 
-        Observable observable = ParseAPIService.INSTANCE.getRestAdapter().getPrizes()
+        Observable observable = SpartaHackAPIService.INSTANCE.getRestAdapter().getPrizes()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
 

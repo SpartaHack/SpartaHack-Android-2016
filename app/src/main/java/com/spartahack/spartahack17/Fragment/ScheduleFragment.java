@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.spartahack.spartahack17.Adapters.EventListAdapter;
@@ -84,6 +85,7 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
     }
 
     @Override public void onError(String error) {
+        Log.e(TAG, error);
     }
 
 }

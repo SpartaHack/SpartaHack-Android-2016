@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.spartahack.spartahack17.Adapters.CompanyListAdapter;
@@ -54,6 +55,7 @@ public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> 
     }
 
     @Override public void onError(String error) {
+        Log.e(TAG, error);
     }
 
     @Override public void showCompanies(ArrayList<Company> companies) {

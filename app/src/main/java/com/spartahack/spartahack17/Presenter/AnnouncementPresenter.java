@@ -2,7 +2,7 @@ package com.spartahack.spartahack17.Presenter;
 
 import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
-import com.spartahack.spartahack17.Retrofit.ParseAPIService;
+import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.AnnouncementView;
 
 import org.joda.time.DateTimeComparator;
@@ -30,7 +30,7 @@ public class AnnouncementPresenter extends RxPresenter<AnnouncementView, GSONMoc
             getView().showLoading();
         }
 
-        Observable observable = ParseAPIService.INSTANCE.getRestAdapter().getAnnouncements()
+        Observable observable = SpartaHackAPIService.INSTANCE.getRestAdapter().getAnnouncements()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io());
 

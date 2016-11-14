@@ -3,6 +3,7 @@ package com.spartahack.spartahack17.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -79,5 +80,6 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
     }
 
     @Override public void onError(String error) {
+        Log.e(TAG, error);
     }
 }

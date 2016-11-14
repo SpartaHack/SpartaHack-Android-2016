@@ -5,6 +5,7 @@ package com.spartahack.spartahack17.Model;
  * SpartaHack2016-Android
  */
 public class Prize {
+    private int id;
     private String description;
     private String name;
     private Company sponsor;

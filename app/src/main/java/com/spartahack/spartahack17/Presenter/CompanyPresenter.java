@@ -1,7 +1,7 @@
 package com.spartahack.spartahack17.Presenter;
 
 import com.spartahack.spartahack17.Model.Company;
-import com.spartahack.spartahack17.Retrofit.ParseAPIService;
+import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.CompanyView;
 
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class CompanyPresenter extends RxPresenter<CompanyView, ArrayList<Company
             getView().showLoading();
         }
 
-        Observable<ArrayList<Company>> observable = ParseAPIService.INSTANCE.getRestAdapter().getCompany()
+        Observable<ArrayList<Company>> observable = SpartaHackAPIService.INSTANCE.getRestAdapter().getCompanies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(companies -> companies.companies);
