@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/black"
     android:orientation="vertical">
 
     <LinearLayout
@@ -17,7 +16,7 @@
             android:layout_weight="3"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text"
             android:textSize="@dimen/sub_header_text_size"
             tools:text="Most technically impressive hack" />
 
@@ -28,7 +27,7 @@
             android:gravity="center"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@color/text_light"
             android:textSize="@dimen/body_text_size"
             tools:text="Amazon Alexa" />
 
@@ -40,12 +39,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/text_margin"
-        android:textColor="@android:color/white"
+        android:textColor="@color/text"
         android:textSize="@dimen/body_text_size"
         tools:text="this is an incredible prize that you could win " />
 
+    <!--There is no divider attribute for a recyclerview so we have to add it our self-->
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@android:color/white"/>
+        android:background="@color/accent"/>
 </LinearLayout>

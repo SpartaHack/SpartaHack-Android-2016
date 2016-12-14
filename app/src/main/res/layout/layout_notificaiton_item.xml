@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -17,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="@dimen/text_margin"
-            android:textColor="@android:color/white"
+            android:textColor="@color/text"
             android:textSize="@dimen/sub_header_text_size"
             tools:text="Title" />
 
@@ -43,7 +42,8 @@
         android:paddingEnd="0dp"
         android:autoLink="web"
         android:paddingBottom="@dimen/text_margin"
-        android:textColor="@android:color/white"
+        android:textColor="@color/text"
         android:textSize="@dimen/body_text_size"
         tools:text="Message" />
+
 </LinearLayout>

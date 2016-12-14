@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation_view_header"
+    android:paddingTop="@dimen/header_padding"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="192dp">
@@ -9,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:src="@drawable/sparathack2016"
+        app:srcCompat="@drawable/logo_17"
         android:contentDescription="@string/spartahack_banner"
         android:id="@+id/header_image"/>
     

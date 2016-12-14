@@ -18,7 +18,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
-        android:icon="@drawable/logo"
+        android:icon="@drawable/logo_17"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
