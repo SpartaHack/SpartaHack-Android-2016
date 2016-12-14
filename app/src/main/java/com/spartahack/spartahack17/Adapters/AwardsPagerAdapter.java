@@ -31,13 +31,11 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
         fragments.add(new CompanyFragment());
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return fragments.size();
     }
 
-    @Override
-    public Fragment getItem(int position) {
+    @Override public Fragment getItem(int position) {
         return fragments.get(position);
     }
 
@@ -45,8 +43,7 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
         return fragments;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(int position) {
         return tabs[position];
     }
 }
