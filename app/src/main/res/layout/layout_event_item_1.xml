@@ -20,7 +20,6 @@
             android:layout_gravity="end"
             android:padding="2dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/text"
             tools:text="4:00 pm" />
 
         <TextView
@@ -30,7 +29,6 @@
             android:layout_gravity="end"
             android:padding="2dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/text"
             tools:text="at yo girl crib" />
     </LinearLayout>
 
@@ -54,7 +52,6 @@
             android:textSize="18sp"
             android:padding="2dp"
             android:textStyle="bold"
-            android:textColor="@color/text"
             tools:text="random event happening " />
 
         <TextView
@@ -63,7 +60,6 @@
             android:layout_height="wrap_content"
             android:padding="2dp"
             android:textSize="12sp"
-            android:textColor="@color/text"
             tools:text="description of whatever is going on here" />
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="@dimen/text_margin"
-            android:textColor="@color/text"
             android:textSize="@dimen/sub_header_text_size"
             tools:text="Title" />
 
@@ -28,7 +28,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/text_margin"
             android:contentDescription="@string/pinned"
-            android:src="@drawable/ic_pin"
+            app:srcCompat="@drawable/ic_pin"
             android:visibility="invisible" />
 
     </RelativeLayout>
@@ -42,7 +42,6 @@
         android:paddingEnd="0dp"
         android:autoLink="web"
         android:paddingBottom="@dimen/text_margin"
-        android:textColor="@color/text"
         android:textSize="@dimen/body_text_size"
         tools:text="Message" />
 
