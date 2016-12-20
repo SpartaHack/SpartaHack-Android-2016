@@ -23,7 +23,7 @@ public class MapFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         webView.getSettings().setJavaScriptEnabled(true);
-        String MAP_URL = "https://spartahack.com/map";
+        String MAP_URL = "https://api.spartahack.com/map";
         webView.loadUrl("https://docs.google.com/gview?embedded=true&url=" + MAP_URL);
     }
 
