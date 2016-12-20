@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.spartahack.spartahack17">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -44,6 +45,11 @@
             android:name=".Activity.MentorViewTicketActivity"
             android:label="@string/title_activity_mentor_view_ticket"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
     </application>
 
 </manifest>

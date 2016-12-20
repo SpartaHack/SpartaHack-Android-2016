@@ -75,5 +75,6 @@
     <string name="push_notifications">Push Notifications</string>
     <string name="toggle_push">Toggle push notifications from SpartaHack.</string>
     <string name="accept_ticket">Accept Ticket</string>
+    <string name="scan">Scan</string>
 
 </resources>

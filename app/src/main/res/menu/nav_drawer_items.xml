@@ -12,6 +12,10 @@
             android:icon="@drawable/ic_star"
             android:title="@string/awards" />
 
+        <item android:id="@+id/scan"
+            android:icon="@drawable/ic_scan"
+            android:title="@string/scan"/>
+
         <item
             android:id="@+id/help"
             android:icon="@drawable/ic_help"
