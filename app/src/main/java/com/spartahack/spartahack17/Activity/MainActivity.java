@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
     @BindView(R.id.navigation_view) NavigationView navigationView;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
+    @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
 
     private String title = "Notifications";
     private static final String TAG = "MainActivity";
@@ -110,15 +112,46 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         navigationView.setNavigationItemSelectedListener(this);
 
         // inflate the nav drawer items programmatically because it is dynamic based on roles
-        navigationView.inflateMenu(R.menu.nav_drawer_items);
+        navigationView.inflateMenu(R.menu.drawer_nav_items);
 
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.accent));
 
         if (getIntent() == null || getIntent().getExtras() == null) {
             onNavigationItemSelected(navigationView.getMenu().getItem(0));
-        }else{
+        } else{
             onNavigationItemSelected(navigationView.getMenu().getItem(2));
         }
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_notifications:
+                                title = getResources().getString(R.string.notifications);
+                                addFragment(new AnnouncementFragment());
+                                break;
+                            case R.id.action_schedule:
+                                title = getResources().getString(R.string.guide);
+                                addFragment(new GuideFragment());
+                                break;
+                            case R.id.action_awards:
+                                title = getResources().getString(R.string.awards);
+                                addFragment(new AwardsFragment());
+                                break;
+                            case R.id.action_help:
+//                                title = getResources().getString(R.string.help);
+//                                addFragment(new CheckInFragment());
+                                break;
+                            case R.id.action_profile:
+                                title = getResources().getString(R.string.profile);
+                                addFragment(new ProfileFragment());
+                                break;
+                        }
+
+                        return true;
+                    }
+                });
     }
 
     @Override

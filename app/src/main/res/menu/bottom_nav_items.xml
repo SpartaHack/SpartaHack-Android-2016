@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_notifications"
+        android:icon="@drawable/ic_notifications"
+        android:title="@string/notifications" />
+
+    <item
+        android:id="@+id/action_schedule"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/guide" />
+
+    <item
+        android:id="@+id/action_awards"
+        android:icon="@drawable/ic_star"
+        android:title="@string/awards" />
+
+    <item
+        android:id="@+id/action_help"
+        android:icon="@drawable/ic_help"
+        android:title="@string/help" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_person"
+        android:title="@string/profile" />
+</menu>
