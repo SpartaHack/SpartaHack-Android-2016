@@ -13,6 +13,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
         android:padding="10dp"
-        tools:src="@drawable/ic_menu_green"
+        tools:src="@drawable/logo_17"
         android:contentDescription="@string/company_logo"/>
 </LinearLayout>

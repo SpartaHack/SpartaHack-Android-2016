@@ -87,6 +87,7 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.1'
     // library for generate and scan barcodes
     compile 'com.google.zxing:core:3.0.0'
+    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
 
     // library for serilizing json objects
     compile 'com.google.code.gson:gson:2.5'

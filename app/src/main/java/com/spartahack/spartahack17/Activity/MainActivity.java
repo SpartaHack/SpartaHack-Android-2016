@@ -28,8 +28,8 @@ import android.widget.Toast;
 
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
+import com.spartahack.spartahack17.Fragment.CheckInFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
-import com.spartahack.spartahack17.Fragment.HelpDeskFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
 import com.spartahack.spartahack17.Model.Ticket;
 import com.spartahack.spartahack17.R;
@@ -86,7 +86,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_green);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
@@ -142,9 +142,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     addFragment(new AwardsFragment());
                     break;
 
+                case R.id.scan:
+                    title = getResources().getString(R.string.scan);
+                    addFragment(new CheckInFragment());
+                    break;
+
                 case R.id.help:
-                    title = getResources().getString(R.string.help);
-                    addFragment(new HelpDeskFragment());
+//                    title = getResources().getString(R.string.help);
+//                    addFragment(new CheckInFragment());
                     break;
 
                 case R.id.notifications:

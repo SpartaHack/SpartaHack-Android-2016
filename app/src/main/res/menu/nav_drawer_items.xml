@@ -4,13 +4,17 @@
         <item
             android:id="@+id/notifications"
             android:checked="true"
-            android:icon="@drawable/ic_notification"
+            android:icon="@drawable/ic_notifications"
             android:title="@string/notifications" />
 
         <item
             android:id="@+id/awards"
-            android:icon="@drawable/ic_awards"
+            android:icon="@drawable/ic_star"
             android:title="@string/awards" />
+
+        <item android:id="@+id/scan"
+            android:icon="@drawable/ic_scan"
+            android:title="@string/scan"/>
 
         <item
             android:id="@+id/help"
@@ -19,12 +23,12 @@
 
         <item
             android:id="@+id/schedule"
-            android:icon="@drawable/ic_sched"
+            android:icon="@drawable/ic_schedule"
             android:title="@string/guide" />
 
         <item
             android:id="@+id/profile"
-            android:icon="@drawable/ic_profile"
+            android:icon="@drawable/ic_person"
             android:title="@string/profile" />
 
     </group>

@@ -14,6 +14,9 @@ import com.google.zxing.common.BitMatrix;
 import java.util.EnumMap;
 import java.util.Map;
 
+import static android.graphics.Color.BLACK;
+import static android.graphics.Color.TRANSPARENT;
+
 /**
  * Created by ryan on 10/22/15
  * SpartaHack2016-Android
@@ -72,8 +75,6 @@ public class Utility {
      * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/EncodeActivity.java
      * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/QRCodeEncoder.java
      */
-    public static final int WHITE = 0xFFFFFFFF;
-    public static final int BLACK = 0xFF000000;
 
     public static Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
         if (contents == null) {
@@ -99,7 +100,7 @@ public class Utility {
         for (int y = 0; y < height; y++) {
             int offset = y * width;
             for (int x = 0; x < width; x++) {
-                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+                pixels[offset + x] = result.get(x, y) ? BLACK : TRANSPARENT;
             }
         }
 

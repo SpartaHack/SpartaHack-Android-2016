@@ -14,7 +14,7 @@ public class AwardsFragment extends BaseFragment {
     @Override public void onResume() {
         super.onResume();
 
-        viewPager.setAdapter(new AwardsPagerAdapter(getFragmentManager()));
+        viewPager.setAdapter(new AwardsPagerAdapter(getChildFragmentManager()));
         setUpTabBar(viewPager);
     }
 
