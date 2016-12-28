@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.spartahack.spartahack17.Activity.MainActivity;
+import com.spartahack.spartahack17.Cache;
 import com.spartahack.spartahack17.Model.Session;
 import com.spartahack.spartahack17.Presenter.ProfilePresenter;
 import com.spartahack.spartahack17.R;
@@ -103,6 +104,9 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
     @Override public void onResume() {
         super.onResume();
+        if (Cache.INSTANCE.hasSession()){
+            session = Cache.INSTANCE.getSession();
+        }
         toggleViews(false);
     }
 
@@ -201,6 +205,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
     @Override public void logOutSuccess() {
         Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
+        Cache.INSTANCE.clear();
         session = null;
         toggleViews(false);
     }
@@ -210,8 +215,10 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
         toggleViews(false);
     }
 
-    @Override public void loginSuccess(Session data) {
-        this.session = data;
+    @Override public void loginSuccess(Session session) {
+        this.session = session;
+        Cache.INSTANCE.setSession(session);
+
         Snackbar.make(progressBar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
         // go back to the help screen

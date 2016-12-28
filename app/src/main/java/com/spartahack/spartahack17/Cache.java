@@ -1,5 +1,7 @@
 package com.spartahack.spartahack17;
 
+import com.spartahack.spartahack17.Model.Session;
+
 /**
  * Created by ryan on 11/5/15
  * SpartaHack2016-Android
@@ -16,56 +18,21 @@ public class Cache {
      */
     private Cache() {}
 
-    /**
-     * enum for user roles
-     */
-    public enum ROLE {ADMIN, ATTENDEE, JUDGE}
+    private Session session;
 
-    /**
-     * The role that the current user has
-     */
-    private ROLE role;
-
-    /**
-     * URL of the users qr code
-     */
-    private String qrURL;
-
-    /**
-     * Username of the user
-     */
-    private String userName;
-
-    public String getUserName() {
-        return userName;
+    public Session getSession() {
+        return session;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setSession(Session session) {
+        this.session = session;
     }
 
-    public ROLE getRole() {
-        return role;
+    public void clear(){
+        session = null;
     }
 
-    public String getQrURL() {
-        return qrURL;
+    public boolean hasSession() {
+        return session != null;
     }
-
-    public void setRole(String roleString){
-        switch (roleString) {
-            case "admin":
-                role = ROLE.ADMIN;
-                break;
-            case "judge":
-                role = ROLE.JUDGE;
-                break;
-            default:
-                role = ROLE.ATTENDEE;
-                break;
-        }
-    }
-
-    public void setQrURL(String url){qrURL = url;}
-
 }
