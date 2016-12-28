@@ -42,29 +42,17 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-        DateTime start = new DateTime();
-        DateTime end = new DateTime(2016, 10, 27, 17, 46, 0);
-
-        long t = end.getMillis() - start.getMillis();
-
-        if (t > 0) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            timer = new CountDownTimer(t, 1) {
-                @Override public void onTick(long millisUntilFinished) {
-                    clock.setText(getDurationBreakdown(millisUntilFinished));
-                }
-
-                @Override public void onFinish() {
-                    clock.setText("Hacking over");
-                }
-            }.start();
-        } else {
-            clock.setText("Hacking over");
-        }
-
         getMVPPresenter().updateEvents();
+    }
+
+    @Override public void onResume() {
+        super.onResume();
+        startClock();
+    }
+
+    @Override public void onPause() {
+        super.onPause();
+        stopClock();
     }
 
     @NonNull @Override public SchedulePresenter createPresenter() {
@@ -131,5 +119,31 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
         String str = "%02d:%02d:%02d";
 
         return String.format(Locale.US, str, hours, minutes, seconds);
+    }
+
+    private void startClock() {
+        DateTime start = new DateTime();
+        DateTime end = new DateTime(2017, 1, 22, 12, 0, 0);
+
+        long t = end.getMillis() - start.getMillis();
+
+        if (t > 0) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            timer = new CountDownTimer(t, 1) {
+                @Override public void onTick(long millisUntilFinished) {
+                    clock.setText(getDurationBreakdown(millisUntilFinished));
+                }
+
+                @Override public void onFinish() {
+                    clock.setText("Hacking over");
+                }
+            }.start();
+        } else {
+            clock.setText("Hacking over");
+        }
+    }
+
+    private void stopClock() {
+        timer.cancel();
     }
 }
