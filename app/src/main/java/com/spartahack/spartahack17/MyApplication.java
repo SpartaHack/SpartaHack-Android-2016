@@ -31,5 +31,7 @@ public class MyApplication extends Application {
 
         JodaTimeAndroid.init(this);
 
+        // init the user from shared prefs
+        Cache.INSTANCE.readFromSharedPrefs(this);
     }
 }

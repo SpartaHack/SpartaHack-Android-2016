@@ -205,7 +205,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
     @Override public void logOutSuccess() {
         Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
-        Cache.INSTANCE.clear();
+        Cache.INSTANCE.clear(getActivity());
         session = null;
         toggleViews(false);
     }
@@ -217,7 +217,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
     @Override public void loginSuccess(Session session) {
         this.session = session;
-        Cache.INSTANCE.setSession(session);
+        Cache.INSTANCE.setSession(session, getActivity());
 
         Snackbar.make(progressBar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
