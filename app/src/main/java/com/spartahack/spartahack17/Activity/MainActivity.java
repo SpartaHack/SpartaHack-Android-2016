@@ -26,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.CheckInFragment;
@@ -56,6 +58,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public static final String OBJECT_ID = "objectid";
     public static final String NOT_ID = "notid";
 
+    private FirebaseAnalytics firebaseAnalytics;
+
     /**
      * Reference to the currently selected menu item in the nav drawer
      */
@@ -83,6 +87,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         registerEventBus = true;
 
         setSupportActionBar(toolbar);
+
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
+
+        Log.d(TAG, "onCreate: " + FirebaseInstanceId.getInstance().getToken());
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
