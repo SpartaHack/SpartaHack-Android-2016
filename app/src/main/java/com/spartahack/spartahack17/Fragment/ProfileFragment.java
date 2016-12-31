@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
@@ -92,13 +91,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     }
 
     @Override public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-        if (isChecked){
-            Toast.makeText(getActivity(), "Subscribed successfully", Toast.LENGTH_SHORT).show();
-            EventBus.getDefault().post(true);
-        } else {
-            Toast.makeText(getActivity(), "Unsubscribed successfully", Toast.LENGTH_SHORT).show();
-            EventBus.getDefault().post(false);
-        }
+        EventBus.getDefault().post(isChecked);
     }
 
     @Override public void onResume() {
