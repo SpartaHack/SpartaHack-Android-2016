@@ -4,6 +4,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -57,8 +59,12 @@ public class MessageService extends FirebaseMessagingService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent, PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Bitmap largeLogo = BitmapFactory.decodeResource(getResources(), R.drawable.launcher);
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_shield_logo)
+                .setSmallIcon(R.drawable.ic_dimond_logo)
+                .setLargeIcon(largeLogo)
                 .setTicker("SpartaHack")
                 .setContentTitle("SpartaHack")
                 .setContentText(messageBody)
