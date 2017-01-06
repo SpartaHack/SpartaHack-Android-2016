@@ -1,10 +1,9 @@
 package com.spartahack.spartahack17.Retrofit;
 
+import com.google.gson.annotations.SerializedName;
 import com.spartahack.spartahack17.Model.Announcement;
-import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Event;
 import com.spartahack.spartahack17.Model.Prize;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
@@ -13,11 +12,6 @@ import java.util.ArrayList;
  * SpartaHack2016-Android
  */
 public class GSONMock {
-    public static class Companies {
-        @SerializedName("companies")
-        public ArrayList<Company> companies;
-    }
-
     public static class Events {
         @SerializedName("schedule")
         public ArrayList<Event> events;

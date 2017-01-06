@@ -11,7 +11,9 @@ public class Company {
     private final String level;
     private final String name;
     private String url;
-    private String logo_png;
+    private String logo_png_light;
+    private String logo_svg_light;
+
 
     public Company(String level, String name) {
         this.level = level;
@@ -37,8 +39,11 @@ public class Company {
         return name;
     }
 
-    public String getPicUrl() {
-        return logo_png;
+    public String getLogo_svg_light() {
+        return logo_svg_light;
     }
 
+    public String getLogo_png_light() {
+        return logo_png_light;
+    }
 }

@@ -1,6 +1,9 @@
 package com.spartahack.spartahack17.Retrofit;
 
+import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Session;
+
+import java.util.ArrayList;
 
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -31,8 +34,6 @@ public interface ISpartaHackAPIService {
     @GET("announcements")
     Observable<GSONMock.Announcements> getAnnouncements();
 
-    @GET("companies")
-    Observable<GSONMock.Companies> getCompanies();
-
-
+    @GET("sponsors")
+    Observable<ArrayList<Company>> getCompanies();
 }

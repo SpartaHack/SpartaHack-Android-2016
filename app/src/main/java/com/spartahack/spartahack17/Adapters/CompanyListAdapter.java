@@ -62,12 +62,12 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
     }
 
 
-    @Override
-    public void onBindViewHolder(SimpleViewHolder holder, final int position) {
+    @Override public void onBindViewHolder(SimpleViewHolder holder, final int position) {
         final Company c = mData.get(position);
 
-        if (c.getPicUrl().contains(".png")){
-            Glide.with(mContext).load(c.getPicUrl()).into(holder.logo);
+        if (c.getLogo_png_light()!= null){
+            // TODO: 1/6/17 fix this loading right 
+            Glide.with(mContext).load(c.getLogo_png_light()).into(holder.logo);
         } else {
             Glide.with(mContext).load(R.drawable.logo_17).into(holder.logo);
         }
@@ -75,8 +75,7 @@ public class CompanyListAdapter extends RecyclerView.Adapter<CompanyListAdapter.
     }
 
 
-    @Override
-    public int getItemCount() {
+    @Override public int getItemCount() {
         return mData.size();
     }
 }

@@ -26,8 +26,7 @@ public class CompanyPresenter extends RxPresenter<CompanyView, ArrayList<Company
 
         Observable<ArrayList<Company>> observable = SpartaHackAPIService.INSTANCE.getRestAdapter().getCompanies()
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(companies -> companies.companies);
+                .observeOn(AndroidSchedulers.mainThread());
 
         subscribe(observable);
     }
