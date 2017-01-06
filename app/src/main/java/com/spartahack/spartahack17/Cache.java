@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import com.spartahack.spartahack17.Model.Session;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.spartahack.spartahack17.Constants.P_USER_AUTH_TOKEN;
+import static com.spartahack.spartahack17.Constants.P_USER_EMAIL;
+import static com.spartahack.spartahack17.Constants.P_USER_ROLE;
 
 /**
  * Created by ryan on 11/5/15
@@ -17,13 +20,6 @@ public class Cache {
      * Singleton instance of the cache
      */
     public static final Cache INSTANCE = new Cache();
-
-    // all variables for shared prefs
-    private static final String P_USER_ID = "user id";
-    private static final String P_USER_AUTH_TOKEN = "auth token";
-    private static final String P_USER_EMAIL = "email";
-    private static final String P_USER_ROLE = "role";
-    private static final String MY_PREFS_NAME = "com.spartahack.spartahack17";
 
     /**
      * Constructor is private for singleton pattern
@@ -52,7 +48,7 @@ public class Cache {
      */
     public void clear(Context context){
         session = null;
-        context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit().clear().apply();
+        context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE).edit().clear().apply();
     }
 
     /**
@@ -69,8 +65,8 @@ public class Cache {
      * @return if the write was successful or not
      */
     public boolean writeToSharedPrefs(Context context) {
-        SharedPreferences.Editor editor = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
-        editor.putInt(P_USER_ID, session.getId());
+        SharedPreferences.Editor editor = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE).edit();
+        editor.putInt(Constants.P_USER_ID, session.getId());
         editor.putString(P_USER_EMAIL, session.getEmail());
         editor.putString(P_USER_AUTH_TOKEN, session.getAuth_token());
         editor.putInt(P_USER_ROLE, session.getRole());
@@ -83,8 +79,8 @@ public class Cache {
      * @return if the read was successful or not
      */
     public boolean readFromSharedPrefs(Context context) {
-        SharedPreferences prefs = context.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        int id = prefs.getInt(P_USER_ID, -100);
+        SharedPreferences prefs = context.getSharedPreferences(context.getPackageName(), MODE_PRIVATE);
+        int id = prefs.getInt(Constants.P_USER_ID, -100);
         String email = prefs.getString(P_USER_EMAIL, null);
         String auth = prefs.getString(P_USER_AUTH_TOKEN, null);
         int role = prefs.getInt(P_USER_ROLE, -100);

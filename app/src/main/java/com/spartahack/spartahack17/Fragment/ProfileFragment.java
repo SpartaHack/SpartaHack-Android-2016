@@ -19,8 +19,8 @@ import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Cache;
+import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Model.Session;
 import com.spartahack.spartahack17.Presenter.ProfilePresenter;
 import com.spartahack.spartahack17.R;
@@ -84,8 +84,8 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
         }
 
         // set switch to correct value
-        aSwitch.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true));
-        aSwitch2.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true));
+        aSwitch.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(Constants.PREF_PUSH, true));
+        aSwitch2.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(Constants.PREF_PUSH, true));
 
         aSwitch.setOnCheckedChangeListener(this);
         aSwitch2.setOnCheckedChangeListener(this);

@@ -4,6 +4,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
@@ -14,6 +15,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.spartahack.spartahack17.Activity.MainActivity;
+import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.R;
 
 /**
@@ -54,6 +56,13 @@ public class MessageService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String messageBody) {
+
+        // if push is turned off don't show the notification
+        SharedPreferences prefs = this.getSharedPreferences(this.getPackageName(), MODE_PRIVATE);
+        if (!prefs.getBoolean(Constants.PREF_PUSH, true)){
+            return;
+        }
+
         Intent intent = new Intent(this, MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent, PendingIntent.FLAG_ONE_SHOT);

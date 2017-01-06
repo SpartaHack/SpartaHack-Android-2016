@@ -28,7 +28,7 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.CheckInFragment;
@@ -53,7 +53,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private String title = "Notifications";
     private static final String TAG = "MainActivity";
-    public static final String PUSH_PREF = "push preference";
 
     public static final String ACTION = "action";
     public static final String OBJECT_ID = "objectid";
@@ -256,18 +255,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onEvent(Boolean isSubscribing) {
         getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE)
                 .edit()
-                .putBoolean(PUSH_PREF, isSubscribing)
+                .putBoolean(Constants.PREF_PUSH, isSubscribing)
                 .apply();
 
-        if (! isSubscribing) {
-            FirebaseMessaging.getInstance().unsubscribeFromTopic("");
-            Snackbar.make(tabLayout, "Unsubscribed successfully", Snackbar.LENGTH_SHORT).show();
-        }
-
-        else {
-            FirebaseMessaging.getInstance().subscribeToTopic("");
-            Snackbar.make(tabLayout, "Subscribed successfully", Snackbar.LENGTH_SHORT).show();
-        }
+        Snackbar.make(tabLayout, isSubscribing ? "Subscribed successfully" : "Unsubscribed successfully", Snackbar.LENGTH_SHORT).show();
     }
 
         public void refreshTicket(GSONMock.UpdateTicketStatusRequest request, final String confirmMessage, String id ) {
