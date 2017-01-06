@@ -34,5 +34,8 @@ public interface ISpartaHackAPIService {
     @GET("companies")
     Observable<GSONMock.Companies> getCompanies();
 
+    @POST("installations")
+    Observable<GSONMock.AddInstillationResponse> addInstillation(@Body GSONMock.AddInstillationRequest requestBody);
+
 
 }
