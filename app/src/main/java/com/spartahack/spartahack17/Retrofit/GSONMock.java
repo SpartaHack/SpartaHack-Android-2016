@@ -28,40 +28,6 @@ public class GSONMock {
         public ArrayList<Announcement> announcements;
     }
 
-    public static class UpdateObj {
-        public String updatedAt;
-    }
-
-    public static class UpdateTicketStatusRequest {
-        public UpdateTicketStatusRequest(String status, boolean notifiedFlag) {
-            this.status = status;
-            this.notifiedFlag = notifiedFlag;
-        }
-
-        public final String status;
-        public final boolean notifiedFlag;
-    }
-
-    /**
-     * Class for gson to parse out the json push object
-     */
-    public static class PushInfo {
-        public String alert;
-        public String description;
-        public String category;
-        public ArrayList<String> action;
-        public String ticketId;
-    }
-
-    public static class Ticket {
-        public String description;
-        public String location;
-        public String subject;
-        public String subCategory;
-        public String status;
-        public String objectId;
-    }
-
     public static class Login {
         public String password;
         public String email;

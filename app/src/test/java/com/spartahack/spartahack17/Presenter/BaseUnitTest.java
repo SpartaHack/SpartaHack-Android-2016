@@ -10,7 +10,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * SpartaHack2016-Android
  */
 @RunWith(PowerMockRunner.class)
-public class BaseUnitTest {
+public abstract class BaseUnitTest {
 
     protected Throwable throwable;
 

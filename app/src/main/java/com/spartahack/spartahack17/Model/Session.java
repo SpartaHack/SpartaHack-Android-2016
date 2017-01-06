@@ -13,6 +13,9 @@ public class Session {
     // TODO: 9/19/16 handle the array option too
     private int role;
 
+    public Session() {
+    }
+
     public Session(int id, String email, String auth_token, int role) {
         this.id = id;
         this.email = email;

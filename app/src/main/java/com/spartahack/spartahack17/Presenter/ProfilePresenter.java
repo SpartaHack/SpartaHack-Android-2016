@@ -13,13 +13,13 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.spartahack.spartahack17.Activity.MentorViewTicketActivity.TAG;
-
 /**
  * Created by ryancasler on 10/12/16
  * SpartaHack2016-Android
  */
 public class ProfilePresenter extends RxPresenter<ProfileView, Session> {
+
+    private static final String TAG = "ProfilePresenter";
 
     public void attemptLogin(String email, String password) {
         GSONMock.Login login = new GSONMock.Login();
