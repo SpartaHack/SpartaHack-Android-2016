@@ -76,5 +76,8 @@
     <string name="toggle_push">Toggle push notifications from SpartaHack.</string>
     <string name="accept_ticket">Accept Ticket</string>
     <string name="scan">Scan</string>
+    <string name="time_til_hacking_over">Time Until Hacking Ends:</string>
+    <string name="time_til_hacking_starts">Time Until Hacking Starts:</string>
+    <string name="hacking_over">Hacking Is Now Over!</string>
 
 </resources>

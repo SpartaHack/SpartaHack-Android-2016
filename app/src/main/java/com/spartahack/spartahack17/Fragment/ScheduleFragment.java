@@ -34,14 +34,18 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
 
     private static final String TAG = "ScheduleFragment";
 
-    CountDownTimer timer;
+    private CountDownTimer timer;
 
     /** Recycler view that displays all objects */
     @BindView(android.R.id.list) RecyclerView recyclerView;
     @BindView(R.id.text_clock) TextView clock;
+    @BindView(R.id.text_label) TextView label;
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         getMVPPresenter().updateEvents();
     }
 
@@ -121,28 +125,69 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
         return String.format(Locale.US, str, hours, minutes, seconds);
     }
 
+    /**
+     * Start the countdown clock for either counting down to the start of the event
+     * or to the end of the event.
+     */
     private void startClock() {
-        DateTime start = new DateTime();
+        DateTime now = new DateTime();
+        DateTime start = new DateTime(2017, 1, 21, 0, 0);
         DateTime end = new DateTime(2017, 1, 22, 12, 0, 0);
 
-        long t = end.getMillis() - start.getMillis();
+        long timeToStart = start.getMillis() - now.getMillis();
+        long timeToFinish = end.getMillis() - now.getMillis();
 
-        if (t > 0) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-            timer = new CountDownTimer(t, 1) {
-                @Override public void onTick(long millisUntilFinished) {
-                    clock.setText(getDurationBreakdown(millisUntilFinished));
-                }
-
-                @Override public void onFinish() {
-                    clock.setText("Hacking over");
-                }
-            }.start();
+        if (timeToStart > 0){
+            startCountDownToStart(timeToStart);
         } else {
-            clock.setText("Hacking over");
+            startCountDownToFinish(timeToFinish);
         }
     }
 
+    /**
+     * Start a timer counting down to the start of the event.
+     * When the event starts it will transition to the countdown to the end of the event.
+     * @param timeLeft mills left to count down.
+     */
+    private void startCountDownToStart(long timeLeft) {
+
+        label.setText(R.string.time_til_hacking_starts);
+        timer = new CountDownTimer(timeLeft, 1) {
+            @Override public void onTick(long millisUntilFinished) {
+                clock.setText(getDurationBreakdown(millisUntilFinished));
+            }
+
+            @Override public void onFinish() {
+                stopClock();
+                startClock();
+            }
+        }.start();
+
+    }
+
+    /**
+     * Start the timer to count down to the end of the event.
+     * When the event ends it will set the clock to say hacking has ended
+     * @param timeLeft mills left to count down.
+     */
+    private void startCountDownToFinish(long timeLeft) {
+        label.setText(R.string.time_til_hacking_over);
+
+        timer = new CountDownTimer(timeLeft, 1) {
+            @Override public void onTick(long millisUntilFinished) {
+                clock.setText(getDurationBreakdown(millisUntilFinished));
+            }
+
+            @Override public void onFinish() {
+                clock.setText(R.string.hacking_over);
+                label.setText("");
+            }
+        }.start();
+    }
+
+    /**
+     * Stop any running clocks and cancel the timer
+     */
     private void stopClock() {
         timer.cancel();
     }
