@@ -1,7 +1,5 @@
 package com.spartahack.spartahack17.Presenter;
 
-import android.util.Log;
-
 import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
@@ -9,15 +7,9 @@ import com.spartahack.spartahack17.View.PrizeView;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
