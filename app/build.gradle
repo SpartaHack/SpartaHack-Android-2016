@@ -103,7 +103,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
 
     // removing this stuff later most likley
-    compile 'io.realm:realm-android:0.87.0'
     compile 'de.greenrobot:eventbus:2.4.0'
 
     // Dependencies for local unit tests

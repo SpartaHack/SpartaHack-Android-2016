@@ -21,25 +21,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.CheckInFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
-import com.spartahack.spartahack17.Model.Ticket;
 import com.spartahack.spartahack17.R;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
-import com.spartahack.spartahack17.Retrofit.ParseAPIService;
 import com.spartahack.spartahack17.Utility;
 
 import butterknife.BindView;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -223,45 +216,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
-    public void onEvent(StartViewTicketActivity a){
-        startActivity(ViewTicketActivity.getIntent(this, a.ticket, -1).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-    }
-
-    public static class StartViewTicketActivity {
-        public StartViewTicketActivity(Ticket t) {this.ticket = t;}
-        public final Ticket ticket;
-    }
-
-    public static class StartMentorViewTicketActivity {
-        public StartMentorViewTicketActivity(Ticket t) {this.ticket = t;}
-        public final Ticket ticket;
-    }
-
-    public void onEvent(StartMentorViewTicketActivity a){
-        startActivity(MentorViewTicketActivity.getIntent(this, a.ticket).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-    }
-
     public void onEvent(Boolean b) {
         SharedPreferences preferences = getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putBoolean(PUSH_PREF, b);
         editor.apply();
-    }
-
-        public void refreshTicket(GSONMock.UpdateTicketStatusRequest request, final String confirmMessage, String id ) {
-        ParseAPIService.INSTANCE.getRestAdapter()
-                .updateTicketStatus(id, request)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GSONMock.UpdateObj>() {
-                    @Override public void onCompleted() { }
-
-                    @Override public void onError(Throwable e) {
-                        Log.e(TAG, "onError: " + e.toString());
-                    }
-
-                    @Override public void onNext(GSONMock.UpdateObj updateObj) {
-                        Toast.makeText(MainActivity.this, confirmMessage, Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }
