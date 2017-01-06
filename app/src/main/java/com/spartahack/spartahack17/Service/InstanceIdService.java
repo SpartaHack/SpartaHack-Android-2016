@@ -1,8 +1,16 @@
 package com.spartahack.spartahack17.Service;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.spartahack.spartahack17.Constants;
+import com.spartahack.spartahack17.Retrofit.GSONMock;
+import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by ryancasler on 12/28/16
@@ -37,6 +45,21 @@ public class InstanceIdService extends com.google.firebase.iid.FirebaseInstanceI
      * @param token The new token.
      */
     private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send token to your app server.
+        SpartaHackAPIService.INSTANCE.getRestAdapter()
+                .addInstillation(new GSONMock.AddInstillationRequest(token))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GSONMock.AddInstillationResponse>() {
+                    @Override public void onCompleted() {}
+
+                    @Override public void onError(Throwable e) {}
+
+                    @Override public void onNext(GSONMock.AddInstillationResponse addInstillationResponse) {
+                        SharedPreferences preferences = getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString(Constants.PREF_INSTALL_TOKEN, addInstillationResponse.token);
+                        editor.putInt(Constants.PREF_INSTALL_ID, addInstillationResponse.id);
+                        editor.apply();
+                    }
+                });
     }
 }
