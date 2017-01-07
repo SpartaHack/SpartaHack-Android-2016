@@ -32,6 +32,7 @@ import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.CheckInFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
+import com.spartahack.spartahack17.Fragment.HelpDeskFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
 import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Utility;
@@ -153,8 +154,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     break;
 
                 case R.id.help:
-//                    title = getResources().getString(R.string.help);
-//                    addFragment(new CheckInFragment());
+                    title = getResources().getString(R.string.help);
+                    addFragment(new HelpDeskFragment());
                     break;
 
                 case R.id.notifications:
