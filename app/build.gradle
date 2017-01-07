@@ -75,6 +75,9 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
+    // library for custom fonts
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+
     // library for image loading
     compile 'com.github.bumptech.glide:glide:3.6.1'
     // rxjava
@@ -113,7 +116,6 @@ dependencies {
     testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
     testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
     testCompile 'joda-time:joda-time:2.9.3'
-
 }
 
 /*

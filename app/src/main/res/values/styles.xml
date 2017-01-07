@@ -2,17 +2,30 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
         <item name="colorAccent">@color/accent</item>
         <item name="colorPrimaryDark">@color/dark_brown</item>
         <item name="android:textColor">@color/text</item>
         <item name="android:textColorSecondary">@color/text_light</item>
         <item name="colorControlHighlight">@color/text_light</item>
+        <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.ActionBar" parent="android:Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:titleTextStyle">@style/AppTheme.ActionBar.TextAppearance</item>
+        <item name="android:subtitleTextStyle">@style/AppTheme.ActionBar.TextAppearance.SubTitle</item>
+    </style>
+
+    <style name="AppTheme.ActionBar.TextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="fontPath">fonts/nemoy/Nemoy-Light.ttf</item>
+    </style>
+
+    <style name="AppTheme.ActionBar.TextAppearance.SubTitle" parent="TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse">
+        <item name="fontPath">fonts/nemoy/Nemoy-Light.ttf</item>
+    </style>
 
     <style name="TextInputLayout">
         <item name="android:layout_width">match_parent</item>
@@ -74,5 +87,15 @@
         <item name="android:textColor">@color/accent</item>
     </style>
 
+    <style name="NotificationTitleStyle">
+        <item name="android:textSize">@dimen/sub_header_text_size</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="NotificationBodyStyle">
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
 
 </resources>

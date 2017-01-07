@@ -12,24 +12,17 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
-import com.spartahack.spartahack17.Fragment.CheckInFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
 import com.spartahack.spartahack17.Model.Ticket;
@@ -42,11 +35,9 @@ import butterknife.BindView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.drawer_layout) DrawerLayout drawerLayout;
-    @BindView(R.id.navigation_view) NavigationView navigationView;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
 
@@ -57,12 +48,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public static final String ACTION = "action";
     public static final String OBJECT_ID = "objectid";
     public static final String NOT_ID = "notid";
-
-    /**
-     * Reference to the currently selected menu item in the nav drawer
-     */
-    private MenuItem currentItem;
-
 
     public static PendingIntent getPendingIntent(Context context, String ticketId, String action, int pushID){
         Intent intent = new Intent(context, MainActivity.class);
@@ -85,128 +70,49 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         registerEventBus = true;
 
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-
-        if (actionBar != null) {
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
         // add padding for transparent statusbar if > kitkat
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
         }
 
-        // set navigation drawer item click listener
-        navigationView.setNavigationItemSelectedListener(this);
-
-        // inflate the nav drawer items programmatically because it is dynamic based on roles
-        navigationView.inflateMenu(R.menu.drawer_nav_items);
-
         toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.accent));
 
-        if (getIntent() == null || getIntent().getExtras() == null) {
-            onNavigationItemSelected(navigationView.getMenu().getItem(0));
-        } else{
-            onNavigationItemSelected(navigationView.getMenu().getItem(2));
-        }
+        addFragment(new AnnouncementFragment());
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.action_notifications:
-                                title = getResources().getString(R.string.notifications);
-                                addFragment(new AnnouncementFragment());
-                                break;
-                            case R.id.action_schedule:
-                                title = getResources().getString(R.string.guide);
-                                addFragment(new GuideFragment());
-                                break;
-                            case R.id.action_awards:
-                                title = getResources().getString(R.string.awards);
-                                addFragment(new AwardsFragment());
-                                break;
-                            case R.id.action_help:
+                item -> {
+                    switch (item.getItemId()) {
+                        case R.id.action_notifications:
+                            title = getResources().getString(R.string.notifications);
+                            addFragment(new AnnouncementFragment());
+                            break;
+                        case R.id.action_schedule:
+                            title = getResources().getString(R.string.guide);
+                            addFragment(new GuideFragment());
+                            break;
+                        case R.id.action_awards:
+                            title = getResources().getString(R.string.awards);
+                            addFragment(new AwardsFragment());
+                            break;
+                        case R.id.action_help:
 //                                title = getResources().getString(R.string.help);
 //                                addFragment(new CheckInFragment());
-                                break;
-                            case R.id.action_profile:
-                                title = getResources().getString(R.string.profile);
-                                addFragment(new ProfileFragment());
-                                break;
-                        }
-
-                        return true;
+                            break;
+                        case R.id.action_profile:
+                            title = getResources().getString(R.string.profile);
+                            addFragment(new ProfileFragment());
+                            break;
                     }
+
+                    return true;
                 });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         toolbar.setTitle(title);
-        drawerLayout.closeDrawers();
-
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-        if (currentItem == null || currentItem != item) {
-            item.setChecked(true);
-
-            switch (item.getItemId()) {
-                case R.id.awards:
-                    title = getResources().getString(R.string.awards);
-                    addFragment(new AwardsFragment());
-                    break;
-
-                case R.id.scan:
-                    title = getResources().getString(R.string.scan);
-                    addFragment(new CheckInFragment());
-                    break;
-
-                case R.id.help:
-//                    title = getResources().getString(R.string.help);
-//                    addFragment(new CheckInFragment());
-                    break;
-
-                case R.id.notifications:
-                    title = getResources().getString(R.string.notifications);
-                    addFragment(new AnnouncementFragment());
-                    break;
-
-                case R.id.schedule:
-                    title = getResources().getString(R.string.guide);
-                    addFragment(new GuideFragment());
-                    break;
-
-                case R.id.profile:
-                    title = getResources().getString(R.string.profile);
-                    addFragment(new ProfileFragment());
-                    break;
-            }
-
-            currentItem = item;
-        }
-
-        drawerLayout.closeDrawers();
-
-        return true;
     }
 
     /**
