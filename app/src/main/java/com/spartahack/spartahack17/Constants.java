@@ -7,7 +7,7 @@ package com.spartahack.spartahack17;
 public class Constants {
     public static final String PREF_PUSH = "push preference";
     public static final String PREF_INSTALL_ID = "Instillation id";
-    public static final String PREF_INSTALL_TOKEN = "Instillation token";
+    public static final String PREF_INSTALL_TOKEN = "Installation token";
     public static final String P_USER_ID = "user id";
     public static final String P_USER_AUTH_TOKEN = "auth token";
     public static final String P_USER_EMAIL = "email";
