@@ -49,4 +49,16 @@ public class GSONMock {
         public String token;
         public Session user;
     }
+
+    public static class CreateMentorshipTicketRequest {
+        String channel;
+        String username;
+        String text;
+
+        public CreateMentorshipTicketRequest(String channel, String username, String text) {
+            this.channel = channel;
+            this.username = username;
+            this.text = text;
+        }
+    }
 }

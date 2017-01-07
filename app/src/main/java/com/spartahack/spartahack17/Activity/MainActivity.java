@@ -26,7 +26,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
-import com.spartahack.spartahack17.Fragment.CheckInFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
 import com.spartahack.spartahack17.Fragment.HelpDeskFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
