@@ -14,11 +14,12 @@ import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -41,6 +42,7 @@ import rx.android.schedulers.AndroidSchedulers;
 public class MainActivity extends BaseActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
 
@@ -78,6 +80,10 @@ public class MainActivity extends BaseActivity {
         registerEventBus = true;
 
         setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
 
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
@@ -89,8 +95,6 @@ public class MainActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
         }
-
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.accent));
 
         addFragment(new AnnouncementFragment());
 
@@ -126,7 +130,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        toolbar.setTitle(title);
+        toolbarTitle.setText(title);
     }
 
     /**
@@ -140,7 +144,7 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.commit();
-        if (toolbar != null) toolbar.setTitle(title);
+        toolbarTitle.setText(title);
         tabLayout.setVisibility(View.GONE);
     }
 
