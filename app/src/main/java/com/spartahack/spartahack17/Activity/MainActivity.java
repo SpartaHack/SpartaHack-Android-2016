@@ -8,12 +8,12 @@ import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -26,6 +26,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.CheckInFragment;
@@ -50,11 +53,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     private String title = "Notifications";
     private static final String TAG = "MainActivity";
-    public static final String PUSH_PREF = "push preference";
 
     public static final String ACTION = "action";
     public static final String OBJECT_ID = "objectid";
     public static final String NOT_ID = "notid";
+
+    private FirebaseAnalytics firebaseAnalytics;
 
     /**
      * Reference to the currently selected menu item in the nav drawer
@@ -83,6 +87,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         registerEventBus = true;
 
         setSupportActionBar(toolbar);
+
+        // Obtain the FirebaseAnalytics instance.
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
+
+        Log.d(TAG, "onCreate: " + FirebaseInstanceId.getInstance().getToken());
+
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
@@ -241,11 +252,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         startActivity(MentorViewTicketActivity.getIntent(this, a.ticket).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
     }
 
-    public void onEvent(Boolean b) {
-        SharedPreferences preferences = getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putBoolean(PUSH_PREF, b);
-        editor.apply();
+    public void onEvent(Boolean isSubscribing) {
+        getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE)
+                .edit()
+                .putBoolean(Constants.PREF_PUSH, isSubscribing)
+                .apply();
+
+        Snackbar.make(tabLayout, isSubscribing ? "Subscribed successfully" : "Unsubscribed successfully", Snackbar.LENGTH_SHORT).show();
     }
 
         public void refreshTicket(GSONMock.UpdateTicketStatusRequest request, final String confirmMessage, String id ) {

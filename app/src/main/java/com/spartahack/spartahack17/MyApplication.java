@@ -1,9 +1,6 @@
 package com.spartahack.spartahack17;
 
-import android.app.Activity;
 import android.app.Application;
-
-import com.spartahack.spartahack17.Activity.MainActivity;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -15,15 +12,7 @@ import io.realm.RealmConfiguration;
  * SpartaHack2016-Android
  */
 public class MyApplication extends Application {
-
-    @Override
-    public void onCreate() {
-        boolean pushOn = getSharedPreferences(getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true);
-//        if (pushOn)
-//            ParsePush.subscribeInBackground("");
-//        else {
-//            ParsePush.unsubscribeInBackground("");
-//        }
+    @Override public void onCreate() {
         super.onCreate();
 
         RealmConfiguration config = new RealmConfiguration.Builder(this).build();

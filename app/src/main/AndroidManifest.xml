@@ -19,7 +19,7 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
-        android:icon="@drawable/logo_17"
+        android:icon="@drawable/launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -50,6 +50,23 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
+
+        <!-- [START firebase_service] -->
+        <service
+            android:name=".Service.MessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
+        <service
+            android:name=".Service.InstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_iid_service] -->
     </application>
 
 </manifest>
