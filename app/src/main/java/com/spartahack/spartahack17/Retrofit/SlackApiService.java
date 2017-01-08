@@ -62,7 +62,7 @@ public class SlackAPIService  {
 
         // create Retrofit rest adapter
         Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl("https://hooks.slack.com/services/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")
+                .baseUrl("https://hooks.slack.com/services/T3ML9DA4T/B3MLTCZ19/")
                 .client(client)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))

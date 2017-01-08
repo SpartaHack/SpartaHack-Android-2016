@@ -1,5 +1,6 @@
 package com.spartahack.spartahack17.Retrofit;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -9,5 +10,5 @@ import rx.Observable;
  * Spartahack-Android
  */
 public interface ISlackAPIService {
-    @POST() Observable<Boolean> addTicket(@Body GSONMock.CreateMentorshipTicketRequest request);
+    @POST("e4Xf6bsbKyw2k1wRWA8pWerK") Observable<ResponseBody> addTicket(@Body GSONMock.CreateMentorshipTicketRequest request);
 }
