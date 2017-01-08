@@ -1,7 +1,5 @@
 package com.spartahack.spartahack17.Presenter;
 
-import android.util.Log;
-
 import com.spartahack.spartahack17.Model.Event;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.View.ScheduleView;
@@ -11,7 +9,6 @@ import org.joda.time.DateTimeComparator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 

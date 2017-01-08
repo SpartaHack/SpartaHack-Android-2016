@@ -23,14 +23,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activity.CreateTicketActivity"
-            android:label="@string/title_activity_main"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Activity.ViewTicketActivity"
-            android:label="@string/title_activity_main"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Activity.MainActivity"
             android:label="@string/title_activity_main"
             android:screenOrientation="portrait">
@@ -40,11 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".Activity.MentorViewTicketActivity"
-            android:label="@string/title_activity_mentor_view_ticket"
-            android:theme="@style/AppTheme" />
 
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"

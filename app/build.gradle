@@ -109,7 +109,6 @@ dependencies {
     compile 'com.google.firebase:firebase-core:10.0.1'
 
     // removing this stuff later most likley
-    compile 'io.realm:realm-android:0.87.0'
     compile 'de.greenrobot:eventbus:2.4.0'
 
     // Dependencies for local unit tests

@@ -12,4 +12,6 @@ public class Constants {
     public static final String P_USER_AUTH_TOKEN = "auth token";
     public static final String P_USER_EMAIL = "email";
     public static final String P_USER_ROLE = "role";
+    public static final String P_USER_FIRST = "first name";
+    public static final String P_USER_LAST = "last name";
 }

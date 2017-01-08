@@ -7,19 +7,17 @@ import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.ProfileView;
 
-import java.net.HttpURLConnection;
-
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static com.spartahack.spartahack17.Activity.MentorViewTicketActivity.TAG;
 
 /**
  * Created by ryancasler on 10/12/16
  * SpartaHack2016-Android
  */
 public class ProfilePresenter extends RxPresenter<ProfileView, Session> {
+
+    private static final String TAG = "ProfilePresenter";
 
     public void attemptLogin(String email, String password) {
         GSONMock.Login login = new GSONMock.Login();
@@ -44,17 +42,16 @@ public class ProfilePresenter extends RxPresenter<ProfileView, Session> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(voidResponse -> {
-                    if (voidResponse.code() == HttpURLConnection.HTTP_NO_CONTENT) {
-                        if (isViewAttached()) {
-                            getView().logOutSuccess();
-                        }
-                    } else {
-                        if (isViewAttached()) {
-                            getView().logOutError();
-                        }
+                    if (isViewAttached()) {
+                        getView().logOutSuccess();
                     }
 
-                }, throwable -> Log.e(TAG, throwable.toString()));
+                }, throwable -> {
+                    Log.e(TAG, throwable.toString());
+                    if (isViewAttached()) {
+                        getView().logOutSuccess();
+                    }
+                });
     }
 
     @Override void onError(Throwable e) {

@@ -1,12 +1,9 @@
 package com.spartahack.spartahack17.Retrofit;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.spartahack.spartahack17.Keys;
+import com.spartahack.spartahack17.BuildConfig;
 
-import io.realm.RealmObject;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -15,41 +12,29 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by ryancasler on 1/4/16
- * SpartaHack2016-Android
+ * Created by ryancasler on 1/6/17
+ * Spartahack-Android
  */
-public class ParseAPIService {
-
+public class SlackAPIService  {
     /**
      * Singleton instance of the api service
      */
-    public final static ParseAPIService INSTANCE = new ParseAPIService();
+    public final static SlackAPIService INSTANCE = new SlackAPIService();
 
     /**
      * Tag for logging
      */
-    private static final String TAG = "ParseAPIService";
+    private static final String TAG = "SlackAPIService";
 
     /**
      * Retrofit network call interface
      */
-    private IParseAPIService apiService;
+    private final ISlackAPIService apiService;
 
-    private ParseAPIService() {
+    private SlackAPIService() {
 
         // create gson object
         Gson gson = new GsonBuilder()
-                .setExclusionStrategies(new ExclusionStrategy() {
-                    @Override
-                    public boolean shouldSkipField(FieldAttributes f) {
-                        return f.getDeclaringClass().equals(RealmObject.class);
-                    }
-
-                    @Override
-                    public boolean shouldSkipClass(Class<?> clazz) {
-                        return false;
-                    }
-                })
                 .setDateFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z'")
                 .create();
 
@@ -59,8 +44,6 @@ public class ParseAPIService {
 
             // Customize the request
             Request request = original.newBuilder()
-                    .header("X-Parse-Application-Id", Keys.PARSE_APP_ID)
-                    .header("X-Parse-REST-API-Key", Keys.PARSE_REST_API_KEY)
                     .method(original.method(), original.body())
                     .build();
 
@@ -70,29 +53,23 @@ public class ParseAPIService {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 
         // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        // add your other interceptors …
+        logging.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
 
         // add logging as last interceptor
-        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        httpClient.addInterceptor(logging);
         OkHttpClient client = httpClient.build();
 
-        // request base url
-        String serverAPI = "https://api.parse.com/1/";
 
         // create Retrofit rest adapter
         Retrofit restAdapter = new Retrofit.Builder()
-                .baseUrl(serverAPI)
+                .baseUrl("https://hooks.slack.com/services/T3ML9DA4T/B3MLTCZ19/")
                 .client(client)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        apiService = restAdapter.create(IParseAPIService.class);
+        apiService = restAdapter.create(ISlackAPIService.class);
     }
-
-
-    public IParseAPIService getRestAdapter() { return apiService; }
-
+    
+    public ISlackAPIService getRestAdapter() { return apiService; }
 }

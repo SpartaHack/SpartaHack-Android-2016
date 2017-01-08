@@ -1,70 +1,103 @@
 package com.spartahack.spartahack17.Fragment;
 
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
+import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 
 import com.spartahack.spartahack17.Activity.MainActivity;
+import com.spartahack.spartahack17.Cache;
 import com.spartahack.spartahack17.R;
+import com.spartahack.spartahack17.Retrofit.GSONMock;
+import com.spartahack.spartahack17.Retrofit.SlackAPIService;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static android.R.layout.simple_spinner_item;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
  */
 public class HelpDeskFragment extends BaseFragment {
 
-    @BindView(R.id.view_pager) ViewPager viewPager;
-    @BindView(R.id.no_user) LinearLayout noUser;
+    @BindView(R.id.signed_in) LinearLayout signedIn;
+    @BindView(R.id.signed_out) LinearLayout signedOut;
+    @BindView(R.id.text_location) EditText locationText;
+    @BindView(R.id.text_description) EditText descriptionText;
+    @BindView(R.id.spinner_category) Spinner cateogrySpinner;
 
     @Override public void onResume() {
         super.onResume();
-        setView();
+
+        String[] arraySpinner = new String[] {"General", "Random"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), simple_spinner_item, arraySpinner);
+        cateogrySpinner.setAdapter(adapter);
+
+        resetForm();
+        setContent();
     }
 
-    @Override int getLayout() {
-        return R.layout.fragment_help_desk;
+    @Override int getLayout() { return R.layout.fragment_help_desk; }
+
+    /**
+     * Submit a help desk ticket
+     */
+    @OnClick(R.id.button_submit) void  onSubmit() {
+
+        // verify the user set a location
+        if (TextUtils.isEmpty(locationText.getText().toString())){
+            locationText.setError("Must set a location!");
+            return;
+        }
+
+        // verify the user set a description
+        if (TextUtils.isEmpty(descriptionText.getText().toString())){
+            descriptionText.setError("Must set a description!");
+            return;
+        }
+
+        // create the ticket
+        GSONMock.CreateMentorshipTicketRequest ticket = new GSONMock.CreateMentorshipTicketRequest(
+                "#" + cateogrySpinner.getSelectedItem().toString(),
+                "(" +  locationText.getText().toString() + ") " + Cache.INSTANCE.getSession().getFullName(),
+                descriptionText.getText().toString());
+
+        SlackAPIService.INSTANCE.getRestAdapter()
+                .addTicket(ticket)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(response -> {
+                    String res = null;
+
+                    try {
+                        res = new String(response.bytes());
+                    } catch (IOException e) {
+                        Snackbar.make(signedIn, "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
+                    }
+
+                    if (res != null && res.equals("ok")) {
+                        Snackbar.make(signedIn, "Ticket Created", Snackbar.LENGTH_SHORT).show();
+                        resetForm();
+                    } else {
+                        Snackbar.make(signedIn, "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
+                    }
+
+                }, throwable -> Snackbar.make(signedIn, "Error Creating Ticket", Snackbar.LENGTH_SHORT).show());
     }
 
-    private void setView(){
-//        if (ParseUser.getCurrentUser() == null){
-//            // need to log in to use the app
-//            noUser.setVisibility(View.VISIBLE);
-//            viewPager.setVisibility(View.GONE);
-//        } else {
-//            noUser.setVisibility(View.GONE);
-//            viewPager.setVisibility(View.VISIBLE);
-//
-//            // see if this person is a mentor or not
-//            ParseQuery<ParseObject> query = new ParseQuery<>("Mentors");
-//            query.whereEqualTo("mentor", ParseUser.getCurrentUser());
-//            query.findInBackground((objects, e) -> {
-//                // check if category array has objects or not
-//                ArrayList<String> cat = null;
-//                if (objects != null && objects.size()>0 && objects.get(0).get("categories") != null){
-//                    try {
-//                        cat = (ArrayList<String>) objects.get(0).get("categories");
-//                    } catch (ClassCastException e1){
-//                        Log.d("Cast", e1.toString());
-//                    }
-//                }
-//
-//                if ( cat == null  || cat.size() == 0){
-//                    // not subscribed to any categories so only show their tickets
-//                    ((MainActivity)getActivity()).addFragment(new MyTicketsFragment());
-//                }else {
-//                    // subscribed to categories so show mentor view as well
-//                    viewPager.setAdapter(new HelpDeskPagerAdapter(getChildFragmentManager()));
-//                    setUpTabBar(viewPager);
-//                }
-//            });
-//
-//        }
-
-    }
-
-    @OnClick(R.id.login) void onLogin() {
+    /**
+     * Redirect the user to the login screen
+     */
+    @OnClick(R.id.button_login) void onLogin() {
         MainActivity activity = ((MainActivity) getActivity());
         ProfileFragment fragment = new ProfileFragment();
         Bundle bundle = new Bundle();
@@ -72,4 +105,27 @@ public class HelpDeskFragment extends BaseFragment {
         fragment.setArguments(bundle);
         activity.switchContent(R.id.container, fragment);
     }
+
+    /**
+     * Pick what content should be shown
+     */
+    private void setContent() {
+        if (Cache.INSTANCE.hasSession()){
+            signedOut.setVisibility(View.GONE);
+            signedIn.setVisibility(View.VISIBLE);
+        } else {
+            signedIn.setVisibility(View.GONE);
+            signedOut.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /**
+     * Reset all values in the form
+     */
+    private void resetForm() {
+        locationText.setText(null);
+        descriptionText.setText(null);
+        cateogrySpinner.setSelection(0);
+    }
+
 }
