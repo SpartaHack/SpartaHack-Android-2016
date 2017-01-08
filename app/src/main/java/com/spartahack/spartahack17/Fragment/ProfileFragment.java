@@ -187,7 +187,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
                 e.printStackTrace();
             }
 
-            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), session.getEmail()));
+            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), session.getFullName()));
 
         } else {
             progressBar.setVisibility(View.GONE);

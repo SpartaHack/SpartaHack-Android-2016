@@ -8,6 +8,8 @@ import com.spartahack.spartahack17.Model.Session;
 import static android.content.Context.MODE_PRIVATE;
 import static com.spartahack.spartahack17.Constants.P_USER_AUTH_TOKEN;
 import static com.spartahack.spartahack17.Constants.P_USER_EMAIL;
+import static com.spartahack.spartahack17.Constants.P_USER_FIRST;
+import static com.spartahack.spartahack17.Constants.P_USER_LAST;
 import static com.spartahack.spartahack17.Constants.P_USER_ROLE;
 
 /**
@@ -70,6 +72,8 @@ public class Cache {
         editor.putString(P_USER_EMAIL, session.getEmail());
         editor.putString(P_USER_AUTH_TOKEN, session.getAuth_token());
         editor.putInt(P_USER_ROLE, session.getRole());
+        editor.putString(P_USER_FIRST, session.getFirst_name());
+        editor.putString(P_USER_LAST, session.getLast_name());
         return editor.commit();
     }
 
@@ -84,9 +88,11 @@ public class Cache {
         String email = prefs.getString(P_USER_EMAIL, null);
         String auth = prefs.getString(P_USER_AUTH_TOKEN, null);
         int role = prefs.getInt(P_USER_ROLE, -100);
+        String first = prefs.getString(P_USER_FIRST, null);
+        String last = prefs.getString(P_USER_LAST, null);
 
-        if (id != -100 && email != null && auth != null && role!= -100){
-            session = new Session(id, email, auth, role);
+        if (id != -100 && email != null ){
+            session = new Session(id, first, last, email, auth, role);
             return true;
         }
 
