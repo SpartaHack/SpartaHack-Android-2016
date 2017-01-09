@@ -92,7 +92,7 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
 
         SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
 
-        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.date_section, R.id.section_text, eventListAdapter);
+        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_header, R.id.section_text, eventListAdapter);
 
         adapter.setSections(sections.toArray(dummy));
 

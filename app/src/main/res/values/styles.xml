@@ -131,4 +131,21 @@
         <item name="fontPath">fonts/lato/Lato-Light.ttf</item>
     </style>
 
+    <style name="PrizesTitleStyle">
+        <item name="android:textSize">@dimen/sub_header_text_size</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="PrizesSponsorStyle">
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="PrizesBodyStyle">
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
 </resources>

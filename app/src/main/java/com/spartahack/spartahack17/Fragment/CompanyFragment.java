@@ -79,7 +79,7 @@ public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> 
 
         SimpleSectionedRecyclerViewAdapter.Section[] dummy = new SimpleSectionedRecyclerViewAdapter.Section[sections.size()];
 
-        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section, R.id.section_text, simpleCompanyAdapter);
+        SimpleSectionedRecyclerViewAdapter adapter = new SimpleSectionedRecyclerViewAdapter(getActivity(), R.layout.section_header, R.id.section_text, simpleCompanyAdapter);
 
         adapter.setSections(sections.toArray(dummy));
 
