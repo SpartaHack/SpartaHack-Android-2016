@@ -90,4 +90,45 @@
         <item name="android:textColor">@color/text</item>
     </style>
 
+    <style name="EventTimeStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="EventLocationStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="EventTitleStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="EventBodyStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="SectionHeaderStyle">
+        <item name="android:textSize">@dimen/sub_header_text_size</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="fontPath">fonts/nemoy/Nemoy-Regular.ttf</item>
+    </style>
+
+    <style name="CountdownHeaderStyle">
+        <item name="android:textSize">@dimen/sub_header_text_size</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="CountdownTimerStyle">
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">32sp</item>
+        <item name="fontPath">fonts/lato/Lato-Light.ttf</item>
+    </style>
+
 </resources>
