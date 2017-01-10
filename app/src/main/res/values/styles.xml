@@ -144,7 +144,7 @@
         <item name="android:textColor">@color/text</item>
     </style>
 
-    <style name="ProfileHeaderStyle">
+    <style name="ProfileGreetingStyle">
         <item name="android:textSize">@dimen/sub_header_text_size</item>
         <item name="android:textColor">@color/accent</item>
         <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
@@ -157,6 +157,17 @@
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/button_shape</item>
         <item name="android:textColor">@color/accent</item>
+    </style>
+
+    <style name="NotificationToggleTitleStyle">
+        <item name="android:textSize">@dimen/sub_header_text_size</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
+    <style name="NotificationToggleBodyStyle">
+        <item name="android:textSize">@dimen/body_text_size</item>
+        <item name="android:textColor">@color/text</item>
     </style>
 
 </resources>
