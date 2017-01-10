@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:fitsSystemWindows="false"
-    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingEnd="@dimen/padding_horizontal_material"
     android:paddingStart="@dimen/padding_horizontal_material"
@@ -18,53 +17,95 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <TextView
-            style="@style/SectionHeaderStyle"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/login" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/email_layout"
-            style="@style/TextInputLayout">
-
-            <EditText
-                android:id="@+id/user_name"
+            <TextView
+                style="@style/SectionHeaderStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email" />
+                android:text="@string/login" />
 
-        </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/email_layout"
+                style="@style/TextInputLayout">
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/password_layout"
-            style="@style/TextInputLayout">
+                <EditText
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email" />
 
-            <EditText
-                android:id="@+id/password"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/password_layout"
+                style="@style/TextInputLayout">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textColorHint="@android:color/transparent" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/login_button"
+                style="@style/ButtonStyle"
+                android:text="@string/login" />
+
+            <TextView
+                android:id="@+id/forgot_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:textColorHint="@android:color/transparent" />
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:gravity="center"
+                android:text="@string/forgot_password" />
 
-        </android.support.design.widget.TextInputLayout>
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/login_button"
-            style="@style/ButtonStyle"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/login" />
-
-        <TextView
-            android:id="@+id/forgot_password"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:gravity="center"
-            android:text="@string/forgot_password" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/push_notifications"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/toggle_push"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/push_switch2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_weight="0" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -77,17 +118,16 @@
 
         <TextView
             android:id="@+id/display_name"
-            style="@style/ProfileGreetingStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/ProfileHeaderStyle"
             tools:text="Welcome SpartaHack Organizer" />
 
         <FrameLayout
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_margin="20dp"
             android:background="@android:color/white">
 
             <ImageView
@@ -96,6 +136,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:contentDescription="@string/barcode"
+                android:padding="5dp"
                 tools:src="@drawable/logo_17" />
 
         </FrameLayout>
@@ -103,9 +144,44 @@
         <Button
             android:id="@+id/logout"
             style="@style/ButtonStyle"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/logout" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/push_notifications"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/toggle_push"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/push_switch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:padding="5dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
