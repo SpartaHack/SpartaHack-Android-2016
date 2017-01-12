@@ -63,7 +63,8 @@ public class CompanyPresenterTest extends BaseUnitTest {
         assertEquals(-1, presenter.compare(one, two));
         assertEquals(1, presenter.compare(three, two));
 
-        assertEquals(1, presenter.compare(four, three));
+        assertEquals(1, presenter.compare(three, four));
+        assertEquals(-1, presenter.compare(four, three));
 
         assertEquals(0, presenter.compare(five, four));
         assertEquals(0, presenter.compare(four, five));

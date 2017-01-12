@@ -48,6 +48,6 @@ public class CompanyPresenter extends RxPresenter<CompanyView, ArrayList<Company
     @Override public int compare(Company lhs, Company rhs) {
         if (lhs.getLevel() != rhs.getLevel())
             return lhs.getLevel() - rhs.getLevel();
-        return rhs.getName().compareTo(lhs.getName());
+        return lhs.getName().compareTo(rhs.getName());
     }
 }

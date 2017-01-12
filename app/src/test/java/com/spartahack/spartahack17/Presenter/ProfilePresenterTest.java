@@ -23,7 +23,7 @@ public class ProfilePresenterTest extends BaseUnitTest {
         presenter = new ProfilePresenter();
         presenter.attachView(view);
 
-        session = new Session();
+        session = new Session(0, "Sparty", "Spartan", "sparty@msu.edu", "", 0);
     }
 
     @Test public void onError() throws Exception {
