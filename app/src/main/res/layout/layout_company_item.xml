@@ -4,15 +4,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/activity_vertical_margin">
+    android:layout_marginBottom="@dimen/activity_vertical_margin"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:paddingStart="@dimen/padding_horizontal_material"
+    android:paddingEnd="@dimen/padding_horizontal_material">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:padding="10dp"
         tools:src="@drawable/logo_17"
         android:contentDescription="@string/company_logo"/>
+
 </LinearLayout>
