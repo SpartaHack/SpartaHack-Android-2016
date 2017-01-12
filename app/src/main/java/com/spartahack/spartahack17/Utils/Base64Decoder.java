@@ -12,7 +12,7 @@ import android.util.Base64;
 public class Base64Decoder {
 
     public static Bitmap decodeSampledBitmapFromBase64(String base64String,
-                                                        int reqWidth, int reqHeight) {
+                                                       int reqWidth, int reqHeight) {
 
         base64String = base64String.replace("data:image/png;base64,","");
         byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
