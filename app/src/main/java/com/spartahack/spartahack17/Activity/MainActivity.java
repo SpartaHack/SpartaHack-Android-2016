@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -29,10 +30,12 @@ import com.spartahack.spartahack17.Fragment.AwardsFragment;
 import com.spartahack.spartahack17.Fragment.GuideFragment;
 import com.spartahack.spartahack17.Fragment.HelpDeskFragment;
 import com.spartahack.spartahack17.Fragment.ProfileFragment;
+import com.spartahack.spartahack17.Fragment.SettingsFragment;
 import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Utility;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
 
@@ -40,6 +43,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.toolbar_title) TextView toolbarTitle;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
+    @BindView(R.id.navigate_before_button) ImageButton navigateBeforeButton;
+    @BindView(R.id.settings_icon) ImageButton settingsIcon;
 
     private String title = "Notifications";
     private static final String TAG = "MainActivity";
@@ -65,6 +70,20 @@ public class MainActivity extends BaseActivity {
 
     public static Intent toHelpDesk(Context c){
         return new Intent(c, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra(ACTION, ACTION);
+    }
+
+    @OnClick(R.id.navigate_before_button) public void onNavigateBeforeButtonClicked() {
+        navigateBeforeButton.setVisibility(View.GONE);
+        settingsIcon.setVisibility(View.VISIBLE);
+        title = getResources().getString(R.string.profile);
+        addFragment(new ProfileFragment());
+    }
+
+    @OnClick(R.id.settings_icon) public void onSettingsIconClicked() {
+        navigateBeforeButton.setVisibility(View.VISIBLE);
+        settingsIcon.setVisibility(View.GONE);
+        title = getResources().getString(R.string.settings);
+        addFragment(new SettingsFragment());
     }
 
     @Override
@@ -97,22 +116,32 @@ public class MainActivity extends BaseActivity {
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.action_notifications:
+                            navigateBeforeButton.setVisibility(View.GONE);
+                            settingsIcon.setVisibility(View.GONE);
                             title = getResources().getString(R.string.notifications);
                             addFragment(new AnnouncementFragment());
                             break;
                         case R.id.action_schedule:
+                            navigateBeforeButton.setVisibility(View.GONE);
+                            settingsIcon.setVisibility(View.GONE);
                             title = getResources().getString(R.string.guide);
                             addFragment(new GuideFragment());
                             break;
                         case R.id.action_awards:
+                            navigateBeforeButton.setVisibility(View.GONE);
+                            settingsIcon.setVisibility(View.GONE);
                             title = getResources().getString(R.string.awards);
                             addFragment(new AwardsFragment());
                             break;
                         case R.id.action_help:
+                            navigateBeforeButton.setVisibility(View.GONE);
+                            settingsIcon.setVisibility(View.GONE);
                             title = getResources().getString(R.string.help);
                             addFragment(new HelpDeskFragment());
                             break;
                         case R.id.action_profile:
+                            navigateBeforeButton.setVisibility(View.GONE);
+                            settingsIcon.setVisibility(View.VISIBLE);
                             title = getResources().getString(R.string.profile);
                             addFragment(new ProfileFragment());
                             break;

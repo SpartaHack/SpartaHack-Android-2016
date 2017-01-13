@@ -80,5 +80,7 @@
     <string name="time_til_hacking_starts">Time Until Hacking Starts:</string>
     <string name="hacking_over">Hacking Is Now Over!</string>
     <string name="location">Location</string>
+    <string name="settings_icon_desc">Open settings.</string>
+    <string name="navigate_before_desc">Return to previous content.</string>
 
 </resources>
