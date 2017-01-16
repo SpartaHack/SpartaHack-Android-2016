@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.spartahack.spartahack17.Activity.MainActivity;
@@ -30,6 +31,7 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
     /** Listview that notificaitons are in */
     @BindView(android.R.id.list) ListView notificationList;
     @BindView(android.R.id.empty) TextView emptyView;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     /** Swipe refresh layout for refreshing the list */
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
@@ -74,9 +76,14 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
         // create adapter and add to arraylist
         AnnouncementAdapter adapter = new AnnouncementAdapter((MainActivity) getActivity(), announcements);
         notificationList.setAdapter(adapter);
+
+        progressBar.setVisibility(View.GONE);
+        notificationList.setVisibility(View.VISIBLE);
     }
 
     @Override public void showLoading() {
+        notificationList.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override public void onError(String error) {
