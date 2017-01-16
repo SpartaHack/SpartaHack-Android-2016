@@ -27,10 +27,9 @@ public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> 
 
     private static final String TAG = "CompanyFragment";
 
-    @BindView(R.id.progressBar) ProgressBar progressBar;
-
     /** Recycler view that displays all objects */
     @BindView(android.R.id.list) RecyclerView recyclerView;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     @Override int getLayout() {
         return R.layout.fragment_company;
