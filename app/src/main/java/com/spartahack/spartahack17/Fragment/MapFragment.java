@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.webkit.WebView;
 
+import com.spartahack.spartahack17.BuildConfig;
 import com.spartahack.spartahack17.R;
 
 import butterknife.BindView;
@@ -23,7 +24,7 @@ public class MapFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         webView.getSettings().setJavaScriptEnabled(true);
-        String MAP_URL = "https://api.spartahack.com/map";
+        String MAP_URL = BuildConfig.HOST + "map";
         webView.loadUrl("https://docs.google.com/gview?embedded=true&url=" + MAP_URL);
     }
 
