@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg_light"
     android:fitsSystemWindows="false"
-    tools:context=".Activity.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -20,14 +20,51 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:contentInsetEnd="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetStart="0dp">
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/ToolbarTitleTextAppearance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/notifications" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageButton
+                    android:id="@+id/navigate_before_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/navigate_before_desc"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:tint="@color/accent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_navigate_before" />
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    style="@style/ToolbarTitleTextAppearance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/notifications" />
+
+                <ImageButton
+                    android:id="@+id/settings_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/settings_icon_desc"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:tint="@color/accent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_settings" />
+
+            </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
 
@@ -36,7 +73,7 @@
             style="@style/TabLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlways"/>
+            app:layout_scrollFlags="scroll|enterAlways" />
 
     </android.support.design.widget.AppBarLayout>
 
@@ -44,7 +81,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight = "1"/>
+        android:layout_weight="1" />
 
     <!--LinearLayout wrapping BottomNavigationView is for colored background-->
     <!--Note: You cannot use a custom background color on BottomNavigationView without losing ripple effect at this time-->
@@ -61,7 +98,7 @@
             android:layout_height="wrap_content"
             app:itemIconTint="@drawable/bottom_nav_item_color"
             app:itemTextColor="@drawable/bottom_nav_item_color"
-            app:menu="@menu/bottom_nav_items"/>
+            app:menu="@menu/bottom_nav_items" />
 
     </LinearLayout>
 
