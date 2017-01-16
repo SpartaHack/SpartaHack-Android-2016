@@ -22,7 +22,7 @@
     <string name="password">Password</string>
     <string name="user_name">Username</string>
     <string name="email">Email Address</string>
-    <string name="forgot_password">Forgot Password</string>
+    <string name="forgot_password">Forgot Password?</string>
 
     <string name="err_msg_subject">Enter the subject</string>
     <string name="err_msg_desc">Enter the description</string>
@@ -82,5 +82,6 @@
     <string name="location">Location</string>
     <string name="settings_icon_desc">Open settings.</string>
     <string name="navigate_before_desc">Return to previous content.</string>
+    <string name="create_ticket">Create Ticket</string>
 
 </resources>

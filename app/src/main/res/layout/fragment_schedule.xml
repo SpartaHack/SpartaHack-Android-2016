@@ -2,30 +2,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     android:animateLayoutChanges="true"
+    android:orientation="vertical"
     tools:context="com.spartahack.spartahack17.Fragment.ScheduleFragment">
 
     <TextView
         android:id="@+id/text_label"
+        style="@style/CountdownHeaderStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/time_til_hacking_starts"
-        android:textSize="20sp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="@string/time_til_hacking_starts" />
 
     <TextView
+        android:id="@+id/text_clock"
+        style="@style/CountdownTimerStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:text="1:23:47"
-        android:textSize="40sp"
-        android:id="@+id/text_clock"
-        android:gravity="center"/>
+        android:gravity="center"
+        tools:text="1:23:47" />
 
     <android.support.v7.widget.RecyclerView
+        android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@android:id/list"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

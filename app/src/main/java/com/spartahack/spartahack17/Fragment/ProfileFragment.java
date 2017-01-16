@@ -1,13 +1,15 @@
 package com.spartahack.spartahack17.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -20,7 +22,6 @@ import android.widget.TextView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.spartahack.spartahack17.Cache;
-import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Model.Session;
 import com.spartahack.spartahack17.Presenter.ProfilePresenter;
 import com.spartahack.spartahack17.R;
@@ -32,6 +33,9 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
+import uk.co.chrisjenx.calligraphy.TypefaceUtils;
 
 
 public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
@@ -55,15 +59,12 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.email_layout) TextInputLayout emailLayout;
     @BindView(R.id.password_layout) TextInputLayout passwordLayout;
-    @BindView(R.id.login_page_title) TextView loginViewTitle;
-    @BindView(R.id.push_switch) Switch aSwitch;
-    @BindView(R.id.push_switch2) Switch aSwitch2;
 
     boolean fromHelp = false;
     private Session session;
 
     @Override int getLayout() {
-        return R.layout.activity_login;
+        return R.layout.fragment_login;
     }
 
     @Override boolean registerEventbus() {
@@ -80,15 +81,18 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
         Bundle args = this.getArguments();
         if (args != null && args.containsKey(I_EXTRA_FROM)){
             fromHelp = true;
-            loginViewTitle.setText(R.string.login_for_help);
         }
 
-        // set switch to correct value
-        aSwitch.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(Constants.PREF_PUSH, true));
-        aSwitch2.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(Constants.PREF_PUSH, true));
+        // Using a custom typeface for an EditText with inputType="textPassword"
+        // requires java intervention because XML automatically uses the default typeface
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), CalligraphyConfig.get().getFontPath());
+        passwordLayout.setTypeface(typeface);
 
-        aSwitch.setOnCheckedChangeListener(this);
-        aSwitch2.setOnCheckedChangeListener(this);
+        CalligraphyTypefaceSpan typefaceSpan = TypefaceUtils.getSpan(typeface);
+        SpannableString spannableString = new SpannableString(getString(R.string.password));
+        spannableString.setSpan(typefaceSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        passwordLayout.setHint(spannableString);
     }
 
     @Override public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
@@ -148,7 +152,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     /**
      * Called when a user clicks on forgot password. This will open the users browser of choice
      */
-    @OnClick(R.id.forgot_passowrd) public void onForgotPassword() {
+    @OnClick(R.id.forgot_password) public void onForgotPassword() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(RESET_URL)));
     }
 

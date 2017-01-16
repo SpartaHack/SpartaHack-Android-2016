@@ -62,7 +62,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
 
 
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(context).inflate(R.layout.layout_event_item_1, parent, false);
+        final View view = LayoutInflater.from(context).inflate(R.layout.layout_event_item, parent, false);
         return new SimpleViewHolder(view);
     }
 
