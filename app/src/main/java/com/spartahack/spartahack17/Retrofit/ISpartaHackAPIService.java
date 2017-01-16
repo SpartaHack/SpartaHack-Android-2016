@@ -1,5 +1,6 @@
 package com.spartahack.spartahack17.Retrofit;
 
+import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Session;
 
@@ -32,7 +33,7 @@ public interface ISpartaHackAPIService {
     Observable<GSONMock.Prizes> getPrizes();
 
     @GET("announcements")
-    Observable<GSONMock.Announcements> getAnnouncements();
+    Observable<ArrayList<Announcement>> getAnnouncements();
 
     @GET("sponsors")
     Observable<ArrayList<Company>> getCompanies();

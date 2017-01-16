@@ -1,7 +1,6 @@
 package com.spartahack.spartahack17.Retrofit;
 
 import com.google.gson.annotations.SerializedName;
-import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.Model.Event;
 import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.Model.Session;
@@ -21,11 +20,6 @@ public class GSONMock {
     public static class Prizes {
         @SerializedName("prizes")
         public ArrayList<Prize> prizes;
-    }
-
-    public static class Announcements {
-        @SerializedName("announcements")
-        public ArrayList<Announcement> announcements;
     }
 
     public static class Login {
