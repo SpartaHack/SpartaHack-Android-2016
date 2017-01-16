@@ -1,7 +1,6 @@
 package com.spartahack.spartahack17.Presenter;
 
 import com.spartahack.spartahack17.Model.Announcement;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.AnnouncementView;
 
@@ -19,7 +18,7 @@ import rx.schedulers.Schedulers;
  * Created by ryancasler on 9/23/16.
  * SpartaHack2016-Android
  */
-public class AnnouncementPresenter extends RxPresenter<AnnouncementView, GSONMock.Announcements> implements Comparator<Announcement> {
+public class AnnouncementPresenter extends RxPresenter<AnnouncementView, ArrayList<Announcement>> implements Comparator<Announcement> {
     private static final int RIGHT_FIRST = 1;
     private static final int LEFT_FIRST = -1;
 
@@ -51,11 +50,10 @@ public class AnnouncementPresenter extends RxPresenter<AnnouncementView, GSONMoc
         }
     }
 
-    @Override void onNext(GSONMock.Announcements data) {
-        ArrayList<Announcement> notifications = data.announcements;
-        Collections.sort(notifications, this);
+    @Override void onNext(ArrayList<Announcement> announcements) {
+        Collections.sort(announcements, this);
         if (isViewAttached()) {
-            getView().showAnnouncements(notifications);
+            getView().showAnnouncements(announcements);
         }
     }
 }
