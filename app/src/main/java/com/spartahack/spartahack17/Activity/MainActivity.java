@@ -116,26 +116,22 @@ public class MainActivity extends BaseActivity {
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.action_notifications:
-                            navigateBeforeButton.setVisibility(View.GONE);
-                            settingsIcon.setVisibility(View.GONE);
+                            hideToolbarItems();
                             title = getResources().getString(R.string.notifications);
                             addFragment(new AnnouncementFragment());
                             break;
                         case R.id.action_schedule:
-                            navigateBeforeButton.setVisibility(View.GONE);
-                            settingsIcon.setVisibility(View.GONE);
+                            hideToolbarItems();
                             title = getResources().getString(R.string.guide);
                             addFragment(new GuideFragment());
                             break;
                         case R.id.action_awards:
-                            navigateBeforeButton.setVisibility(View.GONE);
-                            settingsIcon.setVisibility(View.GONE);
+                            hideToolbarItems();
                             title = getResources().getString(R.string.awards);
                             addFragment(new AwardsFragment());
                             break;
                         case R.id.action_help:
-                            navigateBeforeButton.setVisibility(View.GONE);
-                            settingsIcon.setVisibility(View.GONE);
+                            hideToolbarItems();
                             title = getResources().getString(R.string.help);
                             addFragment(new HelpDeskFragment());
                             break;
@@ -198,6 +194,11 @@ public class MainActivity extends BaseActivity {
         }else {
             super.onBackPressed();
         }
+    }
+
+    private void hideToolbarItems() {
+        navigateBeforeButton.setVisibility(View.GONE);
+        settingsIcon.setVisibility(View.GONE);
     }
 
     public void onEvent(String url){

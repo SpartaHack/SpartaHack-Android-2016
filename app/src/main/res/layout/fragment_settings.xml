@@ -16,8 +16,6 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <!--style="@style/NotificationToggleTitleStyle"-->
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
