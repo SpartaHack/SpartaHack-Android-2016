@@ -1,6 +1,5 @@
 package com.spartahack.spartahack17.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
@@ -23,7 +22,6 @@ import android.widget.TextView;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.spartahack.spartahack17.Cache;
-import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Model.Session;
 import com.spartahack.spartahack17.Presenter.ProfilePresenter;
 import com.spartahack.spartahack17.R;
@@ -61,8 +59,6 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.email_layout) TextInputLayout emailLayout;
     @BindView(R.id.password_layout) TextInputLayout passwordLayout;
-    @BindView(R.id.push_switch) Switch aSwitch;
-    @BindView(R.id.push_switch2) Switch aSwitch2;
 
     boolean fromHelp = false;
     private Session session;
@@ -97,13 +93,6 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
         spannableString.setSpan(typefaceSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
 
         passwordLayout.setHint(spannableString);
-
-        // set switch to correct value
-        aSwitch.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(Constants.PREF_PUSH, true));
-        aSwitch2.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(Constants.PREF_PUSH, true));
-
-        aSwitch.setOnCheckedChangeListener(this);
-        aSwitch2.setOnCheckedChangeListener(this);
     }
 
     @Override public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
