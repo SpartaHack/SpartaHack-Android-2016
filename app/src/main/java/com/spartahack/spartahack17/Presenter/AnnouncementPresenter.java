@@ -50,10 +50,10 @@ public class AnnouncementPresenter extends RxPresenter<AnnouncementView, ArrayLi
         }
     }
 
-    @Override void onNext(ArrayList<Announcement> notifications) {
-        Collections.sort(notifications, this);
+    @Override void onNext(ArrayList<Announcement> announcements) {
+        Collections.sort(announcements, this);
         if (isViewAttached()) {
-            getView().showAnnouncements(notifications);
+            getView().showAnnouncements(announcements);
         }
     }
 }
