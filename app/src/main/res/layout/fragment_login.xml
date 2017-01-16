@@ -18,97 +18,53 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/SectionHeaderStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/login" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/email_layout"
-                style="@style/TextInputLayout">
-
-                <EditText
-                    android:id="@+id/user_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/email" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/password_layout"
-                style="@style/TextInputLayout">
-
-                <EditText
-                    android:id="@+id/password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/password"
-                    android:inputType="textPassword"
-                    android:textColorHint="@android:color/transparent" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/login_button"
-                style="@style/ButtonStyle"
-                android:text="@string/login"
-                android:layout_marginBottom="0dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin" />
-
-            <TextView
-                android:id="@+id/forgot_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:gravity="center"
-                android:text="@string/forgot_password" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            style="@style/SectionHeaderStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:text="@string/login" />
 
-            <LinearLayout
-                android:layout_width="0dp"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/email_layout"
+            style="@style/TextInputLayout">
+
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:hint="@string/email" />
 
-                <TextView
-                    style="@style/NotificationToggleTitleStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/push_notifications" />
+        </android.support.design.widget.TextInputLayout>
 
-                <TextView
-                    style="@style/NotificationToggleBodyStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/toggle_push" />
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_layout"
+            style="@style/TextInputLayout">
 
-            </LinearLayout>
-
-            <Switch
-                android:id="@+id/push_switch"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="0dp"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_weight="0" />
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColorHint="@android:color/transparent" />
 
-        </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/login_button"
+            style="@style/ButtonStyle"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/login" />
+
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:text="@string/forgot_password" />
 
     </LinearLayout>
 
@@ -143,42 +99,6 @@
                 tools:src="@drawable/logo_17" />
 
         </FrameLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/NotificationToggleTitleStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/push_notifications" />
-
-                <TextView
-                    style="@style/NotificationToggleBodyStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/toggle_push" />
-
-            </LinearLayout>
-
-            <Switch
-                android:id="@+id/push_switch2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="0dp"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_weight="0" />
-
-        </LinearLayout>
 
         <Button
             android:id="@+id/logout"
