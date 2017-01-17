@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.spartahack.spartahack17.Adapters.EventListAdapter;
@@ -40,6 +41,7 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
     @BindView(android.R.id.list) RecyclerView recyclerView;
     @BindView(R.id.text_clock) TextView clock;
     @BindView(R.id.text_label) TextView label;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -97,9 +99,14 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
         adapter.setSections(sections.toArray(dummy));
 
         recyclerView.setAdapter(adapter);
+
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override public void showLoading() {
+        recyclerView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override public void onError(String error) {

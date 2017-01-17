@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.spartahack.spartahack17.Adapters.CompanyListAdapter;
 import com.spartahack.spartahack17.Adapters.SimpleSectionedRecyclerViewAdapter;
@@ -28,6 +29,7 @@ public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> 
 
     /** Recycler view that displays all objects */
     @BindView(android.R.id.list) RecyclerView recyclerView;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     @Override int getLayout() {
         return R.layout.fragment_company;
@@ -52,6 +54,8 @@ public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> 
     }
 
     @Override public void showLoading() {
+        recyclerView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override public void onError(String error) {
@@ -84,5 +88,8 @@ public class CompanyFragment extends MVPFragment<CompanyView, CompanyPresenter> 
         adapter.setSections(sections.toArray(dummy));
 
         recyclerView.setAdapter(adapter);
+
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 }
