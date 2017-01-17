@@ -36,9 +36,13 @@ public class AnnouncementPresenter extends RxPresenter<AnnouncementView, ArrayLi
         subscribe(observable);
     }
 
+
+
     @Override public int compare(Announcement lhs, Announcement rhs) {
         if (!rhs.getPinned() && !lhs.getPinned())
-            return DateTimeComparator.getInstance().compare(rhs.getTime(), lhs.getTime());
+            return DateTimeComparator.getInstance().compare(rhs.getCreatedAt(), lhs.getCreatedAt());
+        else if (rhs.getPinned() && lhs.getPinned())
+            return DateTimeComparator.getInstance().compare(rhs.getCreatedAt(), lhs.getCreatedAt());
         else if (rhs.getPinned())
             return RIGHT_FIRST;
         return LEFT_FIRST;

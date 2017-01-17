@@ -67,7 +67,7 @@ public class AnnouncementAdapter extends BaseAdapter {
         final Announcement announcement = announcements.get(position);
 
         holder.title.setText(announcement.getTitle());
-        holder.message.setText(announcement.getMessage());
+        holder.message.setText(announcement.getDescription());
         if (announcement.getPinned())
             holder.pinned.setVisibility(View.VISIBLE);
         else

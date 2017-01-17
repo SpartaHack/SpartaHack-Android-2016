@@ -1,5 +1,7 @@
 package com.spartahack.spartahack17.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.joda.time.DateTime;
 
 /**
@@ -7,14 +9,28 @@ import org.joda.time.DateTime;
  * SpartaHack2016-Android
  */
 public class Announcement {
-    private String description;
+
+    @SerializedName("title")
     private String title;
-    private int pinned;
+
+    @SerializedName("description")
+    private String description;
+
+    @SerializedName("pinned")
+    private Integer pinned;
+
+    @SerializedName("created_at")
     private String createdAt;
+
+    @SerializedName("updated_at")
     private String updatedAt;
 
-    public void setPinned(int pinned) {
-        this.pinned = pinned;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -25,57 +41,28 @@ public class Announcement {
         this.description = description;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public Boolean getPinned() {
+        return (pinned == 1);
+    }
+
+    public void setPinned(Integer pinned) {
+        this.pinned = pinned;
+    }
+
+    public DateTime getCreatedAt() {
+        return new DateTime(createdAt);
     }
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
+    public DateTime getUpdatedAt() {
+        return new DateTime(updatedAt);
     }
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public DateTime getTime(){
-        return new DateTime(createdAt);
-    }
-
-
-    public String getMessage() {
-        return description;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public boolean getPinned() {
-        return pinned == 1;
-    }
-
-    public boolean isPinned() {
-        return pinned == 1;
-    }
-
-    public void setMessage(String message) {
-        this.description = message;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setPinned(boolean pinned) {
-        this.pinned = pinned ? 1 : 0;
-    }
-
-    public void setTime(String time) {
-        this.createdAt = time;
     }
 }
 
