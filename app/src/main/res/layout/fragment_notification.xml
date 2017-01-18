@@ -25,9 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/no_notificaitons"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
+        android:text="@string/no_notifications"
+        style="@style/NotificationTitleStyle"
         android:visibility="gone"/>
 
     <ProgressBar
@@ -38,5 +37,14 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/error_message"
+        style="@style/ErrorMessageStyle"
+        android:visibility="gone"/>
 
 </RelativeLayout>
