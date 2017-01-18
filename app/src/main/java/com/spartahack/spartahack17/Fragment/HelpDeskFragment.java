@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Cache;
 import com.spartahack.spartahack17.Model.Category;
@@ -28,6 +29,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static android.R.layout.simple_spinner_dropdown_item;
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.GENERATE_LEAD;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
@@ -42,6 +44,11 @@ public class HelpDeskFragment extends BaseFragment {
 
     // map display names to channel names
     HashMap<String, String> categoryHash;
+
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(GENERATE_LEAD, null);
+    }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

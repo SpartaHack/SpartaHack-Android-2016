@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Adapters.AnnouncementAdapter;
 import com.spartahack.spartahack17.Model.Announcement;
@@ -19,6 +20,8 @@ import com.spartahack.spartahack17.View.AnnouncementView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.BEGIN_CHECKOUT;
 
 /**
  * Fragment that displays notifications in a list
@@ -47,6 +50,11 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
 
     @NonNull @Override public AnnouncementPresenter createPresenter() {
         return new AnnouncementPresenter();
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(BEGIN_CHECKOUT, null);
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {

@@ -28,7 +28,6 @@ public class MyApplication extends Application {
         Cache.INSTANCE.readFromSharedPrefs(this);
 
         // Obtain the FirebaseAnalytics instance.
-        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
+        FirebaseAnalytics.getInstance(this).logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
     }
 }
