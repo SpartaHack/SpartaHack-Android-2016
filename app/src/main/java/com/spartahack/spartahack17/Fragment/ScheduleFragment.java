@@ -42,6 +42,7 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
     @BindView(R.id.text_clock) TextView clock;
     @BindView(R.id.text_label) TextView label;
     @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.error_message) TextView errorMessage;
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -100,19 +101,24 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
 
         recyclerView.setAdapter(adapter);
 
+        errorMessage.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
     }
 
     @Override public void showLoading() {
+        errorMessage.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override public void onError(String error) {
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        errorMessage.setVisibility(View.VISIBLE);
+
         Log.e(TAG, error);
     }
-
 
     /**
      * Convert a millisecond duration to a string format
