@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SpartaHack2016</string>
+    <string name="app_name">SpartaHack</string>
     <string name="title_activity_login">LoginActivity</string>
 
     <string name="hello_world">Hello world!</string>
