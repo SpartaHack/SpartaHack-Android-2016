@@ -37,7 +37,7 @@
 
 
     <string name="pinned">pinned</string>
-    <string name="no_notificaitons">No Notifications</string>
+    <string name="no_notifications">No Notifications</string>
     <string name="guide">Guide</string>
     <string name="login_to_see_profile">Login to see your profile.</string>
     <string name="logout">Logout</string>
@@ -83,5 +83,5 @@
     <string name="settings_icon_desc">Open settings.</string>
     <string name="navigate_before_desc">Return to previous content.</string>
     <string name="create_ticket">Create Ticket</string>
-
+    <string name="error_message">An error occurred.\nPlease try again later.</string>
 </resources>
