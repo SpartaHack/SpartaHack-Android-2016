@@ -75,6 +75,12 @@
         <item name="android:textColor">@color/accent</item>
     </style>
 
+    <style name="ErrorMessageStyle">
+        <item name="android:textSize">@dimen/sub_header_text_size</item>
+        <item name="android:textColor">@color/accent</item>
+        <item name="fontPath">fonts/lato/Lato-Regular.ttf</item>
+    </style>
+
     <style name="NotificationTitleStyle">
         <item name="android:textSize">@dimen/sub_header_text_size</item>
         <item name="android:textColor">@color/accent</item>

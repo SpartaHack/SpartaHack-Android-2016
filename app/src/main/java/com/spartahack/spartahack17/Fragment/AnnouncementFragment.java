@@ -32,6 +32,7 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
     @BindView(android.R.id.list) ListView notificationList;
     @BindView(android.R.id.empty) TextView emptyView;
     @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.error_message) TextView errorMessage;
 
     /** Swipe refresh layout for refreshing the list */
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
@@ -73,20 +74,27 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
     }
 
     @Override public void showAnnouncements(ArrayList<Announcement> announcements) {
-        // create adapter and add to arraylist
         AnnouncementAdapter adapter = new AnnouncementAdapter((MainActivity) getActivity(), announcements);
         notificationList.setAdapter(adapter);
 
+        errorMessage.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         notificationList.setVisibility(View.VISIBLE);
     }
 
     @Override public void showLoading() {
+        emptyView.setVisibility(View.GONE);
         notificationList.setVisibility(View.GONE);
+        errorMessage.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override public void onError(String error) {
+        emptyView.setVisibility(View.GONE);
+        notificationList.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        errorMessage.setVisibility(View.VISIBLE);
+
         Log.e(TAG, error);
     }
 }
