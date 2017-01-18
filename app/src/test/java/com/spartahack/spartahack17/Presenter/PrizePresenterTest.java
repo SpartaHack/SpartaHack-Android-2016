@@ -2,7 +2,6 @@ package com.spartahack.spartahack17.Presenter;
 
 import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Prize;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.View.PrizeView;
 
 import org.junit.Before;
@@ -64,13 +63,11 @@ public class PrizePresenterTest extends BaseUnitTest {
     }
 
     @Test public void testOnNext() throws Exception {
-        GSONMock.Prizes prizes = new GSONMock.Prizes();
-        prizes.prizes = new ArrayList<>();
-        prizes.prizes.add(new Prize());
-        ArrayList<Prize> prizeArrayList = prizes.prizes;
+        ArrayList<Prize> prizes = new ArrayList<>();
+        prizes.add(new Prize());
 
         presenter.onNext(prizes);
-        verify(view).showPrizes(prizeArrayList);
+        verify(view).showPrizes(prizes);
     }
 
     @Test public void testOnError() throws Exception {

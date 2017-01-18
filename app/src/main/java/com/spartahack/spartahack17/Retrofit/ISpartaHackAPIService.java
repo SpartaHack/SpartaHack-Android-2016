@@ -2,6 +2,8 @@ package com.spartahack.spartahack17.Retrofit;
 
 import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.Model.Company;
+import com.spartahack.spartahack17.Model.Event;
+import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.Model.Session;
 
 import java.util.ArrayList;
@@ -27,10 +29,10 @@ public interface ISpartaHackAPIService {
     Observable<Response<Void>> logout(@Path("token") String token);
 
     @GET("schedule")
-    Observable<GSONMock.Events> getSchedule();
+    Observable<ArrayList<Event>> getSchedule();
 
     @GET("prizes")
-    Observable<GSONMock.Prizes> getPrizes();
+    Observable<ArrayList<Prize>> getPrizes();
 
     @GET("announcements")
     Observable<ArrayList<Announcement>> getAnnouncements();

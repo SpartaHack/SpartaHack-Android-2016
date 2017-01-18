@@ -1,7 +1,6 @@
 package com.spartahack.spartahack17.Presenter;
 
 import com.spartahack.spartahack17.Model.Prize;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.PrizeView;
 
@@ -17,7 +16,7 @@ import rx.schedulers.Schedulers;
  * Created by memuyskens on 10/5/16.
  * SpartaHack-Android
  */
-public class PrizePresenter extends RxPresenter<PrizeView, GSONMock.Prizes> implements Comparator<Prize> {
+public class PrizePresenter extends RxPresenter<PrizeView, ArrayList<Prize> > implements Comparator<Prize> {
 
     private static final String TAG = "PrizePresenter";
 
@@ -45,8 +44,7 @@ public class PrizePresenter extends RxPresenter<PrizeView, GSONMock.Prizes> impl
         }
     }
 
-    @Override void onNext(GSONMock.Prizes data) {
-        ArrayList<Prize> prizes = data.prizes;
+    @Override void onNext(ArrayList<Prize>  prizes) {
         Collections.sort(prizes, this);
         if (isViewAttached()) {
             getView().showPrizes(prizes);

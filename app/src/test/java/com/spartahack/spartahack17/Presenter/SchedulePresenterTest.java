@@ -1,7 +1,6 @@
 package com.spartahack.spartahack17.Presenter;
 
 import com.spartahack.spartahack17.Model.Event;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.View.ScheduleView;
 
 import org.joda.time.DateTime;
@@ -64,13 +63,11 @@ public class SchedulePresenterTest extends BaseUnitTest {
     }
 
     @Test public void testOnNext() throws Exception {
-        GSONMock.Events events = new GSONMock.Events();
-        events.events = new ArrayList<>();
-        events.events.add(new Event());
-        ArrayList<Event> eventArrayList = events.events;
+        ArrayList<Event> events = new ArrayList<>();
+        events.add(new Event());
 
         presenter.onNext(events);
-        verify(view).showEvents(eventArrayList);
+        verify(view).showEvents(events);
     }
 
     @Test public void testOnError() throws Exception {
