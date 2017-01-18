@@ -101,6 +101,13 @@
         </FrameLayout>
 
         <Button
+            android:id="@+id/check_in"
+            style="@style/ButtonStyle"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/check_in" />
+
+        <Button
             android:id="@+id/logout"
             style="@style/ButtonStyle"
             android:layout_marginBottom="0dp"

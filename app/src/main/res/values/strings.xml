@@ -83,5 +83,6 @@
     <string name="settings_icon_desc">Open settings.</string>
     <string name="navigate_before_desc">Return to previous content.</string>
     <string name="create_ticket">Create Ticket</string>
+    <string name="check_in">Check In Attendees</string>
 
 </resources>

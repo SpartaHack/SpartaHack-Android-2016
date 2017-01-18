@@ -17,8 +17,12 @@ public class Session {
 //    private Object application;
 //    private Object rsvp;
     private String auth_token;
-    // TODO: 9/19/16 handle the array option too
     private int role;
+    private int checked_in;
+
+    public int getChecked_in() {
+        return checked_in;
+    }
 
     public Session(int id, String first, String last, String email, String auth, int role) {
         this.id = id;

@@ -34,6 +34,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Activity.CheckinActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
         <activity
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"

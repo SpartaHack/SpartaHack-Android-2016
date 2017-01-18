@@ -7,11 +7,15 @@ import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.Model.Session;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -42,4 +46,8 @@ public interface ISpartaHackAPIService {
 
     @POST("installations")
     Observable<GSONMock.AddInstillationResponse> addInstillation(@Body GSONMock.AddInstillationRequest requestBody);
+
+    @FormUrlEncoded
+    @POST("checkin")
+    Observable<CheckInResponse> checkInUser(@Header("X-WWW-USER-TOKEN") String userToken, @Field("id") int id);
 }
