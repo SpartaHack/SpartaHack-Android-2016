@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.spartahack.spartahack17.Presenter.BasePresenter;
+import com.spartahack.spartahack17.Presenter.RxPresenter;
 import com.spartahack.spartahack17.View.BaseView;
 
 import butterknife.ButterKnife;
@@ -106,6 +107,10 @@ public abstract class MVPFragment<V extends BaseView, P extends BasePresenter>
         // unregister event bus
         if (registerEventbus()) EventBus.getDefault().unregister(this);
         super.onPause();
+
+        if (getMVPPresenter() instanceof RxPresenter) {
+            ((RxPresenter)getMVPPresenter()).unsubscribe();
+        }
     }
 
     @Override public void onDestroyView() {

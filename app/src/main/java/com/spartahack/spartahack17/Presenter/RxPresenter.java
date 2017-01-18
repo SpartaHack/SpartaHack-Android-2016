@@ -20,7 +20,7 @@ public abstract class RxPresenter<V extends BaseView, M> extends BasePresenter<V
     /**
      * Unsubscribe the subscriber from the observable
      */
-    protected void unsubscribe() {
+    public void unsubscribe() {
         if (subscriber != null && !subscriber.isUnsubscribed()) {
             subscriber.unsubscribe();
         }
