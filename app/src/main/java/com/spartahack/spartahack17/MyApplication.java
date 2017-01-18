@@ -2,6 +2,8 @@ package com.spartahack.spartahack17;
 
 import android.app.Application;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
@@ -24,5 +26,9 @@ public class MyApplication extends Application {
 
         // init the user from shared prefs
         Cache.INSTANCE.readFromSharedPrefs(this);
+
+        // Obtain the FirebaseAnalytics instance.
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
     }
 }
