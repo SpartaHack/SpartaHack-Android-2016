@@ -105,7 +105,7 @@ public class CheckinActivity extends BaseActivity {
         result.setText(TextUtils.isEmpty(error) ? "Error Checking User In" : error);
     }
 
-    @OnClick(R.id.scan) public void scan(){
+    @OnClick(R.id.scan) public void scan() {
         IntentIntegrator intentIntegrator = new IntentIntegrator(this);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).initiateScan();
     }
