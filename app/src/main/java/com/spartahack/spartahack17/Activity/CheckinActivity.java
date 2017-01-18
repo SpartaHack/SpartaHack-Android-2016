@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -35,7 +33,7 @@ public class CheckinActivity extends BaseActivity {
     public static final int UNPROCESSABLE_ENTITY = 422;
 
     @BindView(R.id.result) TextView result;
-    @BindView(R.id.progress_bar) ProgressBar progressBar;
+//    @BindView(R.id.progress_bar) ProgressBar progressBar;
     private int currentScanId;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +50,7 @@ public class CheckinActivity extends BaseActivity {
     }
 
     private void attemptCheckIn(int hasForms) {
-        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setVisibility(View.VISIBLE);
 
         SpartaHackAPIService.INSTANCE.getRestAdapter()
                 .checkInUser(Cache.INSTANCE.getSession().getAuth_token(), new CheckIn(currentScanId, hasForms))
@@ -115,5 +113,9 @@ public class CheckinActivity extends BaseActivity {
     @OnClick(R.id.scan) public void scan(){
         IntentIntegrator intentIntegrator = new IntentIntegrator(this);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES).initiateScan();
+    }
+
+    @OnClick(R.id.navigate_before_button) public void onNavigateBeforeButtonClicked() {
+        onBackPressed();
     }
 }

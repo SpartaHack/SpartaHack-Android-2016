@@ -105,7 +105,7 @@
             style="@style/ButtonStyle"
             android:layout_marginBottom="0dp"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/check_in" />
+            android:text="@string/check_in_attendees" />
 
         <Button
             android:id="@+id/logout"

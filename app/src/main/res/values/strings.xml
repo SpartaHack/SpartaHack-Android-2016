@@ -83,6 +83,8 @@
     <string name="settings_icon_desc">Open settings.</string>
     <string name="navigate_before_desc">Return to previous content.</string>
     <string name="create_ticket">Create Ticket</string>
-    <string name="check_in">Check In Attendees</string>
+    <string name="check_in_attendees">Check In Attendees</string>
+    <string name="check_in">Check In</string>
     <string name="error_message">An error occurred.\nPlease try again later.</string>
+    <string name="start_scan">Start Scan</string>
 </resources>
