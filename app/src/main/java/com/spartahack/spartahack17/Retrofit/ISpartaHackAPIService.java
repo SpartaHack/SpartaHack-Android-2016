@@ -1,6 +1,7 @@
 package com.spartahack.spartahack17.Retrofit;
 
 import com.spartahack.spartahack17.Model.Announcement;
+import com.spartahack.spartahack17.Model.CheckIn;
 import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Event;
 import com.spartahack.spartahack17.Model.Prize;
@@ -12,6 +13,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -42,4 +44,7 @@ public interface ISpartaHackAPIService {
 
     @POST("installations")
     Observable<GSONMock.AddInstillationResponse> addInstillation(@Body GSONMock.AddInstillationRequest requestBody);
+
+    @POST("checkin")
+    Observable<CheckInResponse> checkInUser(@Header("X-WWW-USER-TOKEN") String userToken, @Body CheckIn checkIn);
 }

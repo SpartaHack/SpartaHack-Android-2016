@@ -12,6 +12,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.spartahack.spartahack17.Activity.CheckinActivity;
 import com.spartahack.spartahack17.Cache;
 import com.spartahack.spartahack17.Model.Session;
 import com.spartahack.spartahack17.Presenter.ProfilePresenter;
@@ -59,6 +61,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     @BindView(R.id.progressBar) ProgressBar progressBar;
     @BindView(R.id.email_layout) TextInputLayout emailLayout;
     @BindView(R.id.password_layout) TextInputLayout passwordLayout;
+    @BindView(R.id.check_in) Button checkIn;
 
     boolean fromHelp = false;
     private Session session;
@@ -164,6 +167,10 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
         getMVPPresenter().logOut(session.getAuth_token());
     }
 
+    @OnClick(R.id.check_in) public void showCheckin() {
+        startActivity(new Intent(getActivity(), CheckinActivity.class));
+    }
+
     /**
      * Toggles which views are shown in the view. Either the loading circle if
      * something is loading, the logged in view or the logged out view
@@ -216,12 +223,22 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
         this.session = session;
         Cache.INSTANCE.setSession(session, getActivity());
 
+        setCheckInEnabled();
+
         Snackbar.make(progressBar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
         // go back to the help screen
         if (fromHelp) getActivity().onBackPressed();
             // show the content
         else toggleViews(false);
+    }
+
+    private void setCheckInEnabled() {
+        if (session.getRoles().contains("director") || session.getRoles().contains("admin") || session.getRoles().contains("organizer")){
+            checkIn.setVisibility(View.VISIBLE);
+        } else {
+            checkIn.setVisibility(View.GONE);
+        }
     }
 
     @Override public void showLoading() {
