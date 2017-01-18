@@ -11,18 +11,23 @@ import android.widget.Spinner;
 
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Cache;
+import com.spartahack.spartahack17.Model.Category;
 import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.SlackAPIService;
+import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static android.R.layout.simple_spinner_item;
+import static android.R.layout.simple_spinner_dropdown_item;
 
 /**
  * A simple {@link android.app.Fragment} subclass.
@@ -35,13 +40,33 @@ public class HelpDeskFragment extends BaseFragment {
     @BindView(R.id.text_description) EditText descriptionText;
     @BindView(R.id.spinner_category) Spinner cateogrySpinner;
 
+    // map display names to channel names
+    HashMap<String, String> categoryHash;
+
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        categoryHash = new HashMap<>();
+
+        SpartaHackAPIService.INSTANCE.getRestAdapter().getCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(categories -> {
+                    List<String> arraySpinner = new ArrayList<>();
+
+                    for (Category category : categories){
+                        categoryHash.put(category.getCategory(), category.getChannel());
+                        arraySpinner.add(category.getCategory());
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), simple_spinner_dropdown_item, arraySpinner);
+                    cateogrySpinner.setAdapter(adapter);
+
+                }, throwable -> {});
+    }
+
     @Override public void onResume() {
         super.onResume();
-
-        String[] arraySpinner = new String[] {"General", "Random"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), simple_spinner_item, arraySpinner);
-        cateogrySpinner.setAdapter(adapter);
-
         resetForm();
         setContent();
     }
@@ -67,7 +92,7 @@ public class HelpDeskFragment extends BaseFragment {
 
         // create the ticket
         GSONMock.CreateMentorshipTicketRequest ticket = new GSONMock.CreateMentorshipTicketRequest(
-                "#" + cateogrySpinner.getSelectedItem().toString(),
+                categoryHash.get(cateogrySpinner.getSelectedItem().toString()),
                 "(" +  locationText.getText().toString() + ") " + Cache.INSTANCE.getSession().getFullName(),
                 descriptionText.getText().toString());
 

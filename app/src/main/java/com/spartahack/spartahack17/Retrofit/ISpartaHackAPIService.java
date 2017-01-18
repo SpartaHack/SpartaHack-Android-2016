@@ -1,6 +1,7 @@
 package com.spartahack.spartahack17.Retrofit;
 
 import com.spartahack.spartahack17.Model.Announcement;
+import com.spartahack.spartahack17.Model.Category;
 import com.spartahack.spartahack17.Model.CheckIn;
 import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Event;
@@ -47,4 +48,7 @@ public interface ISpartaHackAPIService {
 
     @POST("checkin")
     Observable<CheckInResponse> checkInUser(@Header("X-WWW-USER-TOKEN") String userToken, @Body CheckIn checkIn);
+
+    @GET("categories")
+    Observable<ArrayList<Category>> getCategories();
 }
