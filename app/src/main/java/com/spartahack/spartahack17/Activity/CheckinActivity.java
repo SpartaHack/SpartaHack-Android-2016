@@ -33,7 +33,6 @@ public class CheckinActivity extends BaseActivity {
     public static final int UNPROCESSABLE_ENTITY = 422;
 
     @BindView(R.id.result) TextView result;
-//    @BindView(R.id.progress_bar) ProgressBar progressBar;
     private int currentScanId;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +49,6 @@ public class CheckinActivity extends BaseActivity {
     }
 
     private void attemptCheckIn(int hasForms) {
-//        progressBar.setVisibility(View.VISIBLE);
-
         SpartaHackAPIService.INSTANCE.getRestAdapter()
                 .checkInUser(Cache.INSTANCE.getSession().getAuth_token(), new CheckIn(currentScanId, hasForms))
                 .subscribeOn(Schedulers.io())
@@ -93,11 +90,9 @@ public class CheckinActivity extends BaseActivity {
 
     private void minorCheckIn() {
         new AlertDialog.Builder(this)
-                .setTitle("Minor Check In")
-                .setMessage("This user is a minor do you have all their forms? ")
-                .setPositiveButton("Check In", (dialog, which) -> {
-                    attemptCheckIn(1);
-                })
+                .setTitle(R.string.minor_check_in)
+                .setMessage(R.string.minor_checkin_question)
+                .setPositiveButton(R.string.check_in, (dialog, which) -> attemptCheckIn(1))
                 .setNegativeButton(android.R.string.no, (dialog, which) -> {
                     result.setText("");
                     currentScanId = -1;
