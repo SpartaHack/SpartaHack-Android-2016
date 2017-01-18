@@ -47,15 +47,14 @@ public class MessageService extends FirebaseMessagingService {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(remoteMessage.getNotification().getBody());
+        sendNotification(remoteMessage.getNotification());
     }
 
     /**
      * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
+     * @param message the message to be shown in the notification
      */
-    private void sendNotification(String messageBody) {
+    private void sendNotification(RemoteMessage.Notification message) {
 
         // if push is turned off don't show the notification
         SharedPreferences prefs = this.getSharedPreferences(this.getPackageName(), MODE_PRIVATE);
@@ -72,16 +71,17 @@ public class MessageService extends FirebaseMessagingService {
         Bitmap largeLogo = BitmapFactory.decodeResource(getResources(), R.drawable.launcher);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_dimond_logo)
+                .setSmallIcon(R.drawable.push)
                 .setLargeIcon(largeLogo)
-                .setTicker("SpartaHack")
-                .setContentTitle("SpartaHack")
-                .setContentText(messageBody)
+                .setContentInfo("SpartaHack")
+                .setContentTitle(message.getTitle())
+                .setContentText(message.getBody())
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager =
+                (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
