@@ -2,6 +2,8 @@ package com.spartahack.spartahack17.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -9,9 +11,11 @@ import android.widget.TextView;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.spartahack.spartahack17.Cache;
+import com.spartahack.spartahack17.Model.CheckIn;
 import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +36,7 @@ public class CheckinActivity extends BaseActivity {
 
     @BindView(R.id.result) TextView result;
     @BindView(R.id.progress_bar) ProgressBar progressBar;
+    private int currentScanId;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,37 +47,69 @@ public class CheckinActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 
+        currentScanId = Integer.valueOf(scanningResult.getContents());
+        attemptCheckIn(0);
+    }
+
+    private void attemptCheckIn(int hasForms) {
         progressBar.setVisibility(View.VISIBLE);
-        result.setText(scanningResult.getContents());
 
         SpartaHackAPIService.INSTANCE.getRestAdapter()
-                .checkInUser(Cache.INSTANCE.getSession().getAuth_token(), Integer.valueOf(scanningResult.getContents()))
+                .checkInUser(Cache.INSTANCE.getSession().getAuth_token(), new CheckIn(currentScanId, hasForms))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(checkInResponse -> {
                     if (checkInResponse.getChecked_in() != 0) {
-                        result.setText(checkInResponse.getFullName());
+                        result.setText(checkInResponse.getFullName() + "is checked in!");
                     } else {
-                    showError();
+                        showError(null);
                     }
                 }, throwable -> {
                     if (((HttpException) throwable).code() == UNPROCESSABLE_ENTITY) {
+
+                        String error;
+
                         try {
                             String json = ((HttpException) throwable).response().errorBody().string();
-                            JSONObject obj = new JSONObject(json);
-                        } catch (IOException e) {
+                            JSONObject o = (JSONObject) new JSONObject(json).get("errors");
+                            error = (String) ((JSONArray)o.get("user")).get(0);
+                        } catch (IOException | JSONException e) {
                             e.printStackTrace();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            showError(null);
+                            return;
                         }
+
+                        if (error.toLowerCase().equals("is a minor")){
+                            minorCheckIn();
+                            result.setText(error);
+
+                        } else {
+                            showError(error);
+                        }
+
                     } else {
-                        showError();
+                        showError(null);
                     }
                 });
     }
 
-    private void showError() {
-        result.setText("Error Checking User In");
+    private void minorCheckIn() {
+        new AlertDialog.Builder(this)
+                .setTitle("Minor Check In")
+                .setMessage("This user is a minor do you have all their forms? ")
+                .setPositiveButton("Check In", (dialog, which) -> {
+                    attemptCheckIn(1);
+                })
+                .setNegativeButton(android.R.string.no, (dialog, which) -> {
+                    result.setText("");
+                    currentScanId = -1;
+                })
+                .show();
+    }
+
+    private void showError(String error) {
+        currentScanId = -1;
+        result.setText(TextUtils.isEmpty(error) ? "Error Checking User In" : error);
     }
 
     @OnClick(R.id.scan) public void scan(){
