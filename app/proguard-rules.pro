@@ -119,3 +119,11 @@
 -keepclassmembers class rx.internal.util.unsafe.BaseLinkedQueueConsumerNodeRef {
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
+
+-dontwarn java.lang.invoke**
+
+# https://github.com/square/okio/issues/60
+-dontwarn okio.**
+
+# keep every model for gson to work
+-keep class com.spartahack.spartahack17.Model.** { *; }

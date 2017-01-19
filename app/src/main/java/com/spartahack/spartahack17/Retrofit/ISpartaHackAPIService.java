@@ -1,10 +1,13 @@
 package com.spartahack.spartahack17.Retrofit;
 
+import com.spartahack.spartahack17.Model.AddInstillationRequest;
+import com.spartahack.spartahack17.Model.AddInstillationResponse;
 import com.spartahack.spartahack17.Model.Announcement;
 import com.spartahack.spartahack17.Model.Category;
 import com.spartahack.spartahack17.Model.CheckIn;
 import com.spartahack.spartahack17.Model.Company;
 import com.spartahack.spartahack17.Model.Event;
+import com.spartahack.spartahack17.Model.Login;
 import com.spartahack.spartahack17.Model.Prize;
 import com.spartahack.spartahack17.Model.Session;
 
@@ -26,7 +29,7 @@ import rx.Observable;
 public interface ISpartaHackAPIService {
 
     @POST("sessions")
-    Observable<Session> login(@Body GSONMock.Login login);
+    Observable<Session> login(@Body Login login);
 
     @DELETE("sessions/{token}")
     Observable<Response<Void>> logout(@Path("token") String token);
@@ -44,7 +47,7 @@ public interface ISpartaHackAPIService {
     Observable<ArrayList<Company>> getCompanies();
 
     @POST("installations")
-    Observable<GSONMock.AddInstillationResponse> addInstillation(@Body GSONMock.AddInstillationRequest requestBody);
+    Observable<AddInstillationResponse> addInstillation(@Body AddInstillationRequest requestBody);
 
     @POST("checkin")
     Observable<CheckInResponse> checkInUser(@Header("X-WWW-USER-TOKEN") String userToken, @Body CheckIn checkIn);

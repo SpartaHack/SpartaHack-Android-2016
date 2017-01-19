@@ -6,7 +6,8 @@ import android.util.Log;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spartahack.spartahack17.Constants;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
+import com.spartahack.spartahack17.Model.AddInstillationRequest;
+import com.spartahack.spartahack17.Model.AddInstillationResponse;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 
 import rx.Subscriber;
@@ -46,14 +47,14 @@ public class InstanceIdService extends com.google.firebase.iid.FirebaseInstanceI
      */
     private void sendRegistrationToServer(String token) {
         SpartaHackAPIService.INSTANCE.getRestAdapter()
-                .addInstillation(new GSONMock.AddInstillationRequest(token))
+                .addInstillation(new AddInstillationRequest(token))
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<GSONMock.AddInstillationResponse>() {
+                .subscribe(new Subscriber<AddInstillationResponse>() {
                     @Override public void onCompleted() {}
 
                     @Override public void onError(Throwable e) {}
 
-                    @Override public void onNext(GSONMock.AddInstillationResponse addInstillationResponse) {
+                    @Override public void onNext(AddInstillationResponse addInstillationResponse) {
                         SharedPreferences preferences = getSharedPreferences(getApplication().getPackageName(), Activity.MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString(Constants.PREF_INSTALL_TOKEN, addInstillationResponse.token);

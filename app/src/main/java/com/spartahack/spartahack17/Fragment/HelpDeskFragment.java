@@ -1,9 +1,11 @@
 package com.spartahack.spartahack17.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -13,8 +15,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Cache;
 import com.spartahack.spartahack17.Model.Category;
+import com.spartahack.spartahack17.Model.CreateMentorshipTicketRequest;
 import com.spartahack.spartahack17.R;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.SlackAPIService;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 
@@ -97,8 +99,14 @@ public class HelpDeskFragment extends BaseFragment {
             return;
         }
 
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
         // create the ticket
-        GSONMock.CreateMentorshipTicketRequest ticket = new GSONMock.CreateMentorshipTicketRequest(
+        CreateMentorshipTicketRequest ticket = new CreateMentorshipTicketRequest(
                 categoryHash.get(cateogrySpinner.getSelectedItem().toString()),
                 "(" +  locationText.getText().toString() + ") " + Cache.INSTANCE.getSession().getFullName(),
                 descriptionText.getText().toString());
@@ -113,17 +121,17 @@ public class HelpDeskFragment extends BaseFragment {
                     try {
                         res = new String(response.bytes());
                     } catch (IOException e) {
-                        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
+                        showDialog("Error Creating Ticket");
                     }
 
                     if (res != null && res.equals("ok")) {
-                        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Ticket Created", Snackbar.LENGTH_SHORT).show();
+                        showDialog("Your ticket was created successfully!");
                         resetForm();
                     } else {
-                        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
+                        showDialog("Error Creating Ticket");
                     }
 
-                }, throwable -> Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Creating Ticket", Snackbar.LENGTH_SHORT).show());
+                }, throwable -> showDialog("Error Creating Ticket"));
     }
 
     /**
@@ -158,6 +166,13 @@ public class HelpDeskFragment extends BaseFragment {
         locationText.setText(null);
         descriptionText.setText(null);
         cateogrySpinner.setSelection(0);
+    }
+
+    private void showDialog(String message) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {})
+                .show();
     }
 
 }

@@ -2,8 +2,8 @@ package com.spartahack.spartahack17.Presenter;
 
 import android.util.Log;
 
+import com.spartahack.spartahack17.Model.Login;
 import com.spartahack.spartahack17.Model.Session;
-import com.spartahack.spartahack17.Retrofit.GSONMock;
 import com.spartahack.spartahack17.Retrofit.SpartaHackAPIService;
 import com.spartahack.spartahack17.View.ProfileView;
 
@@ -20,7 +20,7 @@ public class ProfilePresenter extends RxPresenter<ProfileView, Session> {
     private static final String TAG = "ProfilePresenter";
 
     public void attemptLogin(String email, String password) {
-        GSONMock.Login login = new GSONMock.Login();
+        Login login = new Login();
         login.email = email;
         login.password = password;
 
