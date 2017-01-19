@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="0dp"
+            android:gravity="center"
             android:text="@string/login_for_help"
             android:textSize="@dimen/text_size_large_material" />
 
@@ -72,9 +73,9 @@
 
         <Spinner
             android:id="@+id/spinner_category"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            style="@style/Widget.AppCompat.Spinner.Underlined" />
 
         <Button
             android:id="@+id/button_submit"
