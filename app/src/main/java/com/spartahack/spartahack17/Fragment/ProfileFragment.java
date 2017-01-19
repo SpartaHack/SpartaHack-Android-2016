@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.spartahack.spartahack17.Activity.CheckinActivity;
@@ -38,6 +39,9 @@ import de.greenrobot.event.EventBus;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
 import uk.co.chrisjenx.calligraphy.TypefaceUtils;
+
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.LOGIN;
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT;
 
 
 public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
@@ -76,6 +80,11 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
     @NonNull @Override public ProfilePresenter createPresenter() {
         return new ProfilePresenter();
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(UNLOCK_ACHIEVEMENT, null);
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -208,6 +217,8 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     }
 
     @Override public void logOutSuccess() {
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(LOGIN, null);
+
         Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
         Cache.INSTANCE.clear(getActivity());
         session = null;

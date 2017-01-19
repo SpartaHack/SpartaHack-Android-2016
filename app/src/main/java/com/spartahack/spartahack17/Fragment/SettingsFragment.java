@@ -6,11 +6,14 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.R;
 
 import butterknife.BindView;
 import de.greenrobot.event.EventBus;
+
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.VIEW_SEARCH_RESULTS;
 
 /**
  * Created by memuyskens on 1/12/17.
@@ -23,6 +26,11 @@ public class SettingsFragment extends BaseFragment implements Switch.OnCheckedCh
 
     @Override int getLayout() {
         return R.layout.fragment_settings;
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(VIEW_SEARCH_RESULTS, null);
     }
 
     @Override public void onViewCreated(View view, Bundle savedInstanceState) {

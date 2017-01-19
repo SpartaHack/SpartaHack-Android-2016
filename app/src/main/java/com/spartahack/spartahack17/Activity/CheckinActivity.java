@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.spartahack.spartahack17.Cache;
@@ -38,6 +39,10 @@ public class CheckinActivity extends BaseActivity {
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_in);
+
+        // Obtain the FirebaseAnalytics instance.
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, null);
     }
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {

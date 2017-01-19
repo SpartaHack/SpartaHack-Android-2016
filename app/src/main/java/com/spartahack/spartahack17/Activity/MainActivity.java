@@ -22,7 +22,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
@@ -52,8 +51,6 @@ public class MainActivity extends BaseActivity {
     public static final String ACTION = "action";
     public static final String OBJECT_ID = "objectid";
     public static final String NOT_ID = "notid";
-
-    private FirebaseAnalytics firebaseAnalytics;
 
     /**
      * Reference to the currently selected menu item in the nav drawer
@@ -98,10 +95,6 @@ public class MainActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
-        // Obtain the FirebaseAnalytics instance.
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
 
         Log.d(TAG, "onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
