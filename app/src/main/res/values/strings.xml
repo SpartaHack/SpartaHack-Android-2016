@@ -44,7 +44,7 @@
     <string name="start_scan">Start Scan</string>
     <string name="minor_check_in">Minor Check In</string>
     <string name="minor_checkin_question">This attendee is a minor. Have you collected all of their forms? This includes medical release form, media release form and parental consent form.</string>
-    <string name="sponsored_by">Sponsored by:</string>
+    <string name="sponsored_by">Sponsored by:\u0020</string>
     <string name="checkin_401">Volunteer: Your session has expired. Please log out of the app and back in through the profile screen to refresh the session. After that, attempt the check in again.</string>
     <string name="error_checking_in">Error Checking User In</string>
 </resources>
