@@ -200,7 +200,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
             Bitmap bitmap;
 
             try {
-              bitmap = Utility.encodeAsBitmap(String.valueOf(session.getId()), BarcodeFormat.QR_CODE, 250, 250);
+              bitmap = Utility.encodeAsBitmap(String.valueOf(session.getId()), BarcodeFormat.QR_CODE, 200, 200);
                 qr.setImageBitmap(bitmap);
 
             } catch (WriterException e) {

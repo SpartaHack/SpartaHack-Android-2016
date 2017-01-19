@@ -85,10 +85,7 @@
         <FrameLayout
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@android:color/white">
+            android:layout_gravity="center">
 
             <ImageView
                 android:id="@+id/qr"
@@ -104,7 +101,6 @@
             android:id="@+id/check_in"
             style="@style/ButtonStyle"
             android:layout_marginBottom="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/check_in_attendees" />
 
         <Button
