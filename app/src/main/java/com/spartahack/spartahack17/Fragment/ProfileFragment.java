@@ -219,14 +219,14 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     @Override public void logOutSuccess() {
         FirebaseAnalytics.getInstance(getActivity()).logEvent(LOGIN, null);
 
-        Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
         Cache.INSTANCE.clear(getActivity());
         session = null;
         toggleViews(false);
     }
 
     @Override public void logOutError() {
-        Snackbar.make(signedOut, "Error Logging Out", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Logging Out", Snackbar.LENGTH_LONG).show();
         toggleViews(false);
     }
 
@@ -236,7 +236,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
         setCheckInEnabled();
 
-        Snackbar.make(progressBar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
         // go back to the help screen
         if (fromHelp) getActivity().onBackPressed();
@@ -257,7 +257,7 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     }
 
     @Override public void onError(String error) {
-        Snackbar.make(progressBar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Invalid credentials", Snackbar.LENGTH_LONG).show();
         Log.e("Login", error);
         toggleViews(false);
     }
