@@ -3,7 +3,6 @@ package com.spartahack.spartahack17.Activity;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -18,6 +17,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -45,18 +45,27 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.navigate_before_button) ImageButton navigateBeforeButton;
     @BindView(R.id.settings_icon) ImageButton settingsIcon;
 
-    private String title = "Notifications";
     private static final String TAG = "MainActivity";
 
     public static final String ACTION = "action";
     public static final String OBJECT_ID = "objectid";
     public static final String NOT_ID = "notid";
 
-    /**
-     * Reference to the currently selected menu item in the nav drawer
-     */
+    private FirebaseAnalytics firebaseAnalytics;
 
-    public static PendingIntent getPendingIntent(Context context, String ticketId, String action, int pushID){
+    private String title;
+    private State currentState;
+
+    private enum State {
+        ANNOUNCEMENTS,
+        GUIDE,
+        AWARDS,
+        HELP,
+        PROFILE,
+        SETTINGS
+    }
+
+    public static PendingIntent getPendingIntent(Context context, String ticketId, String action, int pushID) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(ACTION, action);
         intent.putExtra(OBJECT_ID, ticketId);
@@ -65,22 +74,20 @@ public class MainActivity extends BaseActivity {
         return PendingIntent.getActivity(context, pushID, intent, PendingIntent.FLAG_ONE_SHOT);
     }
 
-    public static Intent toHelpDesk(Context c){
+    public static Intent toHelpDesk(Context c) {
         return new Intent(c, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP).putExtra(ACTION, ACTION);
     }
 
-    @OnClick(R.id.navigate_before_button) public void onNavigateBeforeButtonClicked() {
-        navigateBeforeButton.setVisibility(View.GONE);
-        settingsIcon.setVisibility(View.VISIBLE);
-        title = getResources().getString(R.string.profile);
-        addFragment(new ProfileFragment());
+    @OnClick(R.id.navigate_before_button)
+    public void onNavigateBeforeButtonClicked() {
+        currentState = State.PROFILE;
+        changeState();
     }
 
-    @OnClick(R.id.settings_icon) public void onSettingsIconClicked() {
-        navigateBeforeButton.setVisibility(View.VISIBLE);
-        settingsIcon.setVisibility(View.GONE);
-        title = getResources().getString(R.string.settings);
-        addFragment(new SettingsFragment());
+    @OnClick(R.id.settings_icon)
+    public void onSettingsIconClicked() {
+        currentState = State.SETTINGS;
+        changeState();
     }
 
     @Override
@@ -103,47 +110,77 @@ public class MainActivity extends BaseActivity {
             if (toolbar != null) toolbar.setPadding(0, Utility.getStatusBarHeight(this), 0, 0);
         }
 
-        addFragment(new AnnouncementFragment());
+        currentState = State.ANNOUNCEMENTS;
+        changeState();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
                         case R.id.action_notifications:
-                            hideToolbarItems();
-                            title = getResources().getString(R.string.notifications);
-                            addFragment(new AnnouncementFragment());
+                            currentState = State.ANNOUNCEMENTS;
                             break;
                         case R.id.action_schedule:
-                            hideToolbarItems();
-                            title = getResources().getString(R.string.guide);
-                            addFragment(new GuideFragment());
+                            currentState = State.GUIDE;
                             break;
                         case R.id.action_awards:
-                            hideToolbarItems();
-                            title = getResources().getString(R.string.awards);
-                            addFragment(new AwardsFragment());
+                            currentState = State.AWARDS;
                             break;
                         case R.id.action_help:
-                            hideToolbarItems();
-                            title = getResources().getString(R.string.help);
-                            addFragment(new HelpDeskFragment());
+                            currentState = State.HELP;
                             break;
                         case R.id.action_profile:
-                            navigateBeforeButton.setVisibility(View.GONE);
-                            settingsIcon.setVisibility(View.VISIBLE);
-                            title = getResources().getString(R.string.profile);
-                            addFragment(new ProfileFragment());
+                            currentState = State.PROFILE;
                             break;
                     }
+                    changeState();
 
                     return true;
                 });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        toolbarTitle.setText(title);
+    private void changeState() {
+        Menu bottomNavigationViewMenu = bottomNavigationView.getMenu();
+
+        switch (currentState) {
+            case ANNOUNCEMENTS:
+                hideToolbarItems();
+                title = getResources().getString(R.string.notifications);
+                addFragment(new AnnouncementFragment());
+                bottomNavigationViewMenu.findItem(R.id.action_notifications).setChecked(true);
+                break;
+            case GUIDE:
+                hideToolbarItems();
+                title = getResources().getString(R.string.guide);
+                addFragment(new GuideFragment());
+                bottomNavigationViewMenu.findItem(R.id.action_schedule).setChecked(true);
+                break;
+            case AWARDS:
+                hideToolbarItems();
+                title = getResources().getString(R.string.awards);
+                addFragment(new AwardsFragment());
+                bottomNavigationViewMenu.findItem(R.id.action_awards).setChecked(true);
+                break;
+            case HELP:
+                hideToolbarItems();
+                title = getResources().getString(R.string.help);
+                addFragment(new HelpDeskFragment());
+                bottomNavigationViewMenu.findItem(R.id.action_help).setChecked(true);
+                break;
+            case PROFILE:
+                navigateBeforeButton.setVisibility(View.GONE);
+                settingsIcon.setVisibility(View.VISIBLE);
+                title = getResources().getString(R.string.profile);
+                addFragment(new ProfileFragment());
+                bottomNavigationViewMenu.findItem(R.id.action_profile).setChecked(true);
+                break;
+            case SETTINGS:
+                navigateBeforeButton.setVisibility(View.VISIBLE);
+                settingsIcon.setVisibility(View.GONE);
+                title = getResources().getString(R.string.settings);
+                addFragment(new SettingsFragment());
+                bottomNavigationViewMenu.findItem(R.id.action_profile).setChecked(true);
+                break;
+        }
     }
 
     /**
@@ -151,12 +188,9 @@ public class MainActivity extends BaseActivity {
      *
      * @param fragment to replace the current fragment
      */
-    public void addFragment(android.app.Fragment fragment) {
-        // use fragment transaction and add the fragment to the container
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.container, fragment);
-        fragmentTransaction.commit();
+    public void addFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container, fragment).commit();
         toolbarTitle.setText(title);
         tabLayout.setVisibility(View.GONE);
     }
@@ -174,18 +208,26 @@ public class MainActivity extends BaseActivity {
     }
 
     public void switchContent(int id, Fragment fragment) {
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(id, fragment, fragment.toString());
-        ft.addToBackStack(null);
-        ft.commit();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(id, fragment, fragment.toString())
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0){
-            getFragmentManager().popBackStack();
-        }else {
-            super.onBackPressed();
+        switch (currentState) {
+            case ANNOUNCEMENTS:
+                super.onBackPressed();
+                break;
+            case SETTINGS:
+                currentState = State.PROFILE;
+                changeState();
+                break;
+            default:
+                currentState = State.ANNOUNCEMENTS;
+                changeState();
+                break;
         }
     }
 
@@ -194,7 +236,7 @@ public class MainActivity extends BaseActivity {
         settingsIcon.setVisibility(View.GONE);
     }
 
-    public void onEvent(String url){
+    public void onEvent(String url) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
     }
 
