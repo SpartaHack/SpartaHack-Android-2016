@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginBottom="@dimen/activity_vertical_margin"
     android:layout_marginTop="@dimen/activity_vertical_margin"
     android:orientation="horizontal"
@@ -21,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="4:00 pm" />
+            tools:text="4:00 pm" />
 
         <TextView
             android:id="@+id/location"
@@ -29,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:text="at yo girl crib" />
+            tools:text="at the crib" />
 
     </LinearLayout>
 
@@ -54,14 +55,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/padding_horizontal_material"
             android:layout_marginTop="0dp"
-            android:text="random event happening" />
+            tools:text="random event happening" />
 
         <TextView
             android:id="@+id/description"
             style="@style/EventBodyStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="description of whatever is going on here" />
+            tools:text="description of whatever is going on here" />
 
     </LinearLayout>
 

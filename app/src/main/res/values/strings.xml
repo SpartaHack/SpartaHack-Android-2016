@@ -1,81 +1,36 @@
 <resources>
     <string name="app_name">SpartaHack</string>
-    <string name="title_activity_login">LoginActivity</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="title_activity_main">SpartaHack</string>
 
-    <string name="sponsored_by">Sponsored by %s</string>
     <string name="logged_in_as">Welcome \n%s!</string>
-    <string name="ticket_number">Ticket # %d</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="notifications">Notifications</string>
     <string name="awards">Awards</string>
     <string name="help">Help Desk</string>
-    <string name="mentor">Mentor</string>
     <string name="settings">Settings</string>
 
-    <string name="title_activity_profile">ProfileActivity</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
-    <string name="user_name">Username</string>
     <string name="email">Email Address</string>
     <string name="forgot_password">Forgot Password?</string>
 
-    <string name="err_msg_subject">Enter the subject</string>
-    <string name="err_msg_desc">Enter the description</string>
-
-    <string name="hint_subject">Subject</string>
-    <string name="hint_room">Room</string>
-    <string name="hint_description">Description</string>
-
     <string name="submit">Submit</string>
-    <string name="spinner_category">Category:</string>
-    <string name="spinner_location">Location:</string>
 
 
     <string name="pinned">pinned</string>
     <string name="no_notifications">No Notifications</string>
     <string name="guide">Guide</string>
-    <string name="login_to_see_profile">Login to see your profile.</string>
     <string name="logout">Logout</string>
     <string name="profile">Profile</string>
-    <string name="need_help">Need Help? Submit a ticket below</string>
-    <string name="no_tickets">No Tickets</string>
-    <string name="hint_location">Location</string>
-    <string name="spinner_subcategory">SubCategory</string>
-    <string name="authentication_required">Authentication Required to use the Help Desk</string>
-    <string name="criteria">Criteria</string>
     <string name="barcode">Barcode</string>
     <string name="company_logo">Company logo</string>
-    <string name="spartahack_banner">spartahack banner</string>
     <string name="login_for_help">Login to create help desk ticket.</string>
-    <string name="reopen_ticket">Reopen Ticket</string>
-    <string name="extend_ticket">Extend Ticket</string>
-    <string name="delete_ticket">Delete Ticket</string>
-    <string name="subject">Subject</string>
-    <string name="category">Category</string>
     <string name="description">Description</string>
-    <string name="status">Status</string>
-    <string name="my_tickets">My Tickets</string>
 
 
-    <string-array name="roomArray">
-        <item>Cedar Village</item>
-        <item>Chandler Crossings</item>
-        <item>University Villa</item>
-        <item>University Village</item>
-        <item>2900 Apartments</item>
-    </string-array>
-    <string name="title_activity_mentor_view_ticket">MentorViewTicketActivity</string>
-    <string name="name">Name</string>
-    <string name="topics">Topics:</string>
     <string name="push_notifications">Push Notifications</string>
     <string name="toggle_push">Toggle push notifications from SpartaHack.</string>
-    <string name="accept_ticket">Accept Ticket</string>
-    <string name="scan">Scan</string>
     <string name="time_til_hacking_over">Time Until Hacking Ends:</string>
     <string name="time_til_hacking_starts">Time Until Hacking Starts:</string>
     <string name="hacking_over">Hacking Is Now Over!</string>
@@ -89,4 +44,5 @@
     <string name="start_scan">Start Scan</string>
     <string name="minor_check_in">Minor Check In</string>
     <string name="minor_checkin_question">This attendee is a minor. Have you collected all of their forms? This includes medical release form, media release form and parental consent form.</string>
+    <string name="sponsored_by">Sponsored by:</string>
 </resources>

@@ -4,9 +4,10 @@ package com.spartahack.spartahack17.Model;
  * Created by ryancasler on 1/18/17
  * Spartahack-Android
  */
+@SuppressWarnings("FieldCanBeLocal")
 public class AddInstillationRequest {
-    public String device_type;
-    public String token;
+    private final String device_type;
+    private final String token;
 
     public AddInstillationRequest(String token) {
         this.device_type = "android";

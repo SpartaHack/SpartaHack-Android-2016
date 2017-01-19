@@ -58,7 +58,6 @@ public class CompanyPresenterTest extends BaseUnitTest {
         Company two = new Company("commander", "b");
         Company three = new Company("warrior", "c");
         Company four = new Company("warrior", "b");
-        Company five = four;
 
         assertEquals(-1, presenter.compare(one, two));
         assertEquals(1, presenter.compare(three, two));
@@ -66,7 +65,7 @@ public class CompanyPresenterTest extends BaseUnitTest {
         assertEquals(1, presenter.compare(three, four));
         assertEquals(-1, presenter.compare(four, three));
 
-        assertEquals(0, presenter.compare(five, four));
-        assertEquals(0, presenter.compare(four, five));
+        assertEquals(0, presenter.compare(four, four));
+        assertEquals(0, presenter.compare(four, four));
     }
 }
