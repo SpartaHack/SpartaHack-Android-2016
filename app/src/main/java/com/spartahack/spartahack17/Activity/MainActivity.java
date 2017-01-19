@@ -51,8 +51,6 @@ public class MainActivity extends BaseActivity {
     public static final String OBJECT_ID = "objectid";
     public static final String NOT_ID = "notid";
 
-    private FirebaseAnalytics firebaseAnalytics;
-
     private String title;
     private State currentState;
 
