@@ -244,6 +244,6 @@ public class MainActivity extends BaseActivity {
                 .putBoolean(Constants.PREF_PUSH, isSubscribing)
                 .apply();
 
-        Snackbar.make(tabLayout, isSubscribing ? "Subscribed successfully" : "Unsubscribed successfully", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(findViewById(R.id.placeSnackBar), isSubscribing ? "Subscribed successfully" : "Unsubscribed successfully", Snackbar.LENGTH_SHORT).show();
     }
 }

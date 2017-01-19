@@ -83,22 +83,34 @@
         android:layout_height="wrap_content"
         android:layout_weight="1" />
 
-    <!--LinearLayout wrapping BottomNavigationView is for colored background-->
-    <!--Note: You cannot use a custom background color on BottomNavigationView without losing ripple effect at this time-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:background="@color/background">
+        android:orientation="vertical">
 
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottom_navigation"
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/placeSnackBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--LinearLayout wrapping BottomNavigationView is for colored background-->
+        <!--Note: You cannot use a custom background color on BottomNavigationView without losing ripple effect at this time-->
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:itemIconTint="@drawable/bottom_nav_item_color"
-            app:itemTextColor="@drawable/bottom_nav_item_color"
-            app:menu="@menu/bottom_nav_items" />
+            android:background="@color/background" >
+
+            <android.support.design.widget.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:itemIconTint="@drawable/bottom_nav_item_color"
+                app:itemTextColor="@drawable/bottom_nav_item_color"
+                app:menu="@menu/bottom_nav_items" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

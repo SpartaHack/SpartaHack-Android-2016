@@ -113,17 +113,17 @@ public class HelpDeskFragment extends BaseFragment {
                     try {
                         res = new String(response.bytes());
                     } catch (IOException e) {
-                        Snackbar.make(signedIn, "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
                     }
 
                     if (res != null && res.equals("ok")) {
-                        Snackbar.make(signedIn, "Ticket Created", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Ticket Created", Snackbar.LENGTH_SHORT).show();
                         resetForm();
                     } else {
-                        Snackbar.make(signedIn, "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
+                        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Creating Ticket", Snackbar.LENGTH_SHORT).show();
                     }
 
-                }, throwable -> Snackbar.make(signedIn, "Error Creating Ticket", Snackbar.LENGTH_SHORT).show());
+                }, throwable -> Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Creating Ticket", Snackbar.LENGTH_SHORT).show());
     }
 
     /**
