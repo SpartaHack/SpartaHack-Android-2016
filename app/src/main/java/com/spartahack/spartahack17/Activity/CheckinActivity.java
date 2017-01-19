@@ -87,6 +87,8 @@ public class CheckinActivity extends BaseActivity {
                             showError(error);
                         }
 
+                    } else if (((HttpException) throwable).code() == 401) {
+                        showError(getString(R.string.checkin_401));
                     } else {
                         showError(null);
                     }
@@ -107,7 +109,7 @@ public class CheckinActivity extends BaseActivity {
 
     private void showError(String error) {
         currentScanId = -1;
-        result.setText(TextUtils.isEmpty(error) ? "Error Checking User In" : error);
+        result.setText(TextUtils.isEmpty(error) ? getString(R.string.error_checking_in) : error);
     }
 
     @OnClick(R.id.scan) public void scan() {
