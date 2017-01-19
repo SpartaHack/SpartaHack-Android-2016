@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -68,7 +67,5 @@ public class PrizeFragment extends MVPFragment<PrizeView, PrizePresenter> implem
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         errorMessage.setVisibility(View.VISIBLE);
-
-        Log.e(TAG, error);
     }
 }

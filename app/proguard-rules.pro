@@ -127,3 +127,9 @@
 
 # keep every model for gson to work
 -keep class com.spartahack.spartahack17.Model.** { *; }
+
+# kill log stuff
+-assumenosideeffects class android.util.Log {
+    public static *** d(...);
+    public static *** v(...);
+}

@@ -16,13 +16,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.spartahack.spartahack17.Constants;
 import com.spartahack.spartahack17.Fragment.AnnouncementFragment;
 import com.spartahack.spartahack17.Fragment.AwardsFragment;
@@ -100,8 +98,6 @@ public class MainActivity extends BaseActivity {
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
-        Log.d(TAG, "onCreate: " + FirebaseInstanceId.getInstance().getToken());
 
         // add padding for transparent statusbar if > kitkat
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

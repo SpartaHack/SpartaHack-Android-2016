@@ -10,7 +10,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -258,7 +257,6 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
 
     @Override public void onError(String error) {
         Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Invalid credentials", Snackbar.LENGTH_LONG).show();
-        Log.e("Login", error);
         toggleViews(false);
     }
 

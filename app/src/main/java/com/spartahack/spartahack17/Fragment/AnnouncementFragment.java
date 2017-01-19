@@ -3,7 +3,6 @@ package com.spartahack.spartahack17.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -102,7 +101,5 @@ public class AnnouncementFragment extends MVPFragment<AnnouncementView, Announce
         notificationList.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         errorMessage.setVisibility(View.VISIBLE);
-
-        Log.e(TAG, error);
     }
 }

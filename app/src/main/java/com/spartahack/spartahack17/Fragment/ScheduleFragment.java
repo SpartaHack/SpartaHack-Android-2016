@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -116,8 +115,6 @@ public class ScheduleFragment extends MVPFragment<ScheduleView, SchedulePresente
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         errorMessage.setVisibility(View.VISIBLE);
-
-        Log.e(TAG, error);
     }
 
     /**
