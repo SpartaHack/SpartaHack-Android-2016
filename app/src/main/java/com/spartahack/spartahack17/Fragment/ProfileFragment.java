@@ -186,6 +186,8 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
      * @param load if the loading circle should show or not
      */
     private void toggleViews(boolean load) {
+        setCheckInEnabled();
+
         if (load) {
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.GONE);
@@ -233,8 +235,6 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
         this.session = session;
         Cache.INSTANCE.setSession(session, getActivity());
 
-        setCheckInEnabled();
-
         Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
         // go back to the help screen
@@ -244,7 +244,9 @@ public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
     }
 
     private void setCheckInEnabled() {
-        if (session.getRoles().contains("director") || session.getRoles().contains("admin") || session.getRoles().contains("organizer")){
+        if (session != null &&
+                (session.getRoles().contains("director") || session.getRoles().contains("admin")
+                        || session.getRoles().contains("organizer"))){
             checkIn.setVisibility(View.VISIBLE);
         } else {
             checkIn.setVisibility(View.GONE);
