@@ -7,52 +7,49 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.spartahack.spartahack17.R;
 import com.spartahack.spartahack17.Activity.MainActivity;
 import com.spartahack.spartahack17.Model.Announcement;
+import com.spartahack.spartahack17.R;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by ryancasler on 1/9/16.
+ * Created by ryancasler on 1/9/16
+ * SpartaHack2016-Android
  */
 public class AnnouncementAdapter extends BaseAdapter {
 
     /**
      * Reference to the main activity for context to get images as well as get the layout inflater
      */
-    private MainActivity context;
+    private final MainActivity context;
 
     /**
      * The list of notifications that is being displayed
      */
-    private List<Announcement> announcements;
+    private final List<Announcement> announcements;
 
     public AnnouncementAdapter(MainActivity context, List<Announcement> announcements) {
         this.context = context;
         this.announcements = announcements;
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return announcements.size();
     }
 
-    @Override
-    public Object getItem(int position) {
+    @Override public Object getItem(int position) {
         return announcements.get(position);
     }
 
-    @Override
-    public long getItemId(int position) {
+    @Override public long getItemId(int position) {
         return position;
     }
 
-    @Override
-    public View getView(int position, View view, ViewGroup parent) {
+    @Override public View getView(int position, View view, ViewGroup parent) {
 
         AnnouncementViewHolder holder;
 
@@ -70,7 +67,7 @@ public class AnnouncementAdapter extends BaseAdapter {
         final Announcement announcement = announcements.get(position);
 
         holder.title.setText(announcement.getTitle());
-        holder.message.setText(announcement.getMessage());
+        holder.message.setText(announcement.getDescription());
         if (announcement.getPinned())
             holder.pinned.setVisibility(View.VISIBLE);
         else
@@ -83,18 +80,14 @@ public class AnnouncementAdapter extends BaseAdapter {
      * Class for the Viewholder pattern
      */
     static class AnnouncementViewHolder {
-        @Bind(R.id.title)
-        TextView title;
-        @Bind(R.id.message)
-        TextView message;
-        @Bind(R.id.pinned_icon)
-        ImageView pinned;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.message) TextView message;
+        @BindView(R.id.pinned_icon) ImageView pinned;
 
         public AnnouncementViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
     }
-
 }
 
 

@@ -1,0 +1,124 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingEnd="@dimen/padding_horizontal_material"
+    android:paddingStart="@dimen/padding_horizontal_material"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Fragment.ProfileFragment">
+
+    <LinearLayout
+        android:id="@+id/signedOut"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            style="@style/SectionHeaderStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/login" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/email_layout"
+            style="@style/TextInputLayout">
+
+            <EditText
+                android:id="@+id/user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/password_layout"
+            style="@style/TextInputLayout">
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColorHint="@android:color/transparent" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/login_button"
+            style="@style/ButtonStyle"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/login" />
+
+        <TextView
+            android:id="@+id/forgot_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:gravity="center"
+            android:text="@string/forgot_password" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/signedIn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/display_name"
+            style="@style/ProfileGreetingStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Welcome SpartaHack Organizer" />
+
+        <FrameLayout
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/qr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:contentDescription="@string/barcode"
+                tools:src="@drawable/logo_17" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/check_in"
+            style="@style/ButtonStyle"
+            android:layout_marginBottom="0dp"
+            android:text="@string/check_in_attendees" />
+
+        <Button
+            android:id="@+id/logout"
+            style="@style/ButtonStyle"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/logout" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</RelativeLayout>

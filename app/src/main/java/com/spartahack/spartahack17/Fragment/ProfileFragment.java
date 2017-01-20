@@ -1,46 +1,52 @@
 package com.spartahack.spartahack17.Fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.parse.ParseInstallation;
-import com.parse.ParseUser;
-import com.spartahack.spartahack17.Activity.MainActivity;
+import com.spartahack.spartahack17.Activity.CheckinActivity;
+import com.spartahack.spartahack17.Cache;
+import com.spartahack.spartahack17.Model.Session;
+import com.spartahack.spartahack17.Presenter.ProfilePresenter;
 import com.spartahack.spartahack17.R;
+import com.spartahack.spartahack17.Utility;
+import com.spartahack.spartahack17.View.ProfileView;
 
-import java.util.EnumMap;
 import java.util.Locale;
-import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
+import uk.co.chrisjenx.calligraphy.CalligraphyTypefaceSpan;
+import uk.co.chrisjenx.calligraphy.TypefaceUtils;
+
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.LOGIN;
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.UNLOCK_ACHIEVEMENT;
 
 
-public class ProfileFragment extends BaseFragment implements Switch.OnCheckedChangeListener {
+public class ProfileFragment extends MVPFragment<ProfileView, ProfilePresenter>
+        implements Switch.OnCheckedChangeListener, ProfileView{
+
+    private static final String TAG = "ProfileFragment";
 
     /**
      * URL to reset a password
@@ -49,67 +55,70 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
 
     public static final String I_EXTRA_FROM = "From help";
 
-    @Bind(R.id.password) EditText passwordTextView;
-    @Bind(R.id.user_name) EditText userNameTextView;
-    @Bind(R.id.signedIn) View signedIn;
-    @Bind(R.id.signedOut) View signedOut;
-    @Bind(R.id.qr) ImageView qr;
-    @Bind(R.id.display_name) TextView displayName;
-    @Bind(R.id.progressBar) ProgressBar bar;
-    @Bind(R.id.email_layout) TextInputLayout emailLayout;
-    @Bind(R.id.password_layout) TextInputLayout passwordLayout;
-    @Bind(R.id.login_page_title) TextView loginViewTitle;
-    @Bind(R.id.push_switch) Switch aSwitch;
-    @Bind(R.id.push_switch2) Switch aSwitch2;
-
+    @BindView(R.id.password) EditText passwordTextView;
+    @BindView(R.id.user_name) EditText userNameTextView;
+    @BindView(R.id.signedIn) View signedIn;
+    @BindView(R.id.signedOut) View signedOut;
+    @BindView(R.id.qr) ImageView qr;
+    @BindView(R.id.display_name) TextView displayName;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.email_layout) TextInputLayout emailLayout;
+    @BindView(R.id.password_layout) TextInputLayout passwordLayout;
+    @BindView(R.id.check_in) Button checkIn;
 
     boolean fromHelp = false;
+    private Session session;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
+    @Override int getLayout() {
+        return R.layout.fragment_login;
+    }
 
-        View view = inflater.inflate(R.layout.activity_login, container, false);
+    @Override boolean registerEventbus() {
+        return false;
+    }
 
-        ButterKnife.bind(this, view);
+    @NonNull @Override public ProfilePresenter createPresenter() {
+        return new ProfilePresenter();
+    }
+
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(UNLOCK_ACHIEVEMENT, null);
+    }
+
+    @Override public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         Bundle args = this.getArguments();
         if (args != null && args.containsKey(I_EXTRA_FROM)){
             fromHelp = true;
-            loginViewTitle.setText(R.string.login_for_help);
         }
 
-        // set switch to correct value
-        aSwitch.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true));
-        aSwitch2.setChecked(getActivity().getSharedPreferences(getActivity().getApplication().getPackageName(), Activity.MODE_PRIVATE).getBoolean(MainActivity.PUSH_PREF, true));
+        // Using a custom typeface for an EditText with inputType="textPassword"
+        // requires java intervention because XML automatically uses the default typeface
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), CalligraphyConfig.get().getFontPath());
+        passwordLayout.setTypeface(typeface);
 
-        aSwitch.setOnCheckedChangeListener(this);
-        aSwitch2.setOnCheckedChangeListener(this);
-        return view;
+        CalligraphyTypefaceSpan typefaceSpan = TypefaceUtils.getSpan(typeface);
+        SpannableString spannableString = new SpannableString(getString(R.string.password));
+        spannableString.setSpan(typefaceSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        passwordLayout.setHint(spannableString);
     }
 
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
-        if (isChecked){
-            updateParseInstillation(false);
-            Toast.makeText(getActivity(), "Subscribed successfully", Toast.LENGTH_SHORT).show();
-            EventBus.getDefault().post(true);
-        } else {
-            updateParseInstillation(true);
-            Toast.makeText(getActivity(), "Unsubscribed successfully", Toast.LENGTH_SHORT).show();
-            EventBus.getDefault().post(false);
-        }
+    @Override public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+        EventBus.getDefault().post(isChecked);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
+        if (Cache.INSTANCE.hasSession()){
+            session = Cache.INSTANCE.getSession();
+        }
         toggleViews(false);
     }
 
-    @Override
-    public void onPause() {
+    @Override public void onPause() {
         super.onPause();
         hideKeyboard(passwordTextView);
     }
@@ -117,15 +126,14 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
     /**
      * Called when the login button is pressed
      */
-    @OnClick(R.id.login_button)
-    public void onLogin() {
+    @OnClick(R.id.login_button) public void onLogin() {
 
         // flag for if there are any errors
         boolean error = false;
 
         // validate email;
         String email = userNameTextView.getText().toString().trim().toLowerCase(Locale.US);
-        if (!validateEmail(email)) {
+        if (!Utility.isValidEmail(email)) {
             emailLayout.setError("Invalid Email");
             error = true;
         } else {
@@ -134,7 +142,7 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
 
         // validate password
         String password = passwordTextView.getText().toString().trim();
-        if (!validatePassword(password)) {
+        if (!Utility.isPasswordValid(password)) {
             passwordLayout.setError("Password not long enough");
             error = true;
         } else {
@@ -144,35 +152,18 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
         // Don't submit call if errors
         if (error) return;
 
-        hideKeyboard(passwordTextView);
-
-        // change views shown
+        // show loading
         toggleViews(true);
 
-        ParseUser.logInInBackground(email, passwordTextView.getText().toString().trim(), (user, e) -> {
-            if (user != null) {
-                Snackbar.make(bar, "Successfully logged in!", Snackbar.LENGTH_LONG).show();
-                updateParseInstillation(false);
-                if (fromHelp) {
-                    getActivity().onBackPressed();
-                } else {
-                    toggleViews(false);
-                }
+        hideKeyboard(passwordTextView);
 
-            } else {
-                Snackbar.make(bar, "Invalid credentials", Snackbar.LENGTH_LONG).show();
-                Log.e("Login", e.toString());
-                e.printStackTrace();
-                toggleViews(false);
-            }
-        });
+        getMVPPresenter().attemptLogin(email, passwordTextView.getText().toString().trim());
     }
 
     /**
      * Called when a user clicks on forgot password. This will open the users browser of choice
      */
-    @OnClick(R.id.forgot_passowrd)
-    public void onForgotPassword() {
+    @OnClick(R.id.forgot_password) public void onForgotPassword() {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(RESET_URL)));
     }
 
@@ -180,14 +171,12 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
      * Called when logout is clicked. This will log out and show a snackbar
      * when the logout is done
      */
-    @OnClick(R.id.logout)
-    public void onLogout() {
-        toggleViews(true);
-        ParseUser.logOutInBackground(e -> {
-            updateParseInstillation(true);
-            toggleViews(false);
-            Snackbar.make(signedOut, "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
-        });
+    @OnClick(R.id.logout) public void onLogout() {
+        getMVPPresenter().logOut(session.getAuth_token());
+    }
+
+    @OnClick(R.id.check_in) public void showCheckin() {
+        startActivity(new Intent(getActivity(), CheckinActivity.class));
     }
 
     /**
@@ -197,13 +186,14 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
      * @param load if the loading circle should show or not
      */
     private void toggleViews(boolean load) {
-        ParseUser user = ParseUser.getCurrentUser();
+        setCheckInEnabled();
+
         if (load) {
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.GONE);
-            bar.setVisibility(View.VISIBLE);
-        } else if (user != null) {
-            bar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.VISIBLE);
+        } else if (session != null) {
+            progressBar.setVisibility(View.GONE);
             signedIn.setVisibility(View.VISIBLE);
             signedOut.setVisibility(View.GONE);
 
@@ -211,111 +201,65 @@ public class ProfileFragment extends BaseFragment implements Switch.OnCheckedCha
             Bitmap bitmap;
 
             try {
-                bitmap = encodeAsBitmap(user.getObjectId(), BarcodeFormat.CODE_128, 600, 300);
+              bitmap = Utility.encodeAsBitmap(String.valueOf(session.getId()), BarcodeFormat.QR_CODE, 200, 200);
                 qr.setImageBitmap(bitmap);
 
             } catch (WriterException e) {
                 e.printStackTrace();
             }
 
-            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), TextUtils.isEmpty((CharSequence) user.get("name")) ? user.getUsername() : user.get("name")));
+            displayName.setText(String.format(getActivity().getResources().getString(R.string.logged_in_as), session.getFullName()));
 
         } else {
-            bar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             signedIn.setVisibility(View.GONE);
             signedOut.setVisibility(View.VISIBLE);
         }
     }
 
-    /**
-     * Makes sure email address is valid
-     *
-     * @param email a string which is the email address
-     * @return if it is valid or not
-     */
-    private boolean validateEmail(String email) {
-        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
+    @Override public void logOutSuccess() {
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(LOGIN, null);
+
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Successfully Logged Out", Snackbar.LENGTH_LONG).show();
+        Cache.INSTANCE.clear(getActivity());
+        session = null;
+        toggleViews(false);
     }
 
-    /**
-     * @param password string which is the password entered
-     * @return if the password is long enough
-     */
-    private boolean validatePassword(String password) {
-        return password.length() >= 4;
+    @Override public void logOutError() {
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Error Logging Out", Snackbar.LENGTH_LONG).show();
+        toggleViews(false);
     }
 
-    private void updateParseInstillation(boolean logout){
-        ParseInstallation currentInstall = ParseInstallation.getCurrentInstallation();
+    @Override public void loginSuccess(Session session) {
+        this.session = session;
+        Cache.INSTANCE.setSession(session, getActivity());
 
-        if (logout){
-            currentInstall.remove("user");
-//            ParsePush.unsubscribeInBackground("");
-        }
-        else {
-            if (ParseUser.getCurrentUser()!=null) currentInstall.put("user", ParseUser.getCurrentUser());
-//            ParsePush.subscribeInBackground("");
-        }
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Successfully logged in!", Snackbar.LENGTH_LONG).show();
 
-
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+        // go back to the help screen
+        if (fromHelp) getActivity().onBackPressed();
+            // show the content
+        else toggleViews(false);
     }
 
-    /**************************************************************
-     * getting from com.google.zxing.client.android.encode.QRCodeEncoder
-     *
-     * See the sites below
-     * http://code.google.com/p/zxing/
-     * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/EncodeActivity.java
-     * http://code.google.com/p/zxing/source/browse/trunk/android/src/com/google/zxing/client/android/encode/QRCodeEncoder.java
-     */
-    private static final int WHITE = 0xFFFFFFFF;
-    private static final int BLACK = 0xFF000000;
-
-    Bitmap encodeAsBitmap(String contents, BarcodeFormat format, int img_width, int img_height) throws WriterException {
-        if (contents == null) {
-            return null;
+    private void setCheckInEnabled() {
+        if (session != null &&
+                (session.getRoles().contains("director") || session.getRoles().contains("admin")
+                        || session.getRoles().contains("organizer"))){
+            checkIn.setVisibility(View.VISIBLE);
+        } else {
+            checkIn.setVisibility(View.GONE);
         }
-        Map<EncodeHintType, Object> hints = null;
-        String encoding = guessAppropriateEncoding(contents);
-        if (encoding != null) {
-            hints = new EnumMap<>(EncodeHintType.class);
-            hints.put(EncodeHintType.CHARACTER_SET, encoding);
-        }
-        MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix result;
-        try {
-            result = writer.encode(contents, format, img_width, img_height, hints);
-        } catch (IllegalArgumentException iae) {
-            // Unsupported format
-            return null;
-        }
-        int width = result.getWidth();
-        int height = result.getHeight();
-        int[] pixels = new int[width * height];
-        for (int y = 0; y < height; y++) {
-            int offset = y * width;
-            for (int x = 0; x < width; x++) {
-                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
-            }
-        }
-
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        return bitmap;
     }
 
-    private static String guessAppropriateEncoding(CharSequence contents) {
-        // Very crude at the moment
-        for (int i = 0; i < contents.length(); i++) {
-            if (contents.charAt(i) > 0xFF) {
-                return "UTF-8";
-            }
-        }
-        return null;
+    @Override public void showLoading() {
+        toggleViews(true);
+    }
+
+    @Override public void onError(String error) {
+        Snackbar.make(getActivity().findViewById(R.id.placeSnackBar), "Invalid credentials", Snackbar.LENGTH_LONG).show();
+        toggleViews(false);
     }
 
 }

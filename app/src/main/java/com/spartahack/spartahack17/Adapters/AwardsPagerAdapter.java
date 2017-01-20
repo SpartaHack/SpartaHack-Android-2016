@@ -17,12 +17,12 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
     /**
      * list of fragments in the adapter
      */
-    private ArrayList<Fragment> fragments;
+    private final ArrayList<Fragment> fragments;
 
     /**
      * List of titles for the adapter tabs
      */
-    private String[] tabs = {"Prizes", "Sponsors"};
+    private final String[] tabs = {"Prizes", "Sponsors"};
 
     public AwardsPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -31,13 +31,11 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
         fragments.add(new CompanyFragment());
     }
 
-    @Override
-    public int getCount() {
+    @Override public int getCount() {
         return fragments.size();
     }
 
-    @Override
-    public Fragment getItem(int position) {
+    @Override public Fragment getItem(int position) {
         return fragments.get(position);
     }
 
@@ -45,8 +43,7 @@ public class AwardsPagerAdapter extends FragmentPagerAdapter {
         return fragments;
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(int position) {
         return tabs[position];
     }
 }

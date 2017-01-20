@@ -29,7 +29,20 @@ proguard/
 
 *.idea
 */Keys.java
+`
+# Android Studio
+*.iml
+.idea
+.idea/workspace.xml 
+.gradle
+build/
 
 .idea/*
 app/app.iml
-*.iml
+
+# Windows thumbnail db
+Thumbs.db
+
+# OSX files
+.DS_Store
+gradle-wrapper.properties

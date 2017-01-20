@@ -11,11 +11,12 @@ import android.view.inputmethod.InputMethodManager;
 
 import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by ryan on 10/22/15
  */
-public abstract class BaseActivity extends AppCompatActivity{
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected boolean registerEventBus = false;
 
@@ -66,6 +67,11 @@ public abstract class BaseActivity extends AppCompatActivity{
         // hide keyboard!!! fuck android
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

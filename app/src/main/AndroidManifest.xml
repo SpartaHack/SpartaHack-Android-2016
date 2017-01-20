@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.spartahack.spartahack17">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,16 +19,10 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
-        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:icon="@drawable/launcher"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".Activity.CreateTicketActivity"
-            android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".Activity.ViewTicketActivity"
-            android:label="@string/title_activity_main"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".Activity.MainActivity"
             android:label="@string/title_activity_main"
@@ -39,33 +34,31 @@
             </intent-filter>
         </activity>
 
-        <!-- parse shit -->
-        <service android:name="com.parse.PushService" />
-
-        <receiver
-            android:name=".PushNotificationReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.parse.push.intent.RECEIVE" />
-                <action android:name="com.parse.push.intent.DELETE" />
-                <action android:name="com.parse.push.intent.OPEN" />
-            </intent-filter>
-        </receiver>
-        <receiver
-            android:name="com.parse.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-
-                <category android:name="com.spartahack.spartahack16" />
-            </intent-filter>
-        </receiver>
+        <activity android:name=".Activity.CheckinActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
 
         <activity
-            android:name=".Activity.MentorViewTicketActivity"
-            android:label="@string/title_activity_mentor_view_ticket"
-            android:theme="@style/AppTheme"></activity>
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="portrait"
+            tools:replace="screenOrientation" />
+
+        <!-- [START firebase_service] -->
+        <service
+            android:name=".Service.MessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
+        <service
+            android:name=".Service.InstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_iid_service] -->
     </application>
 
 </manifest>

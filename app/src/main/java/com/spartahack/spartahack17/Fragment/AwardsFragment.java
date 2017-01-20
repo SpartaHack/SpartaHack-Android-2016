@@ -2,37 +2,32 @@ package com.spartahack.spartahack17.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.spartahack.spartahack17.Adapters.AwardsPagerAdapter;
 import com.spartahack.spartahack17.R;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
+
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.JOIN_GROUP;
 
 public class AwardsFragment extends BaseFragment {
 
-    @Bind(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.view_pager) ViewPager viewPager;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-
-        View view = inflater.inflate(R.layout.fragment_awards, container, false);
-
-        ButterKnife.bind(this, view);
-
-        return view;
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(JOIN_GROUP, null);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
 
-        viewPager.setAdapter(new AwardsPagerAdapter(getFragmentManager()));
+        viewPager.setAdapter(new AwardsPagerAdapter(getChildFragmentManager()));
         setUpTabBar(viewPager);
+    }
 
+    @Override int getLayout() {
+        return R.layout.fragment_awards;
     }
 }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.SimpleViewHolder> {
@@ -41,10 +41,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
 
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.title) TextView title;
-        @Bind(R.id.time) TextView time;
-        @Bind(R.id.description) TextView description;
-        @Bind(R.id.location) TextView location;
+        @BindView(R.id.title) TextView title;
+        @BindView(R.id.time) TextView time;
+        @BindView(R.id.description) TextView description;
+        @BindView(R.id.location) TextView location;
 
         public SimpleViewHolder(View itemView) {
             super(itemView);
@@ -62,7 +62,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Simp
 
 
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        final View view = LayoutInflater.from(context).inflate(R.layout.layout_event_item_1, parent, false);
+        final View view = LayoutInflater.from(context).inflate(R.layout.layout_event_item, parent, false);
         return new SimpleViewHolder(view);
     }
 

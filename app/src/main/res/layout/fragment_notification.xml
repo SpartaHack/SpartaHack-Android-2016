@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/black"
-    tools:context=".Fragment.NotificationFragment">
+    tools:context=".Fragment.AnnouncementFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -16,8 +15,8 @@
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:dividerHeight="2dp"
-            android:divider="@android:color/white"/>
+            android:dividerHeight="0dp"
+            android:divider="@null"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -26,9 +25,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/no_notificaitons"
-        android:textSize="20sp"
-        android:textColor="@android:color/white"
+        android:text="@string/no_notifications"
+        style="@style/NotificationTitleStyle"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/error_message"
+        style="@style/ErrorMessageStyle"
         android:visibility="gone"/>
 
 </RelativeLayout>

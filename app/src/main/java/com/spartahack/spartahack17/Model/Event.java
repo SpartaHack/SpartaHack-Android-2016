@@ -1,24 +1,21 @@
 package com.spartahack.spartahack17.Model;
 
-import com.google.gson.annotations.SerializedName;
-
 import org.joda.time.DateTime;
 
 /**
- * Created by ryancasler on 1/5/16.
+ * Created by ryancasler on 1/5/16
+ * SpartaHack2016-Android
  */
 public class Event {
-    @SerializedName("eventTitle")
+    private int id;
     private String title;
-    @SerializedName("eventDescription")
     private String description;
-    @SerializedName("eventTime")
-    private Time eventTime;
-
-    private String eventLocation;
+    private String time;
+    private String updatedAt;
+    private String location;
 
     public String getEventLocation() {
-        return eventLocation;
+        return location;
     }
 
     public String getTitle() {
@@ -30,15 +27,10 @@ public class Event {
     }
 
     public String getDateString() {
-        return eventTime.date;
+        return time;
     }
 
     public DateTime getTime(){
-        return new DateTime(eventTime.date);
-    }
-
-    private class Time{
-        @SerializedName("iso")
-        public String date;
+        return new DateTime(time);
     }
 }

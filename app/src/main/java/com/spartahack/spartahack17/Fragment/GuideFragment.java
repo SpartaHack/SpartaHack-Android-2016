@@ -1,44 +1,33 @@
 package com.spartahack.spartahack17.Fragment;
 
-
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.spartahack.spartahack17.Adapters.GidePagerAdapter;
 import com.spartahack.spartahack17.R;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.BindView;
 
+import static com.google.firebase.analytics.FirebaseAnalytics.Event.LEVEL_UP;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class GuideFragment extends BaseFragment {
 
-    @Bind(R.id.view_pager) ViewPager viewPager;
+    @BindView(R.id.view_pager) ViewPager viewPager;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_guide, container, false);
-
-        ButterKnife.bind(this, view);
-
-        return view;
+    @Override public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        FirebaseAnalytics.getInstance(getActivity()).logEvent(LEVEL_UP, null);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
 
         viewPager.setAdapter(new GidePagerAdapter(getChildFragmentManager()));
         setUpTabBar(viewPager);
-
     }
 
+    @Override int getLayout() {
+        return R.layout.fragment_guide;
+    }
 }
