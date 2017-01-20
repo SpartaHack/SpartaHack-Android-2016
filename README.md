@@ -10,3 +10,9 @@ The SpartaHack 2017 Android app allows attendees and sponsors to view schedules,
 ![](https://raw.githubusercontent.com/SpartaHack/SpartaHack-Android/develop/graphics/guide.png)
 ![](https://raw.githubusercontent.com/SpartaHack/SpartaHack-Android/develop/graphics/help.png)
 ![](https://raw.githubusercontent.com/SpartaHack/SpartaHack-Android/develop/graphics/profile.png)
+
+
+## Collaborators
+
+- [@memuyskens](https://github.com/memuyskens)
+- [@ryanrampage1](https://github.com/ryanrampage1)
